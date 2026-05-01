@@ -5,7 +5,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { ShoppingBag, Minus, Plus, X, Loader2, Check, Trash2, Megaphone, Search, Camera, PenTool, Sparkles } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { ShoppingBag, Minus, Plus, X, Loader2, Check, Trash2, Megaphone, Search, Camera, PenTool, Sparkles, ShieldCheck } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
 
@@ -53,9 +63,20 @@ export const CartDrawer = () => {
   const { toast } = useToast();
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+  const [carePromptOpen, setCarePromptOpen] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", company: "", phone: "", notes: "" });
 
+  const hasCarePlan = items.some((i) => i.category === "Care plan");
+
   const submit = async () => {
+    if (items.length === 0) {
+      toast({ title: "Your cart is empty", variant: "destructive" });
+      return;
+    }
+    if (!hasCarePlan) {
+      setCarePromptOpen(true);
+      return;
+    }
     const parsed = schema.safeParse(form);
     if (!parsed.success) {
       toast({
@@ -63,10 +84,6 @@ export const CartDrawer = () => {
         description: parsed.error.issues[0]?.message ?? "Invalid input",
         variant: "destructive",
       });
-      return;
-    }
-    if (items.length === 0) {
-      toast({ title: "Your cart is empty", variant: "destructive" });
       return;
     }
 
