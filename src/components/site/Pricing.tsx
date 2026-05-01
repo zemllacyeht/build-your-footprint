@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Check, Megaphone, Mail, Image as ImageIcon, FileText, ShieldCheck, CreditCard, Server, LifeBuoy, RefreshCw, Hammer, Repeat, Lock, Plus } from "lucide-react";
+import { Check, Megaphone, Mail, Image as ImageIcon, FileText, ShieldCheck, CreditCard, Server, LifeBuoy, RefreshCw, Hammer, Repeat, Lock, Plus, ArrowDown, Sparkles } from "lucide-react";
 import { useCart } from "@/hooks/useCart";
 
 const tiers = [
@@ -209,7 +209,7 @@ export const Pricing = () => {
         </div>
 
         {/* DIVIDER */}
-        <div className="max-w-7xl mx-auto mb-16 flex items-center gap-6">
+        <div className="max-w-7xl mx-auto mb-10 flex items-center gap-6">
           <div className="flex-1 h-px bg-gradient-to-r from-transparent via-border to-border" />
           <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-muted-foreground">
             <span>Then,</span>
@@ -217,6 +217,26 @@ export const Pricing = () => {
           </div>
           <div className="flex-1 h-px bg-gradient-to-l from-transparent via-border to-border" />
         </div>
+
+        {/* CARE PLAN PROMPT — appears after a build package is selected */}
+        {hasBuild && !hasCare && (
+          <div className="max-w-7xl mx-auto mb-10 animate-fade-up">
+            <div className="rounded-2xl border-2 border-accent/40 bg-gradient-to-r from-accent/10 via-accent/5 to-transparent p-5 md:p-6 flex items-center gap-4">
+              <div className="h-10 w-10 rounded-lg bg-gradient-gold grid place-items-center shadow-gold shrink-0">
+                <Sparkles className="h-4 w-4 text-accent-foreground" />
+              </div>
+              <div className="flex-1">
+                <div className="font-display text-base md:text-lg font-medium leading-tight">
+                  Build package added — now choose a care plan to keep it running.
+                </div>
+                <div className="text-xs text-muted-foreground mt-1">
+                  Every site needs hosting, security, and backups. Pick a plan below.
+                </div>
+              </div>
+              <ArrowDown className="hidden sm:block h-5 w-5 text-accent shrink-0 animate-bounce" />
+            </div>
+          </div>
+        )}
 
         {/* PART 2: MONTHLY RETAINER */}
         <div className="max-w-7xl mx-auto">
@@ -276,19 +296,38 @@ export const Pricing = () => {
                   ))}
                 </ul>
 
-                <Button
-                  variant={p.featured ? "gold" : "glass"}
-                  size="sm"
-                  className="w-full"
-                  onClick={() =>
-                    addItem({
-                      id: `care-${p.name.toLowerCase().replace(/\s+/g, "-")}`,
-                      name: p.name,
-                      price: p.price === "Custom" ? "Custom" : `${p.price}/mo`,
-                      category: "Care plan",
-                    })
-                  }
-                >
+                {(() => {
+                  const careId = `care-${p.name.toLowerCase().replace(/\s+/g, "-")}`;
+                  const selected = careIds.has(careId);
+                  return (
+                    <Button
+                      variant={selected ? "gold" : p.featured ? "gold" : "glass"}
+                      size="sm"
+                      className="w-full"
+                      disabled={selected}
+                      onClick={() =>
+                        addItem({
+                          id: careId,
+                          name: p.name,
+                          price: p.price === "Custom" ? "Custom" : `${p.price}/mo`,
+                          category: "Care plan",
+                        })
+                      }
+                    >
+                      {selected ? (
+                        <>
+                          <Check className="h-4 w-4" />
+                          Selected
+                        </>
+                      ) : (
+                        <>
+                          <Plus className="h-4 w-4" />
+                          Add {p.name.split(" ")[0]}
+                        </>
+                      )}
+                    </Button>
+                  );
+                })()}
                   <Plus className="h-4 w-4" />
                   Add {p.name.split(" ")[0]}
                 </Button>
