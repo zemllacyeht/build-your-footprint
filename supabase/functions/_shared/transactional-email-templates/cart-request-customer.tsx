@@ -24,7 +24,10 @@ const CartRequestCustomerEmail = ({
   items = [],
 }: CartRequestCustomerProps) => (
   <Html lang="en" dir="ltr">
-    <Head />
+    <Head>
+      <meta name="x-apple-disable-message-reformatting" />
+      <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
+    </Head>
     <Preview>Your request is in. We will be in touch within 24 hours.</Preview>
     <Body style={main}>
       <Container style={outerWrap}>
@@ -32,10 +35,12 @@ const CartRequestCustomerEmail = ({
           {/* Header */}
           <Section style={headerSection}>
             <Text style={brandKicker}>BUILD YOUR FOOTPRINT</Text>
+            <Text style={brandOrnament}>✦</Text>
           </Section>
 
           <Section style={dividerWrap}>
             <Hr style={topDivider} />
+            <Section style={goldAccentBar} />
           </Section>
 
           {/* Greeting */}
