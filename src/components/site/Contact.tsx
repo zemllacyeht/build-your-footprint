@@ -8,15 +8,25 @@ import { toast } from "sonner";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
+const countWords = (s: string) => s.trim().split(/\s+/).filter(Boolean).length;
+
 const schema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
-  email: z.string().trim().email("Invalid email").max(255),
+  email: z.string().trim().min(1, "Email is required").email("Invalid email").max(255),
   business: z.string().trim().max(150).optional(),
-  message: z.string().trim().min(10, "Tell us a bit more").max(2000),
+  message: z
+    .string()
+    .trim()
+    .min(1, "Please tell us about your project")
+    .max(2000)
+    .refine((v) => countWords(v) >= 25, {
+      message: "Please share at least 25 words about your project",
+    }),
 });
 
 export const Contact = () => {
   const [loading, setLoading] = useState(false);
+  const [messageWords, setMessageWords] = useState(0);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -51,6 +61,7 @@ export const Contact = () => {
       if (error) throw error;
       toast.success("Message received. We'll be in touch within 24 hours.");
       form.reset();
+      setMessageWords(0);
     } catch (err) {
       console.error(err);
       toast.error("Could not send message. Please try again.");
@@ -120,8 +131,29 @@ export const Contact = () => {
               <Input id="email" name="email" type="email" maxLength={255} required className="bg-background/50" />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="message">Tell us about your project</Label>
-              <Textarea id="message" name="message" rows={5} maxLength={2000} required className="bg-background/50 resize-none" />
+              <div className="flex items-center justify-between">
+                <Label htmlFor="message">Tell us about your project</Label>
+                <span
+                  className={`text-xs ${
+                    messageWords >= 25 ? "text-primary" : "text-muted-foreground"
+                  }`}
+                >
+                  {messageWords}/25 words
+                </span>
+              </div>
+              <Textarea
+                id="message"
+                name="message"
+                rows={5}
+                maxLength={2000}
+                required
+                onChange={(e) =>
+                  setMessageWords(
+                    e.target.value.trim().split(/\s+/).filter(Boolean).length
+                  )
+                }
+                className="bg-background/50 resize-none"
+              />
             </div>
             <Button type="submit" variant="hero" size="lg" className="w-full" disabled={loading}>
               {loading ? "Sending…" : "Send message"}
