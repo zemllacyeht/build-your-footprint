@@ -52,9 +52,13 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
           p.id === item.id ? { ...p, quantity: p.quantity + 1 } : p,
         );
       }
+      // Care plans are mutually exclusive — replace any existing care plan
+      if (item.category === "Care plan") {
+        const filtered = prev.filter((p) => p.category !== "Care plan");
+        return [...filtered, { ...item, quantity: 1 }];
+      }
       return [...prev, { ...item, quantity: 1 }];
     });
-    setIsOpen(true);
   };
 
   const removeItem = (id: string) =>
