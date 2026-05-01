@@ -56,7 +56,7 @@ export const Contact = () => {
       if (error) throw error;
       toast.success("Message received. We'll be in touch within 24 hours.");
       form.reset();
-      setMessageWords(0);
+      setMessageChars(0);
     } catch (err) {
       console.error(err);
       toast.error("Could not send message. Please try again.");
