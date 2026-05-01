@@ -14,6 +14,86 @@ export type Database = {
   }
   public: {
     Tables: {
+      client_deliverables: {
+        Row: {
+          client_id: string
+          created_at: string
+          description: string | null
+          external_url: string | null
+          file_path: string | null
+          id: string
+          label: string
+          updated_at: string
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          description?: string | null
+          external_url?: string | null
+          file_path?: string | null
+          id?: string
+          label: string
+          updated_at?: string
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          description?: string | null
+          external_url?: string | null
+          file_path?: string | null
+          id?: string
+          label?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_deliverables_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      client_messages: {
+        Row: {
+          client_id: string
+          content: string
+          created_at: string
+          id: string
+          sender_id: string
+        }
+        Insert: {
+          client_id: string
+          content: string
+          created_at?: string
+          id?: string
+          sender_id: string
+        }
+        Update: {
+          client_id?: string
+          content?: string
+          created_at?: string
+          id?: string
+          sender_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_messages_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "client_messages_sender_id_fkey"
+            columns: ["sender_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       email_send_log: {
         Row: {
           created_at: string
@@ -111,6 +191,7 @@ export type Database = {
           notes: string | null
           phone: string | null
           project_status: string
+          project_url: string | null
           updated_at: string
         }
         Insert: {
@@ -122,6 +203,7 @@ export type Database = {
           notes?: string | null
           phone?: string | null
           project_status?: string
+          project_url?: string | null
           updated_at?: string
         }
         Update: {
@@ -133,6 +215,7 @@ export type Database = {
           notes?: string | null
           phone?: string | null
           project_status?: string
+          project_url?: string | null
           updated_at?: string
         }
         Relationships: []

@@ -9,6 +9,8 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Loader2, ArrowLeft } from "lucide-react";
 
+const emailSchema = z.string().trim().email("Enter a valid email").max(255);
+
 const schema = z.object({
   email: z.string().trim().email("Enter a valid email").max(255),
   password: z.string().min(6, "Password must be at least 6 characters").max(72),
@@ -86,7 +88,24 @@ const Login = () => {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <div className="flex items-center justify-between">
+                <Label htmlFor="password">Password</Label>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    const parsed = emailSchema.safeParse(email);
+                    if (!parsed.success) return toast.error("Enter your email above first");
+                    const { error } = await supabase.auth.resetPasswordForEmail(parsed.data, {
+                      redirectTo: `${window.location.origin}/reset-password`,
+                    });
+                    if (error) return toast.error(error.message);
+                    toast.success("Check your inbox for a reset link");
+                  }}
+                  className="text-xs text-muted-foreground hover:text-primary transition-colors"
+                >
+                  Forgot password?
+                </button>
+              </div>
               <Input
                 id="password"
                 type="password"

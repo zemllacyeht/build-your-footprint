@@ -17,6 +17,7 @@ import WorkPage from "./pages/WorkPage.tsx";
 import PricingPage from "./pages/PricingPage.tsx";
 import ContactPage from "./pages/ContactPage.tsx";
 import Unsubscribe from "./pages/Unsubscribe.tsx";
+import ResetPassword from "./pages/ResetPassword.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -38,6 +39,7 @@ const App = () => (
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/unsubscribe" element={<Unsubscribe />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
               <Route
                 path="/portal"
                 element={
