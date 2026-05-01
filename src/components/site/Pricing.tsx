@@ -1,42 +1,80 @@
 import { Button } from "@/components/ui/button";
-import { Check, Megaphone, Mail, Image as ImageIcon, FileText, ShieldCheck, CreditCard, Server, LifeBuoy, RefreshCw } from "lucide-react";
+import { Check, Megaphone, Mail, Image as ImageIcon, FileText, ShieldCheck, CreditCard, Server, LifeBuoy, RefreshCw, Hammer, Repeat, Lock } from "lucide-react";
 
 const tiers = [
   {
     name: "Core",
     price: "$499",
-    cadence: "one-time build",
-    monthly: "+ $19/mo hosting",
     desc: "Essential online presence for solopreneurs and brand-new ventures.",
-    features: ["1-3 page custom site", "Mobile-responsive design", "Contact form", "Domain & SSL included", "Basic hosting & uptime", "1 round of revisions"],
+    features: ["1-3 page custom site", "Mobile-responsive design", "Contact form", "Domain setup & SSL", "1 round of revisions"],
+    pairsWith: "Essential Care",
     featured: false,
   },
   {
     name: "Starter",
     price: "$999",
-    cadence: "one-time build",
-    monthly: "+ $29/mo hosting",
     desc: "Perfect for new businesses establishing their first digital presence.",
-    features: ["5-page custom website", "Mobile-responsive design", "Basic SEO setup", "Domain & SSL included", "Hosting & uptime monitoring", "2 rounds of revisions"],
+    features: ["5-page custom website", "Mobile-responsive design", "Basic SEO setup", "Domain setup & SSL", "2 rounds of revisions"],
+    pairsWith: "Essential Care",
     featured: false,
   },
   {
     name: "Signature",
     price: "$1,499",
-    cadence: "one-time build",
-    monthly: "+ $59/mo hosting & care",
     desc: "Our most popular package. Full brand identity and a website that converts.",
-    features: ["Up to 12 custom pages", "Brand identity refresh", "Advanced SEO + analytics", "CMS for self-editing", "Premium hosting & backups", "Monthly content updates", "Priority support"],
+    features: ["Up to 12 custom pages", "Brand identity refresh", "Advanced SEO + analytics", "CMS for self-editing", "Launch strategy session"],
+    pairsWith: "Growth Care",
     featured: true,
   },
   {
     name: "Enterprise",
     price: "Custom",
-    cadence: "tailored scope",
-    monthly: "+ custom care plan",
     desc: "For growing businesses needing e-commerce, integrations, or custom features.",
-    features: ["Unlimited pages", "E-commerce / bookings", "Custom integrations", "Dedicated project manager", "White-glove hosting", "Quarterly strategy calls"],
+    features: ["Unlimited pages", "E-commerce / bookings", "Custom integrations", "Dedicated project manager", "Quarterly strategy calls"],
+    pairsWith: "White-Glove Care",
     featured: false,
+  },
+];
+
+const carePlans = [
+  {
+    name: "Essential Care",
+    price: "$19",
+    sub: "+ $10/mo domain",
+    desc: "For Core & Starter sites. Keeps the lights on, secure, and online.",
+    features: [
+      "Premium hosting & uptime monitoring",
+      "SSL renewal & security patches",
+      "Weekly backups",
+      "Email support (48h response)",
+    ],
+  },
+  {
+    name: "Growth Care",
+    price: "$59",
+    sub: "domain & SSL included",
+    desc: "Our most popular retainer. Pairs with Signature builds.",
+    features: [
+      "Everything in Essential",
+      "Daily backups & monitoring",
+      "CMS & plugin updates",
+      "30 min/mo content edits",
+      "Priority support (24h response)",
+    ],
+    featured: true,
+  },
+  {
+    name: "White-Glove Care",
+    price: "Custom",
+    sub: "tailored SLA",
+    desc: "For Enterprise builds, e-commerce, and high-traffic sites.",
+    features: [
+      "Everything in Growth",
+      "Dedicated account manager",
+      "Custom SLA & uptime guarantee",
+      "Quarterly strategy reviews",
+      "Same-day priority support",
+    ],
   },
 ];
 
@@ -47,65 +85,175 @@ export const Pricing = () => {
         <div className="max-w-2xl mx-auto text-center mb-20">
           <div className="text-xs uppercase tracking-[0.25em] text-accent mb-4">Investment</div>
           <h2 className="font-display text-4xl md:text-6xl font-light leading-tight">
-            Transparent, <span className="italic text-gradient-gold">all-in</span> pricing.
+            Two parts, <span className="italic text-gradient-gold">clearly separated</span>.
           </h2>
           <p className="text-muted-foreground mt-6 leading-relaxed">
-            One project fee, plus a simple monthly plan covering hosting, domain, security, and care.
-            No surprises, ever.
+            A one-time build fee to launch your site, plus a simple monthly retainer for hosting,
+            domain, and care. Two invoices, two relationships, zero surprises.
           </p>
-        </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-          {tiers.map((t) => (
-            <div
-              key={t.name}
-              className={`relative rounded-2xl p-8 ${
-                t.featured
-                  ? "bg-gradient-to-b from-primary/10 to-card border-2 border-primary/40 shadow-elegant lg:scale-105"
-                  : "glass"
-              }`}
-            >
-              {t.featured && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-gradient-gold text-accent-foreground text-[10px] uppercase tracking-[0.2em] font-semibold shadow-gold">
-                  Most Popular
-                </div>
-              )}
-              <h3 className="font-display text-3xl font-medium mb-2">{t.name}</h3>
-              <p className="text-sm text-muted-foreground min-h-[3rem]">{t.desc}</p>
-
-              <div className="my-8">
-                <div className="flex items-baseline gap-2">
-                  <span className="font-display text-5xl font-light">{t.price}</span>
-                </div>
-                <div className="text-sm text-muted-foreground mt-1">{t.cadence}</div>
-                <div className="text-sm text-accent mt-2">{t.monthly}</div>
-              </div>
-
-              <Button
-                variant={t.featured ? "hero" : "glass"}
-                size="lg"
-                className="w-full mb-8"
-                asChild
-              >
-                <a href="#contact">{t.featured ? "Start your project" : "Get started"}</a>
-              </Button>
-
-              <ul className="space-y-3">
-                {t.features.map((f) => (
-                  <li key={f} className="flex items-start gap-3 text-sm">
-                    <div className="mt-0.5 h-5 w-5 rounded-full bg-primary/15 grid place-items-center shrink-0">
-                      <Check className="h-3 w-3 text-primary" />
-                    </div>
-                    <span className="text-foreground/90">{f}</span>
-                  </li>
-                ))}
-              </ul>
+          {/* Visual split indicator */}
+          <div className="mt-10 flex items-center justify-center gap-4 text-xs uppercase tracking-[0.2em]">
+            <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-2">
+              <Hammer className="h-3.5 w-3.5 text-primary" />
+              <span className="text-foreground/80">One-time build</span>
             </div>
-          ))}
+            <span className="text-muted-foreground">+</span>
+            <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-2">
+              <Repeat className="h-3.5 w-3.5 text-accent" />
+              <span className="text-foreground/80">Monthly retainer</span>
+            </div>
+          </div>
         </div>
 
-        {/* Stripe billing trust note */}
-        <div className="max-w-7xl mx-auto mt-16">
+        {/* PART 1: ONE-TIME BUILD */}
+        <div className="max-w-7xl mx-auto mb-24">
+          <div className="flex items-center gap-4 mb-10">
+            <div className="h-10 w-10 rounded-lg bg-gradient-primary grid place-items-center shadow-glow shrink-0">
+              <Hammer className="h-4 w-4 text-primary-foreground" />
+            </div>
+            <div>
+              <div className="text-xs uppercase tracking-[0.25em] text-primary mb-1">Part 1 · Build</div>
+              <h3 className="font-display text-2xl md:text-3xl font-light">
+                One-time project packages
+              </h3>
+            </div>
+            <div className="hidden md:block flex-1 h-px bg-border ml-4" />
+            <div className="hidden md:inline-flex items-center gap-2 glass rounded-full px-3 py-1.5 text-xs text-muted-foreground">
+              <CreditCard className="h-3 w-3 text-accent" />
+              <span>Single invoice at launch</span>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {tiers.map((t) => (
+              <div
+                key={t.name}
+                className={`relative rounded-2xl p-8 ${
+                  t.featured
+                    ? "bg-gradient-to-b from-primary/10 to-card border-2 border-primary/40 shadow-elegant lg:scale-105"
+                    : "glass"
+                }`}
+              >
+                {t.featured && (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-gradient-gold text-accent-foreground text-[10px] uppercase tracking-[0.2em] font-semibold shadow-gold">
+                    Most Popular
+                  </div>
+                )}
+                <h3 className="font-display text-3xl font-medium mb-2">{t.name}</h3>
+                <p className="text-sm text-muted-foreground min-h-[3rem]">{t.desc}</p>
+
+                <div className="my-8">
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-display text-5xl font-light">{t.price}</span>
+                  </div>
+                  <div className="text-sm text-muted-foreground mt-1">one-time build</div>
+                  <div className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-accent/10 border border-accent/20 px-2.5 py-1">
+                    <Repeat className="h-3 w-3 text-accent" />
+                    <span className="text-[11px] text-accent uppercase tracking-wider">Pairs with {t.pairsWith}</span>
+                  </div>
+                </div>
+
+                <Button
+                  variant={t.featured ? "hero" : "glass"}
+                  size="lg"
+                  className="w-full mb-8"
+                  asChild
+                >
+                  <a href="#contact">{t.featured ? "Start your project" : "Get started"}</a>
+                </Button>
+
+                <ul className="space-y-3">
+                  {t.features.map((f) => (
+                    <li key={f} className="flex items-start gap-3 text-sm">
+                      <div className="mt-0.5 h-5 w-5 rounded-full bg-primary/15 grid place-items-center shrink-0">
+                        <Check className="h-3 w-3 text-primary" />
+                      </div>
+                      <span className="text-foreground/90">{f}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* DIVIDER */}
+        <div className="max-w-7xl mx-auto mb-16 flex items-center gap-6">
+          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-border to-border" />
+          <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-muted-foreground">
+            <span>Then,</span>
+            <span className="text-accent">every month</span>
+          </div>
+          <div className="flex-1 h-px bg-gradient-to-l from-transparent via-border to-border" />
+        </div>
+
+        {/* PART 2: MONTHLY RETAINER */}
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center gap-4 mb-10">
+            <div className="h-10 w-10 rounded-lg bg-gradient-gold grid place-items-center shadow-gold shrink-0">
+              <Repeat className="h-4 w-4 text-accent-foreground" />
+            </div>
+            <div>
+              <div className="text-xs uppercase tracking-[0.25em] text-accent mb-1">Part 2 · Care</div>
+              <h3 className="font-display text-2xl md:text-3xl font-light">
+                Monthly hosting & care retainer
+              </h3>
+            </div>
+            <div className="hidden md:block flex-1 h-px bg-border ml-4" />
+            <div className="hidden md:inline-flex items-center gap-2 glass rounded-full px-3 py-1.5 text-xs text-muted-foreground">
+              <Lock className="h-3 w-3 text-accent" />
+              <span>Auto-billed via Stripe · Cancel anytime</span>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 mb-10">
+            {carePlans.map((p) => (
+              <div
+                key={p.name}
+                className={`relative rounded-2xl p-8 ${
+                  p.featured
+                    ? "bg-gradient-to-b from-accent/10 to-card border-2 border-accent/40 shadow-gold"
+                    : "glass"
+                }`}
+              >
+                {p.featured && (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-gradient-gold text-accent-foreground text-[10px] uppercase tracking-[0.2em] font-semibold shadow-gold">
+                    Most Popular
+                  </div>
+                )}
+                <h4 className="font-display text-2xl font-medium mb-2">{p.name}</h4>
+                <p className="text-sm text-muted-foreground min-h-[3rem]">{p.desc}</p>
+
+                <div className="my-6">
+                  <div className="flex items-baseline gap-1.5">
+                    <span className="font-display text-4xl font-light">{p.price}</span>
+                    {p.price !== "Custom" && (
+                      <span className="text-base text-muted-foreground">/mo</span>
+                    )}
+                  </div>
+                  <div className="text-xs text-muted-foreground mt-1">{p.sub}</div>
+                </div>
+
+                <ul className="space-y-3 mb-6">
+                  {p.features.map((f) => (
+                    <li key={f} className="flex items-start gap-3 text-sm">
+                      <div className="mt-0.5 h-5 w-5 rounded-full bg-accent/15 grid place-items-center shrink-0">
+                        <Check className="h-3 w-3 text-accent" />
+                      </div>
+                      <span className="text-foreground/90">{f}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <Button variant={p.featured ? "gold" : "glass"} size="sm" className="w-full" asChild>
+                  <a href="#contact">Choose {p.name.split(" ")[0]}</a>
+                </Button>
+              </div>
+            ))}
+          </div>
+
+          {/* Stripe billing trust note */}
           <div className="glass rounded-2xl p-8 md:p-10">
             <div className="grid lg:grid-cols-[1.1fr_1.4fr] gap-10 items-center">
               <div>
@@ -171,7 +319,7 @@ export const Pricing = () => {
                 <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 mb-6">
                   <Megaphone className="h-3.5 w-3.5 text-accent" />
                   <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                    Add-on · Available with any plan
+                    Optional add-on · Stacks with any retainer
                   </span>
                 </div>
                 <h3 className="font-display text-3xl md:text-4xl font-light leading-tight mb-4">
