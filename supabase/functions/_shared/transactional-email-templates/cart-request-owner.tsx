@@ -46,7 +46,7 @@ const CartRequestOwnerEmail = ({
           <Text style={label}>Contact</Text>
           <Text style={value}>{customerName}</Text>
           {customerEmail ? <Text style={value}>{customerEmail}</Text> : null}
-          {customerPhone ? <Text style={value}>{customerPhone}</Text> : null>}
+          {customerPhone ? <Text style={value}>{customerPhone}</Text> : null}
           {customerCompany ? <Text style={value}>{customerCompany}</Text> : null}
           {submittedAt ? <Text style={meta}>Submitted: {submittedAt}</Text> : null}
         </Section>
