@@ -130,8 +130,29 @@ export const Contact = () => {
               <Input id="email" name="email" type="email" maxLength={255} required className="bg-background/50" />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="message">Tell us about your project</Label>
-              <Textarea id="message" name="message" rows={5} maxLength={2000} required className="bg-background/50 resize-none" />
+              <div className="flex items-center justify-between">
+                <Label htmlFor="message">Tell us about your project</Label>
+                <span
+                  className={`text-xs ${
+                    messageWords >= 25 ? "text-primary" : "text-muted-foreground"
+                  }`}
+                >
+                  {messageWords}/25 words
+                </span>
+              </div>
+              <Textarea
+                id="message"
+                name="message"
+                rows={5}
+                maxLength={2000}
+                required
+                onChange={(e) =>
+                  setMessageWords(
+                    e.target.value.trim().split(/\s+/).filter(Boolean).length
+                  )
+                }
+                className="bg-background/50 resize-none"
+              />
             </div>
             <Button type="submit" variant="hero" size="lg" className="w-full" disabled={loading}>
               {loading ? "Sending…" : "Send message"}
