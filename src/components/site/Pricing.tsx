@@ -3,17 +3,26 @@ import { Check } from "lucide-react";
 
 const tiers = [
   {
+    name: "Core",
+    price: "$499",
+    cadence: "one-time build",
+    monthly: "+ $19/mo hosting",
+    desc: "Essential online presence for solopreneurs and brand-new ventures.",
+    features: ["1-3 page custom site", "Mobile-responsive design", "Contact form", "Domain & SSL included", "Basic hosting & uptime", "1 round of revisions"],
+    featured: false,
+  },
+  {
     name: "Starter",
-    price: "$1,499",
+    price: "$999",
     cadence: "one-time build",
     monthly: "+ $29/mo hosting",
     desc: "Perfect for new businesses establishing their first digital presence.",
-    features: ["5-page custom website", "Mobile-responsive design", "Basic SEO setup", "Domain & SSL included", "Hosting & uptime monitoring", "1 round of revisions"],
+    features: ["5-page custom website", "Mobile-responsive design", "Basic SEO setup", "Domain & SSL included", "Hosting & uptime monitoring", "2 rounds of revisions"],
     featured: false,
   },
   {
     name: "Signature",
-    price: "$3,499",
+    price: "$1,499",
     cadence: "one-time build",
     monthly: "+ $59/mo hosting & care",
     desc: "Our most popular package — full brand identity and a website that converts.",
