@@ -5,9 +5,40 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { ShoppingBag, Minus, Plus, X, Loader2, Check, Trash2 } from "lucide-react";
+import { ShoppingBag, Minus, Plus, X, Loader2, Check, Trash2, Megaphone, Search, Camera, PenTool, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
+
+const ADDONS = [
+  {
+    id: "addon-marketing-collateral",
+    name: "Marketing Collateral",
+    price: "From $249/mo",
+    desc: "Ongoing social, email, ads & print design.",
+    icon: Megaphone,
+  },
+  {
+    id: "addon-seo-boost",
+    name: "SEO Boost",
+    price: "From $349/mo",
+    desc: "Keyword strategy, on-page SEO & monthly reporting.",
+    icon: Search,
+  },
+  {
+    id: "addon-content-photography",
+    name: "Content & Photography",
+    price: "From $499",
+    desc: "Pro photo shoot or copywriting for your launch.",
+    icon: Camera,
+  },
+  {
+    id: "addon-brand-identity",
+    name: "Brand Identity Kit",
+    price: "From $799",
+    desc: "Logo refresh, color system & brand guidelines.",
+    icon: PenTool,
+  },
+];
 
 const schema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
