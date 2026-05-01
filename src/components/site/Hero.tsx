@@ -27,20 +27,20 @@ export const Hero = () => {
           <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 mb-8 animate-fade-in">
             <Sparkles className="h-3.5 w-3.5 text-accent" />
             <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-              Premium Web Design Studio
+              Design · Hosting · Ongoing Partnership
             </span>
           </div>
 
           <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-light leading-[0.95] mb-8 animate-fade-up">
-            Leave a<br />
+            Your brand's<br />
             <span className="italic font-normal text-gradient-hero">digital footprint</span><br />
-            worth following.
+            in expert hands.
           </h1>
 
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-12 leading-relaxed animate-fade-up" style={{ animationDelay: "0.1s" }}>
-            We craft websites that establish your brand identity and forge real
-            connection with your customers — design, build, host, and grow,
-            all under one roof.
+            More than a website — a long-term partnership. We shape your brand identity,
+            launch a site your customers love, and keep it secure with managed hosting,
+            a private client portal, and support that grows with you.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 animate-fade-up" style={{ animationDelay: "0.2s" }}>
