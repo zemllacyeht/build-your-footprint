@@ -9,6 +9,8 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Loader2, ArrowLeft } from "lucide-react";
 
+const emailSchema = z.string().trim().email("Enter a valid email").max(255);
+
 const schema = z.object({
   email: z.string().trim().email("Enter a valid email").max(255),
   password: z.string().min(6, "Password must be at least 6 characters").max(72),
