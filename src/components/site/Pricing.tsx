@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Check, Megaphone, Mail, Image as ImageIcon, FileText } from "lucide-react";
+import { Check, Megaphone, Mail, Image as ImageIcon, FileText, ShieldCheck, CreditCard, Server, LifeBuoy, RefreshCw } from "lucide-react";
 
 const tiers = [
   {
@@ -102,6 +102,62 @@ export const Pricing = () => {
               </ul>
             </div>
           ))}
+        </div>
+
+        {/* Stripe billing trust note */}
+        <div className="max-w-7xl mx-auto mt-16">
+          <div className="glass rounded-2xl p-8 md:p-10">
+            <div className="grid lg:grid-cols-[1.1fr_1.4fr] gap-10 items-center">
+              <div>
+                <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 mb-5">
+                  <ShieldCheck className="h-3.5 w-3.5 text-accent" />
+                  <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                    Billing you can trust
+                  </span>
+                </div>
+                <h3 className="font-display text-2xl md:text-3xl font-light leading-tight mb-4">
+                  Monthly billing is fully automated with <span className="italic text-gradient-gold">Stripe</span>.
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-5">
+                  One predictable charge each month. No invoices to chase, no surprise fees,
+                  cancel or change plans anytime from your secure client portal.
+                </p>
+                <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+                  <div className="inline-flex items-center gap-1.5 glass rounded-full px-3 py-1.5">
+                    <CreditCard className="h-3 w-3 text-accent" />
+                    <span>PCI-compliant via Stripe</span>
+                  </div>
+                  <div className="inline-flex items-center gap-1.5 glass rounded-full px-3 py-1.5">
+                    <RefreshCw className="h-3 w-3 text-accent" />
+                    <span>Cancel anytime</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div className="text-xs uppercase tracking-[0.22em] text-accent mb-4">
+                  Included every month
+                </div>
+                <ul className="grid sm:grid-cols-2 gap-3">
+                  {[
+                    { icon: Server, t: "Premium hosting & uptime monitoring" },
+                    { icon: ShieldCheck, t: "SSL, security patches & daily backups" },
+                    { icon: RefreshCw, t: "Software, plugin & CMS updates" },
+                    { icon: LifeBuoy, t: "Priority support & small content edits" },
+                    { icon: CreditCard, t: "Automated Stripe billing & receipts" },
+                    { icon: Check, t: "Access to your secure client portal" },
+                  ].map((item) => (
+                    <li key={item.t} className="flex items-start gap-3 text-sm">
+                      <div className="mt-0.5 h-7 w-7 rounded-lg bg-primary/15 grid place-items-center shrink-0">
+                        <item.icon className="h-3.5 w-3.5 text-primary" />
+                      </div>
+                      <span className="text-foreground/90 leading-snug">{item.t}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Marketing Collateral add-on */}
