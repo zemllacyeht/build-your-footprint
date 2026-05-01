@@ -459,12 +459,11 @@ export const Pricing = () => {
                       size="sm"
                       className="w-full"
                       onClick={() =>
-                        addItem({
-                          id: careId,
-                          name: p.name,
-                          price: p.price === "Custom" ? "Custom" : `${p.price}/mo`,
-                          category: "Care plan",
-                        })
+                        handleAddCare(
+                          careId,
+                          p.name,
+                          p.price === "Custom" ? "Custom" : `${p.price}/mo`,
+                        )
                       }
                     >
                       <Plus className="h-4 w-4" />
