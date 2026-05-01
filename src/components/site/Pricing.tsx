@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { Check, Megaphone, Mail, Image as ImageIcon, FileText, ShieldCheck, CreditCard, Server, LifeBuoy, RefreshCw, Hammer, Repeat, Lock } from "lucide-react";
+import { Check, Megaphone, Mail, Image as ImageIcon, FileText, ShieldCheck, CreditCard, Server, LifeBuoy, RefreshCw, Hammer, Repeat, Lock, Plus } from "lucide-react";
+import { useCart } from "@/hooks/useCart";
 
 const tiers = [
   {
@@ -79,6 +80,7 @@ const carePlans = [
 ];
 
 export const Pricing = () => {
+  const { addItem } = useCart();
   return (
     <section id="pricing" className="py-32 relative">
       <div className="container">
@@ -158,9 +160,17 @@ export const Pricing = () => {
                   variant={t.featured ? "hero" : "glass"}
                   size="lg"
                   className="w-full mb-8"
-                  asChild
+                  onClick={() =>
+                    addItem({
+                      id: `build-${t.name.toLowerCase()}`,
+                      name: t.name,
+                      price: `${t.price} one-time`,
+                      category: "Build package",
+                    })
+                  }
                 >
-                  <a href="#contact">{t.featured ? "Start your project" : "Get started"}</a>
+                  <Plus className="h-4 w-4" />
+                  Add to request
                 </Button>
 
                 <ul className="space-y-3">
@@ -246,8 +256,21 @@ export const Pricing = () => {
                   ))}
                 </ul>
 
-                <Button variant={p.featured ? "gold" : "glass"} size="sm" className="w-full" asChild>
-                  <a href="#contact">Choose {p.name.split(" ")[0]}</a>
+                <Button
+                  variant={p.featured ? "gold" : "glass"}
+                  size="sm"
+                  className="w-full"
+                  onClick={() =>
+                    addItem({
+                      id: `care-${p.name.toLowerCase().replace(/\s+/g, "-")}`,
+                      name: p.name,
+                      price: p.price === "Custom" ? "Custom" : `${p.price}/mo`,
+                      category: "Care plan",
+                    })
+                  }
+                >
+                  <Plus className="h-4 w-4" />
+                  Add {p.name.split(" ")[0]}
                 </Button>
               </div>
             ))}
