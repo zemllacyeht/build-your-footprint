@@ -26,6 +26,7 @@ const schema = z.object({
 
 export const Contact = () => {
   const [loading, setLoading] = useState(false);
+  const [messageWords, setMessageWords] = useState(0);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
