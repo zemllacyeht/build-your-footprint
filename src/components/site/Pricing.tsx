@@ -221,7 +221,7 @@ export const Pricing = () => {
             {carePlans.map((p) => (
               <div
                 key={p.name}
-                className={`relative rounded-2xl p-8 ${
+                className={`relative rounded-2xl p-8 flex flex-col ${
                   p.featured
                     ? "bg-gradient-to-b from-accent/10 to-card border-2 border-accent/40 shadow-gold"
                     : "glass"
@@ -245,7 +245,7 @@ export const Pricing = () => {
                   <div className="text-xs text-muted-foreground mt-1">{p.sub}</div>
                 </div>
 
-                <ul className="space-y-3 mb-6">
+                <ul className="space-y-3 mb-6 flex-1">
                   {p.features.map((f) => (
                     <li key={f} className="flex items-start gap-3 text-sm">
                       <div className="mt-0.5 h-5 w-5 rounded-full bg-accent/15 grid place-items-center shrink-0">
