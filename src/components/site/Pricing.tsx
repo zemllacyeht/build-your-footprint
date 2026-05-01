@@ -328,9 +328,6 @@ export const Pricing = () => {
                     </Button>
                   );
                 })()}
-                  <Plus className="h-4 w-4" />
-                  Add {p.name.split(" ")[0]}
-                </Button>
               </div>
             ))}
           </div>
