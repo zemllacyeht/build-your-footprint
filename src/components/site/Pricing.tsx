@@ -80,7 +80,11 @@ const carePlans = [
 ];
 
 export const Pricing = () => {
-  const { addItem } = useCart();
+  const { addItem, items } = useCart();
+  const buildIds = new Set(items.filter((i) => i.category === "Build package").map((i) => i.id));
+  const careIds = new Set(items.filter((i) => i.category === "Care plan").map((i) => i.id));
+  const hasBuild = buildIds.size > 0;
+  const hasCare = careIds.size > 0;
   return (
     <section id="pricing" className="py-32 relative">
       <div className="container">
@@ -156,22 +160,38 @@ export const Pricing = () => {
                   </div>
                 </div>
 
-                <Button
-                  variant={t.featured ? "hero" : "glass"}
-                  size="lg"
-                  className="w-full mb-8"
-                  onClick={() =>
-                    addItem({
-                      id: `build-${t.name.toLowerCase()}`,
-                      name: t.name,
-                      price: `${t.price} one-time`,
-                      category: "Build package",
-                    })
-                  }
-                >
-                  <Plus className="h-4 w-4" />
-                  Add to request
-                </Button>
+                {(() => {
+                  const tierId = `build-${t.name.toLowerCase()}`;
+                  const selected = buildIds.has(tierId);
+                  return (
+                    <Button
+                      variant={selected ? "gold" : t.featured ? "hero" : "glass"}
+                      size="lg"
+                      className="w-full mb-8"
+                      disabled={selected}
+                      onClick={() =>
+                        addItem({
+                          id: tierId,
+                          name: t.name,
+                          price: `${t.price} one-time`,
+                          category: "Build package",
+                        })
+                      }
+                    >
+                      {selected ? (
+                        <>
+                          <Check className="h-4 w-4" />
+                          Selected
+                        </>
+                      ) : (
+                        <>
+                          <Plus className="h-4 w-4" />
+                          Add to request
+                        </>
+                      )}
+                    </Button>
+                  );
+                })()}
 
                 <ul className="space-y-3">
                   {t.features.map((f) => (
