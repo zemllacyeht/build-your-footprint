@@ -9,6 +9,11 @@ import Index from "./pages/Index.tsx";
 import Login from "./pages/Login.tsx";
 import Portal from "./pages/Portal.tsx";
 import Admin from "./pages/Admin.tsx";
+import ServicesPage from "./pages/ServicesPage.tsx";
+import ProcessPage from "./pages/ProcessPage.tsx";
+import WorkPage from "./pages/WorkPage.tsx";
+import PricingPage from "./pages/PricingPage.tsx";
+import ContactPage from "./pages/ContactPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -22,6 +27,11 @@ const App = () => (
         <AuthProvider>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/services" element={<ServicesPage />} />
+            <Route path="/process" element={<ProcessPage />} />
+            <Route path="/work" element={<WorkPage />} />
+            <Route path="/pricing" element={<PricingPage />} />
+            <Route path="/contact" element={<ContactPage />} />
             <Route path="/login" element={<Login />} />
             <Route
               path="/portal"
