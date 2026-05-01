@@ -39,16 +39,11 @@ export const Navbar = () => {
           </div>
         </a>
 
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-2">
           {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors relative group"
-            >
-              {l.label}
-              <span className="absolute -bottom-1 left-0 h-px w-0 bg-gradient-gold transition-all group-hover:w-full" />
-            </a>
+            <Button key={l.href} variant="glass" size="sm" asChild>
+              <a href={l.href}>{l.label}</a>
+            </Button>
           ))}
         </div>
 
