@@ -61,8 +61,12 @@ const Portal = () => {
               </div>
             </div>
           </div>
-          <div className="flex items-center gap-3">
-            {role === "admin" && <Badge variant="secondary">Admin</Badge>}
+          <div className="flex items-center gap-2">
+            {role === "admin" && (
+              <Button variant="glass" size="sm" onClick={() => navigate("/admin")}>
+                Admin Console
+              </Button>
+            )}
             <Button variant="ghost" size="sm" onClick={handleSignOut}>
               <LogOut className="h-4 w-4" /> Sign out
             </Button>
