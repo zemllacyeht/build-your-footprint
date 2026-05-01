@@ -249,11 +249,11 @@ const Admin = () => {
                 rows.map((row) => (
                   <TableRow key={row.id}>
                     <TableCell className="font-medium">
-                      {row.company_name ?? "—"}
+                      {row.company_name ?? "N/A"}
                     </TableCell>
-                    <TableCell>{row.contact_name ?? "—"}</TableCell>
+                    <TableCell>{row.contact_name ?? "N/A"}</TableCell>
                     <TableCell className="text-muted-foreground">
-                      {row.email ?? "—"}
+                      {row.email ?? "N/A"}
                     </TableCell>
                     <TableCell>
                       <Badge variant="secondary" className="capitalize">

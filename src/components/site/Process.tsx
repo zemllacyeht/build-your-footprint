@@ -1,8 +1,8 @@
 const steps = [
   { n: "01", title: "Discover", desc: "We learn your brand, your customers, and the impression you want to leave." },
-  { n: "02", title: "Design", desc: "You receive custom mockups in your private client portal — review and approve in real time." },
+  { n: "02", title: "Design", desc: "You receive custom mockups in your private client portal. Review and approve in real time." },
   { n: "03", title: "Build", desc: "We engineer your site for speed, SEO, and conversions on modern infrastructure." },
-  { n: "04", title: "Launch & Grow", desc: "We handle hosting, domains, and ongoing care — you focus on your customers." },
+  { n: "04", title: "Launch & Grow", desc: "We handle hosting, domains, and ongoing care so you can focus on your customers." },
 ];
 
 export const Process = () => {

@@ -3,10 +3,10 @@ import { Palette, Code2, Globe, LineChart, Shield, Smartphone } from "lucide-rea
 const services = [
   { icon: Palette, title: "Brand Identity", desc: "Logo systems, color palettes, and visual languages that make you unmistakable." },
   { icon: Code2, title: "Custom Web Design", desc: "Hand-crafted, conversion-focused websites built around your business goals." },
-  { icon: Globe, title: "Domain & Hosting", desc: "We handle the technical side — domains, SSL, hosting, and uptime monitoring." },
+  { icon: Globe, title: "Domain & Hosting", desc: "We handle the technical side: domains, SSL, hosting, and uptime monitoring." },
   { icon: Smartphone, title: "Responsive Builds", desc: "Pixel-perfect on every device, from 4-inch phones to 4K displays." },
   { icon: LineChart, title: "SEO Foundations", desc: "Built-in search optimization so your customers can actually find you." },
-  { icon: Shield, title: "Ongoing Care", desc: "Updates, security patches, content edits — handled, every month." },
+  { icon: Shield, title: "Ongoing Care", desc: "Updates, security patches, content edits, all handled every month." },
 ];
 
 export const Services = () => {
@@ -16,7 +16,7 @@ export const Services = () => {
         <div className="max-w-2xl mb-20">
           <div className="text-xs uppercase tracking-[0.25em] text-accent mb-4">What we do</div>
           <h2 className="font-display text-4xl md:text-6xl font-light leading-tight">
-            Everything you need to <span className="italic text-gradient-gold">go live</span> — and stay ahead.
+            Everything you need to <span className="italic text-gradient-gold">go live</span>, and stay ahead.
           </h2>
         </div>
 

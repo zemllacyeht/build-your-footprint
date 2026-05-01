@@ -19,7 +19,7 @@ export const Work = () => {
             </h2>
           </div>
           <p className="text-muted-foreground max-w-sm">
-            A small selection of recent client launches. Every project is custom — no templates, no shortcuts.
+            A small selection of recent client launches. Every project is custom. No templates, no shortcuts.
           </p>
         </div>
 

@@ -34,7 +34,7 @@ export const Contact = () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      toast.success("Message received — we'll be in touch within 24 hours.");
+      toast.success("Message received. We'll be in touch within 24 hours.");
       (e.target as HTMLFormElement).reset();
     }, 800);
   };

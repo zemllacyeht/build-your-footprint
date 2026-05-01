@@ -128,7 +128,7 @@ const Portal = () => {
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground whitespace-pre-wrap">
-              {profile?.notes || "No notes yet — your designer will leave updates here."}
+              {profile?.notes || "No notes yet. Your designer will leave updates here."}
             </p>
           </CardContent>
         </Card>

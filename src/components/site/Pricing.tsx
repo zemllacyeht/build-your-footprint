@@ -25,7 +25,7 @@ const tiers = [
     price: "$1,499",
     cadence: "one-time build",
     monthly: "+ $59/mo hosting & care",
-    desc: "Our most popular package — full brand identity and a website that converts.",
+    desc: "Our most popular package. Full brand identity and a website that converts.",
     features: ["Up to 12 custom pages", "Brand identity refresh", "Advanced SEO + analytics", "CMS for self-editing", "Premium hosting & backups", "Monthly content updates", "Priority support"],
     featured: true,
   },
@@ -51,7 +51,7 @@ export const Pricing = () => {
           </h2>
           <p className="text-muted-foreground mt-6 leading-relaxed">
             One project fee, plus a simple monthly plan covering hosting, domain, security, and care.
-            No surprises — ever.
+            No surprises, ever.
           </p>
         </div>
 
