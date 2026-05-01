@@ -151,9 +151,12 @@ export const Pricing = () => {
   const { addItem, items, removeItem, clear } = useCart();
   const buildIds = new Set(items.filter((i) => i.category === "Build package").map((i) => i.id));
   const careIds = new Set(items.filter((i) => i.category === "Care plan").map((i) => i.id));
+  const addonIds = new Set(items.filter((i) => i.category === "Add-on").map((i) => i.id));
   const hasBuild = buildIds.size > 0;
   const hasCare = careIds.size > 0;
   const careRef = useRef<HTMLDivElement>(null);
+  const addonRef = useRef<HTMLDivElement>(null);
+  const [showAllAddons, setShowAllAddons] = useState(false);
 
   const handleAddBuild = (id: string, name: string, price: string) => {
     const wasEmpty = !buildIds.has(id);
@@ -163,6 +166,16 @@ export const Pricing = () => {
       setTimeout(() => {
         careRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
       }, 100);
+    }
+  };
+
+  const handleAddCare = (id: string, name: string, price: string) => {
+    const wasEmpty = !careIds.has(id);
+    addItem({ id, name, price, category: "Care plan" });
+    if (wasEmpty) {
+      setTimeout(() => {
+        addonRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 150);
     }
   };
   return (
