@@ -50,6 +50,28 @@ const ADDONS = [
   },
 ];
 
+const CARE_PLANS = [
+  {
+    id: "care-essential-care",
+    name: "Essential Care",
+    price: "$19/mo",
+    desc: "Hosting, SSL, weekly backups & email support.",
+  },
+  {
+    id: "care-growth-care",
+    name: "Growth Care",
+    price: "$59/mo",
+    desc: "Daily backups, updates, content edits & priority support.",
+    featured: true,
+  },
+  {
+    id: "care-white-glove-care",
+    name: "White-Glove Care",
+    price: "Custom",
+    desc: "Dedicated manager, custom SLA & same-day support.",
+  },
+];
+
 const schema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
   email: z.string().trim().email("Valid email required").max(255),
