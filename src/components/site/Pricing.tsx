@@ -206,7 +206,7 @@ export const Pricing = () => {
         </div>
 
         {/* SELECTION SUMMARY — appears when anything is selected */}
-        {(hasBuild || hasCare) && (
+        {(hasBuild || hasCare || addonIds.size > 0) && (
           <div className="max-w-7xl mx-auto mb-12 animate-fade-up">
             <div className="glass rounded-2xl p-4 md:p-5 flex flex-col sm:flex-row sm:items-center gap-4">
               <div className="flex-1 flex flex-wrap items-center gap-2">
@@ -214,7 +214,7 @@ export const Pricing = () => {
                   Your selection
                 </span>
                 {items
-                  .filter((i) => i.category === "Build package" || i.category === "Care plan")
+                  .filter((i) => i.category === "Build package" || i.category === "Care plan" || i.category === "Add-on")
                   .map((i) => (
                     <span
                       key={i.id}
