@@ -363,7 +363,7 @@ export const Pricing = () => {
               </div>
               <div className="flex-1">
                 <div className="font-display text-base md:text-lg font-medium leading-tight">
-                  Build package added — now choose a care plan to keep it running.
+                  Build package added. Now choose a care plan to keep it running.
                 </div>
                 <div className="text-xs text-muted-foreground mt-1">
                   Every site needs hosting, security, and backups. Pick a plan below.
