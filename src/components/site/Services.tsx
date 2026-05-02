@@ -23,7 +23,7 @@ export const Services = () => {
           </h2>
           <div className="h-px w-16 bg-gradient-gold mb-6" />
           <p className="text-muted-foreground text-lg leading-relaxed">
-            Nine connected services covering brand, build, and growth — so nothing about your online presence is left to chance.
+            Nine connected services covering brand, build, and growth, so nothing about your online presence is left to chance.
           </p>
         </div>
 
