@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, ShoppingBag } from "lucide-react";
+import { Menu, X, ShoppingCart } from "lucide-react";
 import { useCart } from "@/hooks/useCart";
 
 const links = [
@@ -55,7 +55,7 @@ export const Navbar = () => {
             aria-label="Open cart"
             className="relative h-9 w-9 grid place-items-center rounded-md glass hover:border-primary/40 transition"
           >
-            <ShoppingBag className="h-4 w-4" />
+            <ShoppingCart className="h-4 w-4" />
             {count > 0 && (
               <span className="absolute -top-1.5 -right-1.5 h-4 min-w-4 px-1 rounded-full bg-gradient-gold text-accent-foreground text-[10px] font-semibold grid place-items-center">
                 {count}
@@ -75,7 +75,7 @@ export const Navbar = () => {
             onClick={(e) => { e.stopPropagation(); openCart(); }}
             className="relative h-8 w-8 grid place-items-center rounded-md glass"
           >
-            <ShoppingBag className="h-4 w-4" />
+            <ShoppingCart className="h-4 w-4" />
             {count > 0 && (
               <span className="absolute -top-1.5 -right-1.5 h-4 min-w-4 px-1 rounded-full bg-gradient-gold text-accent-foreground text-[10px] font-semibold grid place-items-center">
                 {count}
