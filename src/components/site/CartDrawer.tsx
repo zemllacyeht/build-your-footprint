@@ -15,7 +15,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { ShoppingBag, Minus, Plus, X, Loader2, Check, Trash2, Megaphone, Search, Camera, PenTool, Sparkles, ShieldCheck } from "lucide-react";
+import { ShoppingCart, Minus, Plus, X, Loader2, Check, Trash2, Megaphone, Search, Camera, PenTool, Sparkles, ShieldCheck } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
 
@@ -173,7 +173,7 @@ export const CartDrawer = () => {
         <SheetHeader>
           <div className="flex items-center justify-between gap-2">
             <SheetTitle className="flex items-center gap-2">
-              <ShoppingBag className="h-4 w-4" />
+              <ShoppingCart className="h-4 w-4" />
               Your selection {count > 0 && <span className="text-muted-foreground">({count})</span>}
             </SheetTitle>
             {items.length > 0 && !done && (
