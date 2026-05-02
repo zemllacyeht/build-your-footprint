@@ -317,7 +317,7 @@ export const CartDrawer = () => {
                     </div>
                   </div>
                   <p className="text-xs text-muted-foreground mb-3">
-                    Stack any of these with your selection — pricing confirmed by email.
+                    Stack any of these with your selection. Pricing confirmed by email.
                   </p>
                   <div className="space-y-2">
                     {ADDONS.map((a) => {
