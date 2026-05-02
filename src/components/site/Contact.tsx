@@ -127,7 +127,7 @@ export const Contact = () => {
             </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Label htmlFor="message">Tell us about your project</Label>
+                <Label htmlFor="message">Tell us about your project vision</Label>
                 <span
                   className={`text-xs ${
                     messageChars >= 50 ? "text-primary" : "text-muted-foreground"
