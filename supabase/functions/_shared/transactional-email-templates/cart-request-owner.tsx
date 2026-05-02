@@ -34,7 +34,7 @@ const CartRequestOwnerEmail = ({
 }: CartRequestOwnerProps) => (
   <Html lang="en" dir="ltr">
     <Head />
-    <Preview>New cart request from {customerName} — {items.length} item(s)</Preview>
+    <Preview>New cart request from {customerName}, {items.length} item(s)</Preview>
     <Body style={main}>
       <Container style={container}>
         <Heading style={h1}>New cart request</Heading>
