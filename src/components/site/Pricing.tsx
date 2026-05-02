@@ -43,7 +43,7 @@ const addons = [
     priceLabel: "$499",
     priceUnit: "one-time",
     icon: Camera,
-    tagline: "Real photos and real words — built for your launch.",
+    tagline: "Real photos and real words, built for your launch.",
     desc: "A professional photo shoot or full copywriting pass tailored to your business, ready to drop straight into your new site.",
     features: [
       { icon: Camera, t: "Photo Shoot", d: "On-location or product" },
