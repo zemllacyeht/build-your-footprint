@@ -5,7 +5,7 @@ import { Clock, MessageCircle, Sparkles } from "lucide-react";
 
 const promises = [
   { icon: Clock, t: "24-hour reply", d: "Every inquiry gets a personal response within one business day." },
-  { icon: MessageCircle, t: "Free strategy call", d: "30 minutes to scope your goals — no obligation, no upsell." },
+  { icon: MessageCircle, t: "Free strategy call", d: "30 minutes to scope your goals. No obligation, no upsell." },
   { icon: Sparkles, t: "Custom proposal", d: "A tailored plan with timeline and pricing, delivered within a week." },
 ];
 
