@@ -1,10 +1,10 @@
 import { ArrowUpRight } from "lucide-react";
 
 const projects = [
-  { title: "Northwind Coffee Roasters", tag: "E-commerce · Brand", color: "from-amber-500/30 to-rose-500/20" },
-  { title: "Aspen Architecture Studio", tag: "Portfolio · Editorial", color: "from-emerald-500/30 to-teal-500/20" },
-  { title: "Riverside Wellness Clinic", tag: "Healthcare · Booking", color: "from-sky-500/30 to-indigo-500/20" },
-  { title: "Forge & Field Outfitters", tag: "Retail · Catalog", color: "from-orange-500/30 to-yellow-500/20" },
+  { title: "Northwind Coffee Roasters", tag: "E-commerce · Brand", color: "from-accent/30 to-primary/20" },
+  { title: "Aspen Architecture Studio", tag: "Portfolio · Editorial", color: "from-primary/30 to-accent/10" },
+  { title: "Riverside Wellness Clinic", tag: "Healthcare · Booking", color: "from-primary/20 to-accent/20" },
+  { title: "Forge & Field Outfitters", tag: "Retail · Catalog", color: "from-accent/30 to-primary/10" },
 ];
 
 export const Work = () => {
