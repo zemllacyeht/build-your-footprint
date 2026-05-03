@@ -4,6 +4,7 @@ import { Menu, X, ShoppingCart } from "lucide-react";
 import { useCart } from "@/hooks/useCart";
 
 const links = [
+  { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
   { href: "/process", label: "Process" },
   { href: "/work", label: "Work" },
