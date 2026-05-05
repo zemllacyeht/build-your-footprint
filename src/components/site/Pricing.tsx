@@ -74,33 +74,71 @@ const tiers = [
   {
     name: "Core",
     price: "$499",
-    desc: "Essential online presence for solopreneurs and brand-new ventures.",
-    features: ["1-3 page custom site", "Mobile-responsive design", "Contact form", "Domain setup & SSL", "1 round of revisions"],
+    desc: "Perfect for getting online fast with a clean, professional presence",
+    turnaround: "3-5 days",
     pairsWith: "Essential Care",
+    features: [
+      "1-3 page custom website",
+      "Mobile-responsive design",
+      "Contact form",
+      "Domain setup & SSL",
+      "Basic on-page SEO",
+      "1 round of revisions",
+    ],
     featured: false,
   },
   {
-    name: "Starter",
+    name: "Launch",
     price: "$999",
-    desc: "Perfect for new businesses establishing their first digital presence.",
-    features: ["5-page custom website", "Mobile-responsive design", "Basic SEO setup", "Domain setup & SSL", "2 rounds of revisions"],
+    desc: "For businesses ready to grow with a polished, optimized website",
+    turnaround: "1-2 weeks",
     pairsWith: "Essential Care",
+    features: [
+      "Up to 5 custom pages",
+      "Mobile-responsive design",
+      "Contact form",
+      "Domain setup & SSL",
+      "Google Business Profile setup & optimization",
+      "Basic SEO setup",
+      "2 rounds of revisions",
+      "30 days of unlimited edits after launch",
+    ],
     featured: false,
   },
   {
     name: "Signature",
     price: "$1,499",
-    desc: "Our most popular package. Full brand identity and a website that converts.",
-    features: ["Up to 12 custom pages", "Brand identity refresh", "Advanced SEO + analytics", "CMS for self-editing", "Launch strategy session"],
+    desc: "Full brand identity and a website built to convert visitors into customers",
+    turnaround: "2-4 weeks",
     pairsWith: "Growth Care",
+    features: [
+      "Up to 12 custom pages",
+      "Mobile-responsive design",
+      "Basic brand identity (logo concept, color palette, fonts)",
+      "Advanced SEO + Google Analytics setup",
+      "Google Business Profile optimization",
+      "3 rounds of revisions",
+      "60 days of unlimited edits after launch",
+      "Launch strategy session",
+    ],
     featured: true,
   },
   {
     name: "Enterprise",
     price: "Custom",
-    desc: "For growing businesses needing e-commerce, integrations, or custom features.",
-    features: ["Unlimited pages", "E-commerce / bookings", "Custom integrations", "Dedicated project manager", "Quarterly strategy calls"],
+    desc: "Custom solutions for growing businesses that need power and flexibility",
+    turnaround: "Custom timeline",
     pairsWith: "White-Glove Care",
+    features: [
+      "Unlimited pages",
+      "Full brand identity package",
+      "E-commerce or booking integrations",
+      "Custom third party integrations",
+      "Dedicated project manager",
+      "Quarterly strategy calls",
+      "Priority support",
+      "Custom retainer plan",
+    ],
     featured: false,
   },
 ];
@@ -270,7 +308,7 @@ export const Pricing = () => {
                 key={t.name}
                 className={`relative rounded-2xl p-8 ${
                   t.featured
-                    ? "bg-gradient-to-b from-primary/10 to-card border-2 border-primary/40 shadow-elegant lg:scale-105"
+                    ? "bg-gradient-to-b from-accent/10 to-card border-2 border-teal-400/70 shadow-elegant lg:scale-105"
                     : "glass"
                 }`}
               >
@@ -286,8 +324,8 @@ export const Pricing = () => {
                   <div className="flex items-baseline gap-2">
                     <span className="font-display text-5xl font-light">{t.price}</span>
                   </div>
-                  <div className="text-sm text-muted-foreground mt-1">one-time build</div>
-                  <div className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-accent/10 border border-accent/20 px-2.5 py-1">
+                  <div className="text-sm text-muted-foreground mt-2">Estimated delivery: {t.turnaround}</div>
+                  <div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-accent/10 border border-accent/20 px-2.5 py-1">
                     <Repeat className="h-3 w-3 text-accent" />
                     <span className="text-[11px] text-accent uppercase tracking-wider">Pairs with {t.pairsWith}</span>
                   </div>
@@ -316,9 +354,9 @@ export const Pricing = () => {
                   }
                   return (
                     <Button
-                      variant={t.featured ? "hero" : "glass"}
+                      variant="glass"
                       size="lg"
-                      className="w-full mb-8"
+                      className={`w-full mb-8 ${t.featured ? "bg-teal-500 text-white hover:bg-teal-600 border-transparent shadow-teal-500/30" : ""}`}
                       onClick={() =>
                         handleAddBuild(tierId, t.name, `${t.price} one-time`)
                       }

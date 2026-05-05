@@ -23,11 +23,11 @@ export const Work = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-8">
           {projects.map((p, i) => (
             <div
               key={p.title}
-              className={`group relative aspect-[4/3] rounded-2xl overflow-hidden glass cursor-pointer ${i % 2 === 1 ? "md:translate-y-12" : ""}`}
+              className={`group relative aspect-[3/2] rounded-2xl overflow-hidden glass cursor-pointer ${i % 2 === 1 ? "md:translate-y-12" : ""}`}
             >
               <div className={`absolute inset-0 bg-gradient-to-br ${p.color}`} />
               <div className="absolute inset-0 grain opacity-50" />
@@ -41,7 +41,7 @@ export const Work = () => {
                   <div className="h-2.5 w-2.5 rounded-full bg-primary/60" />
                 </div>
                 <div className="flex-1 grid place-items-center text-center p-6">
-                  <div>
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                     <div className="font-display text-2xl font-medium mb-2">{p.title}</div>
                     <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">{p.tag}</div>
                   </div>

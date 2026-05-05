@@ -19,6 +19,7 @@ import ContactPage from "./pages/ContactPage.tsx";
 import Unsubscribe from "./pages/Unsubscribe.tsx";
 import ResetPassword from "./pages/ResetPassword.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import DemoOne from "./pages/DemoOne.tsx";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +41,7 @@ const App = () => (
               <Route path="/unsubscribe" element={<Unsubscribe />} />
               <Route path="/login" element={<Login />} />
               <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/demo" element={<DemoOne />} />
               <Route
                 path="/portal"
                 element={
