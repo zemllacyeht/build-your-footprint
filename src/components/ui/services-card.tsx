@@ -48,7 +48,6 @@ const ServiceCard = ({
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.5, delay: index * 0.05 }}
       onMouseEnter={!isMobile ? onOpen : undefined}
       onMouseLeave={!isMobile ? onClose : undefined}
       onClick={handleClick}
