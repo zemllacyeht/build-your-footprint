@@ -14,6 +14,7 @@ type CarouselApi = UseEmblaCarouselType[1];
 
 export interface Service {
   number: string;
+  tag?: string;
   title: string;
   description: string;
   icon: React.ElementType;
@@ -49,7 +50,6 @@ const ServiceCard = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
       onMouseEnter={!isMobile ? onOpen : undefined}
-      onMouseLeave={!isMobile ? onClose : undefined}
       onClick={handleClick}
       className={cn(
         "glass glass-hover rounded-2xl p-8 md:p-10 relative overflow-hidden group cursor-pointer",
@@ -78,7 +78,7 @@ const ServiceCard = ({
 
       <div className="relative flex items-start justify-between mb-12">
         <span className="text-xs uppercase tracking-[0.25em] text-accent">
-          ( {service.number} )
+          {service.tag ?? "Service"}
         </span>
         <div
           className={cn(
