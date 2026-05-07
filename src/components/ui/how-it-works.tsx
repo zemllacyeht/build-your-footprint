@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Compass, PenTool, Code2, Lock, Rocket, Check, ArrowRight } from "lucide-react";
+import { Compass, PenTool, Code2, Lock, Rocket, Check, ArrowRight, Sparkles, Star, Footprints, Zap } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type React from "react";
 import {
@@ -15,6 +15,10 @@ interface Step {
   title: string;
   description: string;
   benefits: string[];
+  /** tailwind class for the colored vertical tab and accent dot */
+  tabClass: string;
+  /** tailwind text color for tab label and underline */
+  tabTextClass: string;
   details: {
     overview: string;
     deliverables: string[];
@@ -28,8 +32,11 @@ const steps: Step[] = [
   {
     icon: <Compass className="h-6 w-6" strokeWidth={1.5} />,
     title: "Discover",
-    description: "We learn your brand, customers, and the impression you want to leave.",
+    description:
+      "Fill out the inquiry form and tell us about your business, including your vision, goals, audience, and inspiration. This is where we get to know you and your brand identity.",
     benefits: ["Strategy call and intake", "Goals and audience defined", "Scope and timeline mapped"],
+    tabClass: "bg-accent/80",
+    tabTextClass: "text-accent-foreground",
     details: {
       overview:
         "Every project starts with a focused discovery session. We dig into your business model, ideal customer, and the outcomes a website needs to drive. You leave with clarity on scope, budget, and timeline before a single pixel is designed.",
@@ -45,8 +52,11 @@ const steps: Step[] = [
   {
     icon: <PenTool className="h-6 w-6" strokeWidth={1.5} />,
     title: "Design",
-    description: "Custom mockups in your private portal. Review and approve in real time.",
+    description:
+      "Custom mockups land in your private portal. Approve sections in real time as bespoke visual direction takes shape, page by page, with no templates and no guesswork.",
     benefits: ["Bespoke visual direction", "Inline feedback and revisions", "Approve sections as you go"],
+    tabClass: "bg-primary/70",
+    tabTextClass: "text-primary-foreground",
     details: {
       overview:
         "We design every page from scratch around your brand, never templates. Mockups land in your private portal where you can leave inline comments. We iterate until each section feels right, then lock it for build.",
@@ -62,8 +72,11 @@ const steps: Step[] = [
   {
     icon: <Code2 className="h-6 w-6" strokeWidth={1.5} />,
     title: "Build",
-    description: "Engineered for speed, SEO, and conversions on modern infrastructure.",
+    description:
+      "Approved designs become production code, hand built for performance. Semantic markup, accessible components, and integrations baked in so the site loads fast and ranks well.",
     benefits: ["Performance first code", "Responsive on every device", "SEO foundations baked in"],
+    tabClass: "bg-secondary",
+    tabTextClass: "text-secondary-foreground",
     details: {
       overview:
         "Approved designs become production code, hand built for performance. We ship semantic markup, accessible components, and a CMS or form integrations so you can update content without touching code.",
@@ -78,9 +91,12 @@ const steps: Step[] = [
   },
   {
     icon: <Lock className="h-6 w-6" strokeWidth={1.5} />,
-    title: "Preview Hub",
-    description: "Password-protected portal to preview, comment, and pay invoices.",
+    title: "Preview",
+    description:
+      "Your private hub is the single source of truth. Preview the live build, leave page level comments, approve milestones, and pay invoices behind a secure login we provision for you.",
     benefits: ["Live previews any time", "Comments and approvals", "Secure invoicing built in"],
+    tabClass: "bg-accent/60",
+    tabTextClass: "text-accent-foreground",
     details: {
       overview:
         "Your private hub is the single source of truth for the project. Preview the live build, leave page level comments, approve milestones, and pay invoices, all behind a secure login we provision for you.",
@@ -95,9 +111,12 @@ const steps: Step[] = [
   },
   {
     icon: <Rocket className="h-6 w-6" strokeWidth={1.5} />,
-    title: "Launch and Grow",
-    description: "We handle hosting, domains, and ongoing care so you focus on customers.",
+    title: "Launch",
+    description:
+      "Launch day is a non event because we plan it. We handle DNS, SSL, redirects, and post launch monitoring, then keep the site fast and updated as your business grows.",
     benefits: ["Smooth launch coordination", "Hosting and domain managed", "Ongoing care included"],
+    tabClass: "bg-primary/90",
+    tabTextClass: "text-primary-foreground",
     details: {
       overview:
         "Launch day is a non event because we plan it. We handle DNS, SSL, redirects, and post launch monitoring. From there, ongoing care keeps the site fast, secure, and updated as your business grows.",
@@ -112,104 +131,126 @@ const steps: Step[] = [
   },
 ];
 
-interface StepCardProps {
-  step: Step;
-  index: number;
-  isActive: boolean;
-  onActivate: () => void;
-  onOpen: () => void;
-  cardRef: (el: HTMLDivElement | null) => void;
+/** Symbols that follow the cursor inside the active panel. */
+const trailIcons = [
+  { Icon: Sparkles, color: "text-accent" },
+  { Icon: Footprints, color: "text-primary" },
+  { Icon: Star, color: "text-accent-glow" },
+  { Icon: Zap, color: "text-primary-glow" },
+];
+
+interface TrailDot {
+  id: number;
+  x: number;
+  y: number;
+  iconIndex: number;
 }
 
-const StepCard: React.FC<StepCardProps> = ({ step, index, isActive, onActivate, onOpen, cardRef }) => (
-  <div
-    ref={cardRef}
+const CursorTrail: React.FC<{ active: boolean }> = ({ active }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [dots, setDots] = useState<TrailDot[]>([]);
+  const idRef = useRef(0);
+  const lastEmit = useRef(0);
+  const iconCursor = useRef(0);
+
+  useEffect(() => {
+    if (!active) {
+      setDots([]);
+      return;
+    }
+    const el = containerRef.current;
+    if (!el) return;
+
+    const handleMove = (e: MouseEvent) => {
+      const now = performance.now();
+      if (now - lastEmit.current < 55) return;
+      lastEmit.current = now;
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const id = ++idRef.current;
+      const iconIndex = iconCursor.current++ % trailIcons.length;
+      setDots((prev) => [...prev.slice(-10), { id, x, y, iconIndex }]);
+      window.setTimeout(() => {
+        setDots((prev) => prev.filter((d) => d.id !== id));
+      }, 900);
+    };
+
+    el.addEventListener("mousemove", handleMove);
+    return () => el.removeEventListener("mousemove", handleMove);
+  }, [active]);
+
+  return (
+    <div
+      ref={containerRef}
+      className="pointer-events-none absolute inset-0 overflow-hidden"
+      aria-hidden
+    >
+      {dots.map((d) => {
+        const { Icon, color } = trailIcons[d.iconIndex];
+        return (
+          <span
+            key={d.id}
+            className={cn("absolute -translate-x-1/2 -translate-y-1/2 animate-trail", color)}
+            style={{ left: d.x, top: d.y }}
+          >
+            <Icon className="h-4 w-4" strokeWidth={1.75} />
+          </span>
+        );
+      })}
+    </div>
+  );
+};
+
+interface VerticalTabProps {
+  step: Step;
+  index: number;
+  total: number;
+  isActive: boolean;
+  onActivate: () => void;
+}
+
+const VerticalTab: React.FC<VerticalTabProps> = ({ step, index, total, isActive, onActivate }) => (
+  <button
     onMouseEnter={onActivate}
     onFocus={onActivate}
-    onClick={onOpen}
-    role="button"
-    tabIndex={0}
-    onKeyDown={(e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        onOpen();
-      }
-    }}
+    onClick={onActivate}
+    aria-label={`Step ${index + 1}: ${step.title}`}
+    aria-pressed={isActive}
     className={cn(
-      "group relative flex flex-col h-full rounded-2xl border bg-card/40 backdrop-blur p-8 cursor-pointer transition-all duration-500 outline-none",
-      "hover:-translate-y-1 focus-visible:-translate-y-1",
-      isActive
-        ? "border-accent/60 bg-card/70 shadow-elegant ring-1 ring-accent/20"
-        : "border-border hover:border-accent/40"
+      "group relative flex flex-col items-center justify-between py-6 w-12 md:w-16 shrink-0 border-r border-border/40 last:border-r-0 transition-all duration-500 outline-none",
+      isActive ? step.tabClass : "bg-card/30 hover:bg-card/60"
     )}
   >
-    <div className="absolute top-6 right-6 text-xs uppercase tracking-[0.25em] text-muted-foreground/60 font-mono">
-      0{index}
-    </div>
-    <div
+    <span
       className={cn(
-        "h-14 w-14 rounded-xl border grid place-items-center mb-6 transition-all duration-500",
-        isActive ? "border-accent/60 bg-accent/10 scale-110" : "border-accent/30 bg-accent/5"
+        "font-mono text-[10px] uppercase tracking-[0.2em] transition-colors",
+        isActive ? step.tabTextClass : "text-muted-foreground"
       )}
     >
-      <div className="text-accent">{step.icon}</div>
-    </div>
-    <h3 className="font-display text-2xl font-light mb-3 leading-tight">{step.title}</h3>
-    <p className="text-sm text-muted-foreground leading-relaxed mb-6">{step.description}</p>
-    <ul className="space-y-2.5 pt-6 border-t border-border/50">
-      {step.benefits.map((b) => (
-        <li key={b} className="flex items-start gap-2.5 text-sm">
-          <span className="mt-0.5 h-4 w-4 rounded-full bg-accent/15 grid place-items-center shrink-0">
-            <Check className="h-2.5 w-2.5 text-accent" strokeWidth={3} />
-          </span>
-          <span className="text-foreground/80">{b}</span>
-        </li>
-      ))}
-    </ul>
-    <div
+      0{index + 1}
+    </span>
+    <span
       className={cn(
-        "mt-6 inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.2em] transition-colors",
-        isActive ? "text-accent" : "text-muted-foreground/60 group-hover:text-accent"
+        "font-display text-lg md:text-xl tracking-wide [writing-mode:vertical-rl] rotate-180 transition-colors",
+        isActive ? step.tabTextClass : "text-foreground/70 group-hover:text-foreground"
       )}
     >
-      View details <ArrowRight className="h-3 w-3" />
-    </div>
-  </div>
+      {step.title}
+    </span>
+    <ArrowRight
+      className={cn(
+        "h-4 w-4 -rotate-90 transition-all",
+        isActive ? cn(step.tabTextClass, "translate-y-0 opacity-100") : "text-muted-foreground/50 opacity-60"
+      )}
+    />
+  </button>
 );
 
 export const HowItWorks: React.FC<HowItWorksProps> = ({ className, ...props }) => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [progress, setProgress] = useState(0);
-
-  // Animate progress as the active step changes
-  useEffect(() => {
-    const target = steps.length <= 1 ? 1 : activeIndex / (steps.length - 1);
-    setProgress(target);
-  }, [activeIndex]);
-
-  // Auto-activate based on scroll position on small screens (mobile single column)
-  useEffect(() => {
-    const observers: IntersectionObserver[] = [];
-    cardRefs.current.forEach((el, i) => {
-      if (!el) return;
-      const obs = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting && entry.intersectionRatio > 0.55) {
-            setActiveIndex(i);
-          }
-        },
-        { threshold: [0.55] }
-      );
-      obs.observe(el);
-      observers.push(obs);
-    });
-    return () => observers.forEach((o) => o.disconnect());
-  }, []);
-
-  const active = openIndex !== null ? steps[openIndex] : null;
+  const [openDetails, setOpenDetails] = useState(false);
+  const active = steps[activeIndex];
 
   return (
     <section
@@ -224,100 +265,146 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ className, ...props }) =
       </div>
 
       <div className="container">
-        {/* Step indicator rail */}
-        <div className="mb-12 md:mb-16">
-          <div className="flex items-center justify-between mb-3 px-1">
+        {/* Progress rail */}
+        <div className="mb-10 md:mb-14 max-w-4xl">
+          <div className="flex items-center justify-between mb-3">
             <span className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
               Step {String(activeIndex + 1).padStart(2, "0")} of {String(steps.length).padStart(2, "0")}
             </span>
-            <span className="text-xs uppercase tracking-[0.25em] text-accent">
-              {steps[activeIndex].title}
-            </span>
+            <span className="text-xs uppercase tracking-[0.25em] text-accent">{active.title}</span>
           </div>
           <div className="relative h-px w-full bg-border overflow-hidden rounded-full">
             <div
-              className="absolute inset-y-0 left-0 bg-gradient-to-r from-accent/60 via-accent to-accent/60 transition-[width] duration-700 ease-out"
-              style={{ width: `${progress * 100}%` }}
+              className="absolute inset-y-0 left-0 bg-gradient-to-r from-accent/60 via-accent to-primary transition-[width] duration-700 ease-out"
+              style={{
+                width: `${steps.length <= 1 ? 100 : (activeIndex / (steps.length - 1)) * 100}%`,
+              }}
             />
-          </div>
-          <div className="relative mt-3 flex justify-between">
-            {steps.map((s, i) => (
-              <button
-                key={s.title}
-                onClick={() => setActiveIndex(i)}
-                onMouseEnter={() => setActiveIndex(i)}
-                aria-label={`Go to step ${i + 1}: ${s.title}`}
-                className={cn(
-                  "relative h-2.5 w-2.5 rounded-full transition-all duration-300",
-                  i <= activeIndex ? "bg-accent scale-110" : "bg-border hover:bg-accent/40"
-                )}
-              >
-                {i === activeIndex && (
-                  <span className="absolute inset-0 -m-1.5 rounded-full bg-accent/30 animate-ping" />
-                )}
-              </button>
-            ))}
           </div>
         </div>
 
-        <div ref={containerRef} className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {steps.map((s, i) => (
-            <StepCard
-              key={s.title}
-              step={s}
-              index={i + 1}
-              isActive={i === activeIndex}
-              onActivate={() => setActiveIndex(i)}
-              onOpen={() => setOpenIndex(i)}
-              cardRef={(el) => (cardRefs.current[i] = el)}
-            />
-          ))}
-        </div>
-      </div>
+        {/* Tabbed panel */}
+        <div className="relative rounded-2xl border border-border bg-card/30 backdrop-blur overflow-hidden shadow-elegant">
+          <div className="flex min-h-[460px] md:min-h-[520px]">
+            {/* Left tabs */}
+            <div className="flex">
+              {steps.slice(0, Math.ceil(steps.length / 2)).map((s, i) => (
+                <VerticalTab
+                  key={s.title}
+                  step={s}
+                  index={i}
+                  total={steps.length}
+                  isActive={activeIndex === i}
+                  onActivate={() => setActiveIndex(i)}
+                />
+              ))}
+            </div>
 
-      <Dialog open={openIndex !== null} onOpenChange={(o) => !o && setOpenIndex(null)}>
-        <DialogContent className="max-w-2xl">
-          {active && (
-            <>
-              <DialogHeader>
-                <div className="flex items-center gap-4 mb-2">
+            {/* Center content */}
+            <div className="relative flex-1 px-6 py-10 md:px-14 md:py-16">
+              <CursorTrail active key={activeIndex} />
+
+              <div className="relative max-w-xl">
+                <div className="flex items-center gap-3 mb-6">
                   <div className="h-12 w-12 rounded-xl border border-accent/40 bg-accent/10 grid place-items-center text-accent">
                     {active.icon}
                   </div>
-                  <div>
-                    <div className="text-xs uppercase tracking-[0.25em] text-muted-foreground font-mono">
-                      Step 0{(openIndex ?? 0) + 1} · {active.details.timeline}
-                    </div>
-                    <DialogTitle className="font-display text-2xl md:text-3xl font-light leading-tight">
-                      {active.title}
-                    </DialogTitle>
+                  <div className="text-xs uppercase tracking-[0.25em] text-muted-foreground font-mono">
+                    {active.details.timeline}
                   </div>
                 </div>
-                <DialogDescription className="text-base text-muted-foreground leading-relaxed pt-2">
-                  {active.details.overview}
-                </DialogDescription>
-              </DialogHeader>
 
-              <div className="mt-4">
-                <div className="text-xs uppercase tracking-[0.25em] text-accent mb-3">
-                  What you get
-                </div>
-                <ul className="grid sm:grid-cols-2 gap-2.5">
-                  {active.details.deliverables.map((d) => (
-                    <li
-                      key={d}
-                      className="flex items-start gap-2.5 text-sm rounded-lg border border-border/60 bg-card/40 px-3 py-2.5"
-                    >
+                <h3 className="font-display text-4xl md:text-6xl font-light leading-[1.05] mb-6">
+                  {active.title}
+                  <span className="text-accent">.</span>
+                </h3>
+
+                <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-8">
+                  {active.description}
+                </p>
+
+                <ul className="space-y-2.5 mb-8">
+                  {active.benefits.map((b) => (
+                    <li key={b} className="flex items-start gap-2.5 text-sm">
                       <span className="mt-0.5 h-4 w-4 rounded-full bg-accent/15 grid place-items-center shrink-0">
                         <Check className="h-2.5 w-2.5 text-accent" strokeWidth={3} />
                       </span>
-                      <span className="text-foreground/85">{d}</span>
+                      <span className="text-foreground/85">{b}</span>
                     </li>
                   ))}
                 </ul>
+
+                <button
+                  onClick={() => setOpenDetails(true)}
+                  className="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-accent hover:gap-3 transition-all"
+                >
+                  View full details <ArrowRight className="h-4 w-4" />
+                </button>
               </div>
-            </>
-          )}
+
+              {/* Decorative brand dots in the corners */}
+              <span className="absolute top-8 right-10 h-2.5 w-2.5 rounded-full bg-accent" />
+              <span className="absolute top-20 right-24 h-1.5 w-1.5 rounded-full bg-primary" />
+              <span className="absolute bottom-12 right-16 h-2 w-2 rounded-full bg-accent-glow" />
+            </div>
+
+            {/* Right tabs */}
+            <div className="flex">
+              {steps.slice(Math.ceil(steps.length / 2)).map((s, i) => {
+                const realIndex = i + Math.ceil(steps.length / 2);
+                return (
+                  <VerticalTab
+                    key={s.title}
+                    step={s}
+                    index={realIndex}
+                    total={steps.length}
+                    isActive={activeIndex === realIndex}
+                    onActivate={() => setActiveIndex(realIndex)}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <Dialog open={openDetails} onOpenChange={setOpenDetails}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <div className="flex items-center gap-4 mb-2">
+              <div className="h-12 w-12 rounded-xl border border-accent/40 bg-accent/10 grid place-items-center text-accent">
+                {active.icon}
+              </div>
+              <div>
+                <div className="text-xs uppercase tracking-[0.25em] text-muted-foreground font-mono">
+                  Step 0{activeIndex + 1} · {active.details.timeline}
+                </div>
+                <DialogTitle className="font-display text-2xl md:text-3xl font-light leading-tight">
+                  {active.title}
+                </DialogTitle>
+              </div>
+            </div>
+            <DialogDescription className="text-base text-muted-foreground leading-relaxed pt-2">
+              {active.details.overview}
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="mt-4">
+            <div className="text-xs uppercase tracking-[0.25em] text-accent mb-3">What you get</div>
+            <ul className="grid sm:grid-cols-2 gap-2.5">
+              {active.details.deliverables.map((d) => (
+                <li
+                  key={d}
+                  className="flex items-start gap-2.5 text-sm rounded-lg border border-border/60 bg-card/40 px-3 py-2.5"
+                >
+                  <span className="mt-0.5 h-4 w-4 rounded-full bg-accent/15 grid place-items-center shrink-0">
+                    <Check className="h-2.5 w-2.5 text-accent" strokeWidth={3} />
+                  </span>
+                  <span className="text-foreground/85">{d}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </DialogContent>
       </Dialog>
     </section>
