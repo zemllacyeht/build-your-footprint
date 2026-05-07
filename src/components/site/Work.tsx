@@ -1,7 +1,22 @@
 import { ArrowUpRight } from "lucide-react";
+import midasTouchShot from "@/assets/work-midas-touch.png";
 
-const projects = [
-  { title: "Northwind Coffee Roasters", tag: "E-commerce · Brand", color: "from-accent/30 to-primary/20" },
+type Project = {
+  title: string;
+  tag: string;
+  color: string;
+  image?: string;
+  href?: string;
+};
+
+const projects: Project[] = [
+  {
+    title: "Midas Touch Professional Services",
+    tag: "Local Services · Booking",
+    color: "from-accent/30 to-primary/20",
+    image: midasTouchShot,
+    href: "https://www.midastouchmiami.com",
+  },
   { title: "Aspen Architecture Studio", tag: "Portfolio · Editorial", color: "from-primary/30 to-accent/10" },
   { title: "Riverside Wellness Clinic", tag: "Healthcare · Booking", color: "from-primary/20 to-accent/20" },
   { title: "Forge & Field Outfitters", tag: "Retail · Catalog", color: "from-accent/30 to-primary/10" },
@@ -24,35 +39,73 @@ export const Work = () => {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
-          {projects.map((p, i) => (
-            <div
-              key={p.title}
-              className={`group relative aspect-[3/2] rounded-2xl overflow-hidden glass cursor-pointer ${i % 2 === 1 ? "md:translate-y-12" : ""}`}
-            >
-              <div className={`absolute inset-0 bg-gradient-to-br ${p.color}`} />
-              <div className="absolute inset-0 grain opacity-50" />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+          {projects.map((p, i) => {
+            const Wrapper = (props: { children: React.ReactNode; className: string }) =>
+              p.href ? (
+                <a
+                  href={p.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={props.className}
+                  aria-label={`Visit ${p.title}`}
+                >
+                  {props.children}
+                </a>
+              ) : (
+                <div className={props.className}>{props.children}</div>
+              );
 
-              {/* Mock browser */}
-              <div className="absolute inset-8 rounded-xl glass overflow-hidden flex flex-col">
-                <div className="flex items-center gap-1.5 p-3 border-b border-border">
-                  <div className="h-2.5 w-2.5 rounded-full bg-destructive/60" />
-                  <div className="h-2.5 w-2.5 rounded-full bg-accent/60" />
-                  <div className="h-2.5 w-2.5 rounded-full bg-primary/60" />
-                </div>
-                <div className="flex-1 grid place-items-center text-center p-6">
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <div className="font-display text-2xl font-medium mb-2">{p.title}</div>
-                    <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">{p.tag}</div>
+            return (
+              <Wrapper
+                key={p.title}
+                className={`group relative aspect-[3/2] rounded-2xl overflow-hidden glass cursor-pointer block ${
+                  i % 2 === 1 ? "md:translate-y-12" : ""
+                }`}
+              >
+                <div className={`absolute inset-0 bg-gradient-to-br ${p.color}`} />
+                <div className="absolute inset-0 grain opacity-50" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+
+                {/* Mock browser */}
+                <div className="absolute inset-8 rounded-xl glass overflow-hidden flex flex-col">
+                  <div className="flex items-center gap-1.5 p-3 border-b border-border shrink-0">
+                    <div className="h-2.5 w-2.5 rounded-full bg-destructive/60" />
+                    <div className="h-2.5 w-2.5 rounded-full bg-accent/60" />
+                    <div className="h-2.5 w-2.5 rounded-full bg-primary/60" />
                   </div>
+                  {p.image ? (
+                    <div className="flex-1 relative overflow-hidden bg-background">
+                      <img
+                        src={p.image}
+                        alt={`${p.title} website preview`}
+                        loading="lazy"
+                        className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-background/95 via-background/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <div className="font-display text-lg font-medium">{p.title}</div>
+                        <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                          {p.tag}
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex-1 grid place-items-center text-center p-6">
+                      <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <div className="font-display text-2xl font-medium mb-2">{p.title}</div>
+                        <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                          {p.tag}
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
-              </div>
 
-              <div className="absolute top-6 right-6 h-12 w-12 rounded-full glass grid place-items-center opacity-0 group-hover:opacity-100 group-hover:-translate-y-1 transition-all duration-500">
-                <ArrowUpRight className="h-5 w-5 text-accent" />
-              </div>
-            </div>
-          ))}
+                <div className="absolute top-6 right-6 h-12 w-12 rounded-full glass grid place-items-center opacity-0 group-hover:opacity-100 group-hover:-translate-y-1 transition-all duration-500">
+                  <ArrowUpRight className="h-5 w-5 text-accent" />
+                </div>
+              </Wrapper>
+            );
+          })}
         </div>
       </div>
     </section>
