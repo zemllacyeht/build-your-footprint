@@ -50,7 +50,7 @@ const Login = () => {
       return;
     }
     toast.success("Welcome back");
-    navigate("/portal", { replace: true });
+    // Redirect handled by the useEffect once role resolves
   };
 
   return (
