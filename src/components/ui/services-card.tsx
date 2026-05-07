@@ -14,6 +14,7 @@ type CarouselApi = UseEmblaCarouselType[1];
 
 export interface Service {
   number: string;
+  tag?: string;
   title: string;
   description: string;
   icon: React.ElementType;
