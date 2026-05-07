@@ -298,6 +298,8 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ className, ...props }) =
   const [activeIndex, setActiveIndex] = useState(0);
   const [openDetails, setOpenDetails] = useState(false);
   const active = steps[activeIndex];
+  const panelRef = useRef<HTMLDivElement>(null);
+  const splitAt = Math.ceil(steps.length / 2);
 
   return (
     <section
@@ -330,17 +332,31 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ className, ...props }) =
           </div>
         </div>
 
+        {/* Mobile pill tabs (tap friendly, no hover required) */}
+        <div className="md:hidden mb-4 -mx-6 px-6 overflow-x-auto snap-x snap-mandatory">
+          <div className="flex gap-2 w-max pb-2">
+            {steps.map((s, i) => (
+              <PillTab
+                key={s.title}
+                step={s}
+                index={i}
+                isActive={activeIndex === i}
+                onActivate={() => setActiveIndex(i)}
+              />
+            ))}
+          </div>
+        </div>
+
         {/* Tabbed panel */}
         <div className="relative rounded-2xl border border-border bg-card/30 backdrop-blur overflow-hidden shadow-elegant">
-          <div className="flex min-h-[460px] md:min-h-[520px]">
-            {/* Left tabs */}
-            <div className="flex">
-              {steps.slice(0, Math.ceil(steps.length / 2)).map((s, i) => (
+          <div className="flex min-h-[480px] md:min-h-[520px]">
+            {/* Left tabs (md+) */}
+            <div className="hidden md:flex">
+              {steps.slice(0, splitAt).map((s, i) => (
                 <VerticalTab
                   key={s.title}
                   step={s}
                   index={i}
-                  total={steps.length}
                   isActive={activeIndex === i}
                   onActivate={() => setActiveIndex(i)}
                 />
@@ -348,8 +364,8 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ className, ...props }) =
             </div>
 
             {/* Center content */}
-            <div className="relative flex-1 px-6 py-10 md:px-14 md:py-16">
-              <CursorTrail active key={activeIndex} />
+            <div ref={panelRef} className="relative flex-1 px-6 py-10 md:px-14 md:py-16">
+              <CursorTrail targetRef={panelRef} />
 
               <div className="relative max-w-xl">
                 <div className="flex items-center gap-3 mb-6">
@@ -395,16 +411,15 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ className, ...props }) =
               <span className="absolute bottom-12 right-16 h-2 w-2 rounded-full bg-accent-glow" />
             </div>
 
-            {/* Right tabs */}
-            <div className="flex">
-              {steps.slice(Math.ceil(steps.length / 2)).map((s, i) => {
-                const realIndex = i + Math.ceil(steps.length / 2);
+            {/* Right tabs (md+) */}
+            <div className="hidden md:flex">
+              {steps.slice(splitAt).map((s, i) => {
+                const realIndex = i + splitAt;
                 return (
                   <VerticalTab
                     key={s.title}
                     step={s}
                     index={realIndex}
-                    total={steps.length}
                     isActive={activeIndex === realIndex}
                     onActivate={() => setActiveIndex(realIndex)}
                   />
@@ -413,6 +428,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ className, ...props }) =
             </div>
           </div>
         </div>
+      </div>
       </div>
 
       <Dialog open={openDetails} onOpenChange={setOpenDetails}>
