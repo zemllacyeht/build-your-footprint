@@ -445,9 +445,10 @@ function OptionGrid<T extends string>({ options, value, multiSelected, onChange 
             type="button"
             onClick={() => onChange(o.value)}
             className={cn(
-              "group relative text-left rounded-xl border p-4 md:p-5 transition-all duration-200 outline-none",
+              "group relative text-left rounded-xl border p-4 md:p-5 transition-all duration-300 outline-none overflow-hidden",
+              "hover:-translate-y-0.5",
               selected
-                ? "border-accent/70 bg-accent/10 ring-1 ring-accent/40"
+                ? "border-accent/70 bg-accent/10 ring-1 ring-accent/40 shadow-gold"
                 : "border-border bg-card/40 hover:border-accent/40 hover:bg-card/60"
             )}
             aria-pressed={selected}
