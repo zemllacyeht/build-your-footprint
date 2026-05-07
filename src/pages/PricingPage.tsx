@@ -1,5 +1,5 @@
 import { PageLayout } from "@/components/site/PageLayout";
-import { PageHeader } from "@/components/site/PageHeader";
+
 import { Pricing } from "@/components/site/Pricing";
 import { PlanFinderWizard } from "@/components/site/PlanFinderWizard";
 import { Button } from "@/components/ui/button";
@@ -37,12 +37,25 @@ const PricingPage = () => {
       title="Pricing · Build Your Footprint"
       description="Answer a few questions to get a tailored plan, then send it straight to your cart. Transparent two part pricing with a one time build fee plus a simple monthly retainer."
     >
-      <PageHeader
-        eyebrow="Investment"
-        breadcrumb="Pricing"
-        title={<>Find the <span className="italic text-gradient-gold">right plan</span> in 60 seconds.</>}
-        description="Answer five quick questions and we will recommend a build package, care plan, and the add-ons that match your goals. Send it to your cart, or browse every package below."
-      />
+      <section className="relative pt-28 md:pt-32 pb-2 overflow-hidden grain">
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute inset-0 bg-gradient-to-b from-card/40 via-background to-background" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 h-[360px] w-[760px] bg-primary/10 blur-[140px] rounded-full" />
+        </div>
+        <div className="container">
+          <nav className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-muted-foreground mb-4 animate-fade-in">
+            <Link to="/" className="hover:text-accent transition-colors">Home</Link>
+            <span className="opacity-50">/</span>
+            <span className="text-accent">Pricing</span>
+          </nav>
+          <div className="max-w-3xl">
+            <div className="text-xs uppercase tracking-[0.25em] text-accent mb-3 animate-fade-up">Plan finder</div>
+            <h1 className="font-display text-4xl md:text-6xl font-light leading-[1.04] animate-fade-up" style={{ animationDelay: "0.05s" }}>
+              Your <span className="italic text-gradient-gold">right plan</span>, in 60 seconds.
+            </h1>
+          </div>
+        </div>
+      </section>
 
       <PlanFinderWizard />
 
