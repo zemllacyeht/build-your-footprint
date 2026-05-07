@@ -165,7 +165,7 @@ export const PlanFinderWizard = () => {
   };
 
   return (
-    <section className="relative pt-6 pb-24 md:pt-10 md:pb-28 overflow-hidden">
+    <section className="relative pt-4 pb-24 md:pt-6 md:pb-28 overflow-hidden">
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 h-[420px] w-[820px] bg-primary/8 blur-[140px] rounded-full" />
         <div className="absolute bottom-0 right-0 h-[280px] w-[280px] bg-accent/10 blur-[120px] rounded-full" />
@@ -173,27 +173,17 @@ export const PlanFinderWizard = () => {
 
       <div className="container">
         <div className="max-w-4xl mx-auto">
-          {/* Header strip */}
-          <div className="flex items-center gap-3 mb-5">
-            <div className="h-9 w-9 rounded-lg bg-gradient-gold grid place-items-center shadow-gold">
-              <Wand2 className="h-4 w-4 text-accent-foreground" />
-            </div>
-            <div>
-              <div className="text-xs uppercase tracking-[0.25em] text-accent">Plan finder</div>
-              <div className="font-display text-lg md:text-xl font-light leading-tight">
-                Answer 5 quick questions, get a tailored plan.
-              </div>
-            </div>
-          </div>
-
           {/* Progress rail */}
           <div className="mb-3 flex items-center justify-between text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
-            <span>{showResult ? "Recommendation" : step.eyebrow}</span>
+            <span className="inline-flex items-center gap-2">
+              <Wand2 className="h-3.5 w-3.5 text-accent" />
+              {showResult ? "Recommendation" : step.eyebrow}
+            </span>
             <span className="text-accent">
-              {showResult ? "Ready" : `${stepIndex + 1} of ${STEPS.length}`}
+              {showResult ? "Ready" : `${stepIndex + 1} / ${STEPS.length}`}
             </span>
           </div>
-          <div className="relative h-px w-full bg-border overflow-hidden rounded-full mb-8">
+          <div className="relative h-px w-full bg-border overflow-hidden rounded-full mb-6">
             <div
               className="absolute inset-y-0 left-0 bg-gradient-to-r from-accent via-accent to-primary transition-[width] duration-500 ease-out"
               style={{ width: `${progress}%` }}
