@@ -17,6 +17,7 @@ import WorkPage from "./pages/WorkPage.tsx";
 import PricingPage from "./pages/PricingPage.tsx";
 import ContactPage from "./pages/ContactPage.tsx";
 import Unsubscribe from "./pages/Unsubscribe.tsx";
+import Privacy from "./pages/Privacy.tsx";
 import ResetPassword from "./pages/ResetPassword.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import DemoOne from "./pages/DemoOne.tsx";
@@ -39,6 +40,7 @@ const App = () => (
               <Route path="/pricing" element={<PricingPage />} />
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/unsubscribe" element={<Unsubscribe />} />
+              <Route path="/privacy" element={<Privacy />} />
               <Route path="/login" element={<Login />} />
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/demo" element={<DemoOne />} />
