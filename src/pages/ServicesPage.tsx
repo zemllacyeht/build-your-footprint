@@ -17,15 +17,114 @@ import {
 import { Link } from "react-router-dom";
 
 const services: Service[] = [
-  { number: "001", title: "Brand Identity", description: "Logo systems, color palettes, and visual languages that make you unmistakable.", icon: Palette },
-  { number: "002", title: "Custom Web Design", description: "Hand-crafted, conversion-focused websites built around your business goals.", icon: Code2 },
-  { number: "003", title: "Domain & Hosting", description: "We handle the technical side: domains, SSL, hosting, and uptime monitoring.", icon: Globe },
-  { number: "004", title: "Responsive Builds", description: "Pixel-perfect on every device, from 4-inch phones to 4K displays.", icon: Smartphone },
-  { number: "005", title: "SEO Foundations", description: "Built-in search optimization so your customers can actually find you.", icon: LineChart },
-  { number: "006", title: "Marketing Collateral", description: "Social graphics, email banners, ads, and print pieces, always on-brand.", icon: Megaphone },
-  { number: "007", title: "Content & Photography", description: "Original photography, video, and copy that bring your brand story to life.", icon: Camera },
-  { number: "008", title: "Email & Automation", description: "Branded email templates and automations that nurture leads while you sleep.", icon: Mail },
-  { number: "009", title: "Ongoing Care", description: "Updates, security patches, content edits, all handled every month.", icon: Shield },
+  {
+    number: "001",
+    title: "Brand Identity",
+    description: "Logo systems, color palettes, and visual languages that make you unmistakable.",
+    icon: Palette,
+    details: [
+      "Primary and secondary logo lockups",
+      "Color, typography, and spacing tokens",
+      "Brand guidelines PDF for your team",
+      "Social avatars and favicons included",
+    ],
+  },
+  {
+    number: "002",
+    title: "Custom Web Design",
+    description: "Hand-crafted, conversion-focused websites built around your business goals.",
+    icon: Code2,
+    details: [
+      "Bespoke layouts, never templates",
+      "Built in React with modern tooling",
+      "Conversion-focused page structures",
+      "Accessibility and performance baked in",
+    ],
+  },
+  {
+    number: "003",
+    title: "Domain & Hosting",
+    description: "We handle the technical side: domains, SSL, hosting, and uptime monitoring.",
+    icon: Globe,
+    details: [
+      "Domain purchase and DNS setup",
+      "Free SSL certificates included",
+      "Global CDN for fast load times",
+      "24/7 uptime monitoring",
+    ],
+  },
+  {
+    number: "004",
+    title: "Responsive Builds",
+    description: "Pixel-perfect on every device, from 4-inch phones to 4K displays.",
+    icon: Smartphone,
+    details: [
+      "Mobile-first design approach",
+      "Tested across iOS, Android, and desktop",
+      "Touch-friendly navigation",
+      "Optimized images for every screen",
+    ],
+  },
+  {
+    number: "005",
+    title: "SEO Foundations",
+    description: "Built-in search optimization so your customers can actually find you.",
+    icon: LineChart,
+    details: [
+      "Keyword research for your niche",
+      "On-page SEO and meta tags",
+      "Structured data and sitemaps",
+      "Google Search Console setup",
+    ],
+  },
+  {
+    number: "006",
+    title: "Marketing Collateral",
+    description: "Social graphics, email banners, ads, and print pieces, always on-brand.",
+    icon: Megaphone,
+    details: [
+      "Social media templates",
+      "Paid ad creative for Meta and Google",
+      "Email headers and signatures",
+      "Print-ready business cards and flyers",
+    ],
+  },
+  {
+    number: "007",
+    title: "Content & Photography",
+    description: "Original photography, video, and copy that bring your brand story to life.",
+    icon: Camera,
+    details: [
+      "On-location product and team photos",
+      "Short-form video for social",
+      "Copywriting for web and email",
+      "Edited, color-graded, ready to ship",
+    ],
+  },
+  {
+    number: "008",
+    title: "Email & Automation",
+    description: "Branded email templates and automations that nurture leads while you sleep.",
+    icon: Mail,
+    details: [
+      "Welcome and onboarding sequences",
+      "Branded transactional templates",
+      "Abandoned cart and re-engagement flows",
+      "Integrated with your CRM",
+    ],
+  },
+  {
+    number: "009",
+    title: "Ongoing Care",
+    description: "Updates, security patches, content edits, all handled every month.",
+    icon: Shield,
+    details: [
+      "Monthly security and dependency updates",
+      "Content edits and small tweaks included",
+      "Performance and uptime reports",
+      "Priority support response times",
+    ],
+  },
 ];
 
 const ServicesPage = () => {
