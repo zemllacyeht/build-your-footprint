@@ -68,32 +68,32 @@ export const Footer = () => {
           <div>
             <h4 className="text-xs uppercase tracking-[0.2em] text-accent mb-4">Connect</h4>
             <div className="flex items-center gap-2 mb-5">
-              <a
-                href="#"
-                aria-label="LinkedIn"
-                className="h-9 w-9 rounded-lg glass grid place-items-center text-muted-foreground hover:text-accent transition-colors"
+              <span
+                aria-label="LinkedIn (coming soon)"
+                title="Coming soon"
+                className="h-9 w-9 rounded-lg glass grid place-items-center text-muted-foreground/50 cursor-not-allowed"
               >
                 <Linkedin className="h-4 w-4" />
-              </a>
-              <a
-                href="#"
-                aria-label="Twitter"
-                className="h-9 w-9 rounded-lg glass grid place-items-center text-muted-foreground hover:text-accent transition-colors"
+              </span>
+              <span
+                aria-label="Twitter (coming soon)"
+                title="Coming soon"
+                className="h-9 w-9 rounded-lg glass grid place-items-center text-muted-foreground/50 cursor-not-allowed"
               >
                 <Twitter className="h-4 w-4" />
-              </a>
-              <a
-                href="#"
-                aria-label="Instagram"
-                className="h-9 w-9 rounded-lg glass grid place-items-center text-muted-foreground hover:text-accent transition-colors"
+              </span>
+              <span
+                aria-label="Instagram (coming soon)"
+                title="Coming soon"
+                className="h-9 w-9 rounded-lg glass grid place-items-center text-muted-foreground/50 cursor-not-allowed"
               >
                 <Instagram className="h-4 w-4" />
-              </a>
+              </span>
             </div>
             <ul className="space-y-2.5 text-sm">
-              <li><a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Terms of Service</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Cookie Policy</a></li>
+              <li><span title="Coming soon" className="text-muted-foreground/50 cursor-not-allowed">Privacy Policy</span></li>
+              <li><span title="Coming soon" className="text-muted-foreground/50 cursor-not-allowed">Terms of Service</span></li>
+              <li><span title="Coming soon" className="text-muted-foreground/50 cursor-not-allowed">Cookie Policy</span></li>
             </ul>
           </div>
         </div>
