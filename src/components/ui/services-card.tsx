@@ -49,7 +49,6 @@ const ServiceCard = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
       onMouseEnter={!isMobile ? onOpen : undefined}
-      onMouseLeave={!isMobile ? onClose : undefined}
       onClick={handleClick}
       className={cn(
         "glass glass-hover rounded-2xl p-8 md:p-10 relative overflow-hidden group cursor-pointer",
