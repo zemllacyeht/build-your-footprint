@@ -304,7 +304,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ className, ...props }) =
   return (
     <section
       className={cn(
-        "py-24 md:py-32 relative overflow-hidden bg-gradient-to-b from-background via-card/20 to-background",
+        "pt-8 pb-20 md:pt-10 md:pb-24 relative overflow-hidden bg-gradient-to-b from-background via-card/20 to-background",
         className
       )}
       {...props}
