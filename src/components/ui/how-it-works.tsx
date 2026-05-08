@@ -365,7 +365,6 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ className, ...props }) =
 
             {/* Center content */}
             <div ref={panelRef} className="relative flex-1 px-6 py-10 md:px-14 md:py-16">
-              <CursorTrail targetRef={panelRef} />
 
               <div className="relative max-w-xl">
                 <div className="flex items-center gap-3 mb-6">

@@ -1,5 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 import midasTouchShot from "@/assets/work-midas-touch.jpg";
+import midasTouchShotWebp from "@/assets/work-midas-touch.webp";
 
 type Project = {
   title: string;
@@ -75,12 +76,18 @@ export const Work = () => {
                   </div>
                   {p.image ? (
                     <div className="flex-1 relative overflow-hidden bg-background">
-                      <img
-                        src={p.image}
-                        alt={`${p.title} website preview`}
-                        loading="lazy"
-                        className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                      />
+                      <picture>
+                        {p.image === midasTouchShot && (
+                          <source srcSet={midasTouchShotWebp} type="image/webp" />
+                        )}
+                        <img
+                          src={p.image}
+                          alt={`${p.title} website preview`}
+                          loading="lazy"
+                          decoding="async"
+                          className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                        />
+                      </picture>
                       <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-background/95 via-background/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                         <div className="font-display text-lg font-medium">{p.title}</div>
                         <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">

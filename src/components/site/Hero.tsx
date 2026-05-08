@@ -1,11 +1,26 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
-import hero from "@/assets/hero-footprint.jpg";
+import heroJpg from "@/assets/hero-footprint.jpg";
+import heroWebp from "@/assets/hero-footprint.webp";
 import { motion, useMotionValue, useMotionTemplate, useAnimationFrame } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 export const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Preload the above-the-fold hero image with high priority
+  useEffect(() => {
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = "image";
+    link.href = heroWebp;
+    link.type = "image/webp";
+    (link as HTMLLinkElement & { fetchPriority?: string }).fetchPriority = "high";
+    document.head.appendChild(link);
+    return () => {
+      document.head.removeChild(link);
+    };
+  }, []);
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -39,13 +54,20 @@ export const Hero = () => {
     >
       {/* Background image */}
       <div className="absolute inset-0 -z-10">
-        <img
-          src={hero}
-          alt=""
-          width={1920}
-          height={1280}
-          className="w-full h-full object-cover opacity-40"
-        />
+        <picture>
+          <source srcSet={heroWebp} type="image/webp" />
+          <img
+            src={heroJpg}
+            alt=""
+            width={1920}
+            height={1280}
+            loading="eager"
+            decoding="async"
+            // @ts-expect-error fetchpriority is a valid HTML attribute
+            fetchpriority="high"
+            className="w-full h-full object-cover opacity-40"
+          />
+        </picture>
         <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/80 to-background" />
         <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background/40" />
       </div>
