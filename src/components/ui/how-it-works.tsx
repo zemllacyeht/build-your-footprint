@@ -241,8 +241,9 @@ const VerticalTab: React.FC<VerticalTabProps> = ({ step, index, isActive, onActi
     aria-label={`Step ${index + 1}: ${step.title}`}
     aria-pressed={isActive}
     className={cn(
-      "group relative flex flex-col items-center justify-between py-6 w-12 md:w-16 shrink-0 border-r border-border/40 last:border-r-0 transition-all duration-500 outline-none",
-      isActive ? step.tabClass : "bg-card/30 hover:bg-card/60"
+      "group relative flex flex-col items-center justify-between py-6 w-12 md:w-16 shrink-0 border-r border-border last:border-r-0 transition-all duration-500 outline-none",
+      "after:absolute after:top-4 after:bottom-4 after:right-0 after:w-px after:bg-gradient-to-b after:from-transparent after:via-accent/40 after:to-transparent last:after:hidden",
+      isActive ? cn(step.tabClass, "shadow-[inset_0_0_0_1px_hsl(var(--accent)/0.35)]") : "bg-card/30 hover:bg-card/60"
     )}
   >
     <span
