@@ -1,7 +1,7 @@
 import { PageLayout } from "@/components/site/PageLayout";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Work } from "@/components/site/Work";
-import { Testimonials } from "@/components/site/Testimonials";
+import { ClientStories } from "@/components/site/ClientStories";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
