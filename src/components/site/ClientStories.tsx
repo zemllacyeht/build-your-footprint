@@ -44,6 +44,7 @@ const STORIES: Story[] = [
   },
   {
     id: "03",
+    videoSrc: "/videos/byf-03.mp4",
     client: "Aisha Okonkwo",
     business: "Founder, Lumen Wellness",
     quote:
