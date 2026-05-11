@@ -19,8 +19,10 @@ interface Props {
   max: number;
   checks: CheckItem[];
   vitals?: Record<string, any>;
+  loading?: boolean;
   unavailable?: boolean;
   unavailableReason?: string | null;
+  unavailableCta?: { label: string; href: string };
 }
 
 const summary = (score: number | null, max: number, unavailable?: boolean, reason?: string | null) => {
