@@ -94,9 +94,7 @@ export const ServiceMatch = ({ scores }: Props) => {
             <div className="flex-1">
               <h3 className="font-display text-2xl font-medium mb-2">Full Digital Presence</h3>
               <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-                Get everything fixed at once: website redesign, SEO, performance, security,
-                branding, AI visibility, and ongoing support. The fastest path from a broken
-                presence to one that wins customers every day.
+                Get everything fixed at once: a brand new website that's fast, secure, and built to rank on Google and show up in AI searches. Everything your business needs to win customers online, done right.
               </p>
               <div className="flex flex-wrap items-center gap-3">
                 <a
