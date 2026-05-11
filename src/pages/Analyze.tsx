@@ -222,24 +222,27 @@ const Analyze = () => {
 
           {/* Results */}
           {base && !loading && (
-            <div className="space-y-12 animate-fade-up">
+            <div className="animate-fade-up" style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
               <section className="max-w-2xl mx-auto rounded-3xl border border-border bg-card/40 p-8 md:p-12 text-center">
                 <div className="flex justify-center mb-6">
                   <div className="w-full max-w-[280px] md:max-w-none">
                     <ScoreGauge score={mergedOverall} />
                   </div>
                 </div>
-                <div className="font-display text-3xl md:text-4xl mb-2">{grade(mergedOverall)}</div>
+                <div className="font-display mb-2" style={{ fontSize: "1.4rem" }}>{grade(mergedOverall)}</div>
                 <p className="text-muted-foreground max-w-md mx-auto">{summary(mergedOverall)}</p>
+                {speed.status === "loading" && (
+                  <p className="text-xs text-muted-foreground mt-3">
+                    Score based on 3 of 4 categories{" "}
+                    <span className="animate-pulse">(speed analysis in progress...)</span>
+                  </p>
+                )}
                 <p className="text-xs text-muted-foreground/70 mt-4">
                   Analyzed: <span className="text-foreground/70">{base.domain}</span>
-                  {speed.status === "loading" && (
-                    <span className="ml-2 text-accent">(speed analyzing...)</span>
-                  )}
                 </p>
               </section>
 
-              <section className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+              <section className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 mt-6">
                 <CategoryCard
                   icon="🔍"
                   title="Google Findability"
@@ -251,7 +254,7 @@ const Analyze = () => {
                 <CategoryCard
                   icon="⚡"
                   title="Website Speed"
-                  subtitle="Does your site load fast on phones?"
+                  subtitle="How fast does your site load for visitors?"
                   score={speed.status === "ready" ? speed.score : null}
                   max={25}
                   checks={speed.status === "ready" ? speed.checks : []}
@@ -300,7 +303,7 @@ const Analyze = () => {
                 }}
               />
 
-              <section className="relative rounded-3xl p-[2px] bg-gradient-to-br from-accent via-primary to-accent bg-[length:200%_200%] animate-gradient-shift">
+              <section className="relative rounded-3xl p-[2px] bg-gradient-to-br from-accent via-primary to-accent bg-[length:200%_200%] animate-gradient-shift" style={{ marginBottom: "48px" }}>
                 <div className="rounded-3xl bg-background py-20 px-6 sm:px-10 md:py-24 md:px-14 text-center">
                   <h2 className="font-display text-3xl md:text-5xl font-light mb-4">
                     Ready to <span className="italic text-gradient-gold">fix this</span>?
