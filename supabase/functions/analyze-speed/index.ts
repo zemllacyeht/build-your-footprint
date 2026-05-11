@@ -200,12 +200,13 @@ Deno.serve(async (req) => {
     }
 
     const perf = buildPerfChecks(psi);
+    const namedChecks = applyNames(perf.checks);
     return new Response(
       JSON.stringify({
         unavailable: false,
         score: perf.score,
         max: 25,
-        checks: perf.checks,
+        checks: namedChecks,
         vitals: perf.vitals,
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } },
