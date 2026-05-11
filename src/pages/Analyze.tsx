@@ -23,6 +23,7 @@ interface AnalysisResult {
       checks: any[];
       vitals: any;
       unavailable: boolean;
+      unavailableReason?: string | null;
     };
     aiVisibility: { score: number; max: number; checks: any[] };
     security: { score: number; max: number; checks: any[] };
