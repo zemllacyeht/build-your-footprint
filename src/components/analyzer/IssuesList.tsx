@@ -31,8 +31,41 @@ const categoryClass: Record<string, string> = {
   security: "bg-blue-500/10 text-blue-400 border-blue-500/30",
 };
 
+const winsById: Record<string, string> = {
+  "sec-https": "Your site uses secure connections",
+  "seo-h1": "Your page has a clear main heading",
+  "seo-title-exists": "Search engines can identify your page",
+  "seo-title-length": "Your title fits perfectly in search results",
+  "seo-meta-desc": "Search engines have a description to show",
+  "seo-meta-desc-len": "Your description displays in full on Google",
+  "seo-img-alt": "Your images are accessible and crawlable",
+  "seo-canonical": "Duplicate content issues are prevented",
+  "seo-robots": "Search bots can crawl your site",
+  "ai-og-title": "Your page previews well when shared",
+  "ai-og-desc": "AI tools can summarize your page accurately",
+  "ai-og-image": "Your social shares show a preview image",
+  "ai-schema": "AI tools understand your business type",
+  "ai-faq": "Your content matches how people ask AI",
+  "ai-location": "Local AI searches can find you",
+  "ai-bots-allowed": "ChatGPT and Perplexity can read your site",
+  "sec-hsts": "HTTPS is enforced for every visitor",
+  "sec-xframe": "Your site is protected from clickjacking",
+  "sec-xcto": "MIME-sniffing attacks are blocked",
+  "sec-referrer": "Referrer data is properly controlled",
+  "sec-csp": "Script injection is defended",
+  "sec-permissions": "Unused browser features are locked down",
+  "perf-psi": "Your site scores well on Google PageSpeed",
+  "perf-fcp": "Visitors see content quickly",
+  "perf-lcp": "Your main content loads fast",
+  "perf-tbt": "Your page stays responsive while loading",
+};
+
+const winFor = (p: any) => winsById[p.id] || p.found || "Looking good";
+
 export const IssuesList = ({ issues, passed }: { issues: any[]; passed: any[] }) => {
-  const [showPassed, setShowPassed] = useState(false);
+  const [showAllPassed, setShowAllPassed] = useState(false);
+  const visiblePassed = showAllPassed ? passed : passed.slice(0, 4);
+  const remaining = passed.length - 4;
 
   const sorted = [...issues].sort((a, b) => {
     const order = { critical: 0, important: 1, minor: 2 };
