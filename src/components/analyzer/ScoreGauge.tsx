@@ -36,8 +36,11 @@ export const ScoreGauge = ({ score, size = 220 }: Props) => {
   const offset = circumference * (1 - display / 100);
 
   return (
-    <div className="relative" style={{ width: size, height: size }}>
-      <svg width={size} height={size} className="-rotate-90">
+    <div
+      className="relative w-full"
+      style={{ maxWidth: size, aspectRatio: "1 / 1" }}
+    >
+      <svg viewBox={`0 0 ${size} ${size}`} className="-rotate-90 w-full h-full">
         <circle
           cx={size / 2}
           cy={size / 2}
@@ -60,7 +63,7 @@ export const ScoreGauge = ({ score, size = 220 }: Props) => {
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <div className="font-display text-6xl font-medium" style={{ color }}>
+        <div className="font-display text-5xl md:text-6xl font-medium" style={{ color }}>
           {display}
         </div>
         <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mt-1">

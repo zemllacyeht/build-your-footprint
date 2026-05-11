@@ -23,6 +23,7 @@ interface AnalysisResult {
       checks: any[];
       vitals: any;
       unavailable: boolean;
+      unavailableReason?: string | null;
     };
     aiVisibility: { score: number; max: number; checks: any[] };
     security: { score: number; max: number; checks: any[] };
@@ -164,7 +165,9 @@ const Analyze = () => {
               {/* Overall Score */}
               <section className="max-w-2xl mx-auto rounded-3xl border border-border bg-card/40 p-8 md:p-12 text-center">
                 <div className="flex justify-center mb-6">
-                  <ScoreGauge score={result.overallScore} />
+                  <div className="w-full max-w-[280px] md:max-w-none">
+                    <ScoreGauge score={result.overallScore} />
+                  </div>
                 </div>
                 <div className="font-display text-3xl md:text-4xl mb-2">{grade(result.overallScore)}</div>
                 <p className="text-muted-foreground max-w-md mx-auto">{summary(result.overallScore)}</p>
@@ -174,7 +177,7 @@ const Analyze = () => {
               </section>
 
               {/* Category Cards */}
-              <section className="grid md:grid-cols-2 gap-4">
+              <section className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
                 <CategoryCard
                   icon="🔍"
                   title="SEO Basics"
@@ -190,6 +193,7 @@ const Analyze = () => {
                   checks={result.categories.performance.checks}
                   vitals={result.categories.performance.vitals}
                   unavailable={result.categories.performance.unavailable}
+                  unavailableReason={result.categories.performance.unavailableReason}
                 />
                 <CategoryCard
                   icon="🤖"
@@ -224,43 +228,48 @@ const Analyze = () => {
               />
 
               {/* Conversion CTA */}
-              <section className="relative rounded-3xl p-[2px] bg-gradient-to-br from-accent via-primary to-accent">
-                <div className="rounded-3xl bg-background p-8 md:p-12 text-center">
+              <section className="relative rounded-3xl p-[2px] bg-gradient-to-br from-accent via-primary to-accent bg-[length:200%_200%] animate-gradient-shift">
+                <div className="rounded-3xl bg-background py-20 px-6 sm:px-10 md:py-24 md:px-14 text-center">
                   <h2 className="font-display text-3xl md:text-5xl font-light mb-4">
                     Ready to <span className="italic text-gradient-gold">fix this</span>?
                   </h2>
-                  <p className="text-muted-foreground max-w-2xl mx-auto mb-2 leading-relaxed">
+                  <p className="text-muted-foreground max-w-2xl mx-auto mb-3 leading-relaxed">
                     We've helped dozens of small businesses go from a broken digital presence to one
                     that actually wins customers. Your score shows exactly where you're losing,
                     and we know exactly how to fix it.
                   </p>
-                  <p className="text-sm text-muted-foreground mb-8">
-                    Your site scored{" "}
-                    <span className="text-foreground font-medium">{result.overallScore}/100</span>.
-                    Businesses we work with typically reach 85+ within 60 days.
+                  <p className="mb-10" style={{ fontSize: "1.1rem" }}>
+                    <span className="text-muted-foreground">Your site scored </span>
+                    <span className="font-display font-medium" style={{ color: "#c9a84c" }}>
+                      {result.overallScore}/100
+                    </span>
+                    <span className="text-muted-foreground">. Businesses we work with typically reach 85+ within 60 days.</span>
                   </p>
-                  <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <div className="flex flex-col sm:flex-row gap-6 justify-center items-stretch sm:items-center">
                     <a
                       href="https://byf-vercel-depo.vercel.app/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="h-12 px-7 rounded-full bg-primary text-primary-foreground font-medium inline-flex items-center justify-center gap-2 hover:shadow-glow hover:-translate-y-0.5 transition-all"
+                      className="h-12 px-7 rounded-full bg-primary text-primary-foreground font-medium inline-flex items-center justify-center gap-2 hover:shadow-glow hover:-translate-y-0.5 transition-all w-full sm:w-auto"
                     >
                       Start Your Project <ArrowRight className="h-4 w-4" />
                     </a>
                     <button
                       onClick={reset}
-                      className="h-12 px-7 rounded-full border border-border bg-card/40 text-foreground font-medium hover:border-primary/40 transition"
+                      className="h-12 px-7 rounded-full border border-border bg-card/40 text-foreground font-medium hover:border-primary/40 transition w-full sm:w-auto"
                     >
                       Analyze Another Site
                     </button>
                   </div>
-                  <div className="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs text-muted-foreground">
+                  <div className="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs text-muted-foreground">
                     <span>✦ No long-term contracts</span>
                     <span>✦ Results in 30-60 days</span>
                     <span>✦ Starting at $800</span>
                     <span>✦ Based in Miami</span>
                   </div>
+                  <p className="mt-6 text-sm text-muted-foreground/80 max-w-xl mx-auto">
+                    Join 100+ businesses that have improved their digital presence with Build Your Footprint.
+                  </p>
                 </div>
               </section>
             </div>

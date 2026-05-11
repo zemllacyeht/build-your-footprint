@@ -31,8 +31,41 @@ const categoryClass: Record<string, string> = {
   security: "bg-blue-500/10 text-blue-400 border-blue-500/30",
 };
 
+const winsById: Record<string, string> = {
+  "sec-https": "Your site uses secure connections",
+  "seo-h1": "Your page has a clear main heading",
+  "seo-title-exists": "Search engines can identify your page",
+  "seo-title-length": "Your title fits perfectly in search results",
+  "seo-meta-desc": "Search engines have a description to show",
+  "seo-meta-desc-len": "Your description displays in full on Google",
+  "seo-img-alt": "Your images are accessible and crawlable",
+  "seo-canonical": "Duplicate content issues are prevented",
+  "seo-robots": "Search bots can crawl your site",
+  "ai-og-title": "Your page previews well when shared",
+  "ai-og-desc": "AI tools can summarize your page accurately",
+  "ai-og-image": "Your social shares show a preview image",
+  "ai-schema": "AI tools understand your business type",
+  "ai-faq": "Your content matches how people ask AI",
+  "ai-location": "Local AI searches can find you",
+  "ai-bots-allowed": "ChatGPT and Perplexity can read your site",
+  "sec-hsts": "HTTPS is enforced for every visitor",
+  "sec-xframe": "Your site is protected from clickjacking",
+  "sec-xcto": "MIME-sniffing attacks are blocked",
+  "sec-referrer": "Referrer data is properly controlled",
+  "sec-csp": "Script injection is defended",
+  "sec-permissions": "Unused browser features are locked down",
+  "perf-psi": "Your site scores well on Google PageSpeed",
+  "perf-fcp": "Visitors see content quickly",
+  "perf-lcp": "Your main content loads fast",
+  "perf-tbt": "Your page stays responsive while loading",
+};
+
+const winFor = (p: any) => winsById[p.id] || p.found || "Looking good";
+
 export const IssuesList = ({ issues, passed }: { issues: any[]; passed: any[] }) => {
-  const [showPassed, setShowPassed] = useState(false);
+  const [showAllPassed, setShowAllPassed] = useState(false);
+  const visiblePassed = showAllPassed ? passed : passed.slice(0, 4);
+  const remaining = passed.length - 4;
 
   const sorted = [...issues].sort((a, b) => {
     const order = { critical: 0, important: 1, minor: 2 };
@@ -44,7 +77,7 @@ export const IssuesList = ({ issues, passed }: { issues: any[]; passed: any[] })
       {sorted.map((iss: Issue) => (
         <div
           key={iss.id}
-          className="rounded-xl border border-border bg-card/40 p-5 hover:border-border/80 transition"
+          className="rounded-xl border border-border bg-card/40 p-4 sm:p-5 hover:border-border/80 transition"
         >
           <div className="flex items-start gap-4">
             <span
@@ -83,28 +116,30 @@ export const IssuesList = ({ issues, passed }: { issues: any[]; passed: any[] })
       ))}
 
       {passed.length > 0 && (
-        <div className="rounded-xl border border-border bg-card/30 overflow-hidden">
-          <button
-            onClick={() => setShowPassed(!showPassed)}
-            className="w-full flex items-center justify-between p-5 text-left hover:bg-card/60 transition"
-          >
-            <span className="inline-flex items-center gap-2 text-sm font-medium">
-              <Check className="h-4 w-4 text-primary" />
-              What's already working ({passed.length} checks passed)
-            </span>
-            <ChevronDown
-              className={`h-4 w-4 text-muted-foreground transition ${showPassed ? "rotate-180" : ""}`}
-            />
-          </button>
-          {showPassed && (
-            <ul className="px-5 pb-5 space-y-2 animate-fade-in">
-              {passed.map((p: any) => (
-                <li key={p.id} className="flex items-start gap-2 text-sm">
-                  <Check className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-                  <span className="text-muted-foreground">{p.name}</span>
-                </li>
-              ))}
-            </ul>
+        <div className="rounded-xl border border-primary/20 bg-primary/5 p-5 sm:p-6">
+          <div className="flex items-center gap-2 text-sm font-medium mb-4">
+            <Check className="h-4 w-4 text-primary" />
+            What's already working
+          </div>
+          <ul className="space-y-3">
+            {visiblePassed.map((p: any) => (
+              <li key={p.id} className="flex items-start gap-3 text-sm">
+                <Check className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  <span className="text-foreground/90 font-medium">{p.name}</span>
+                  <span className="text-muted-foreground"> — {winFor(p)}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+          {remaining > 0 && (
+            <button
+              onClick={() => setShowAllPassed(!showAllPassed)}
+              className="mt-4 inline-flex items-center gap-1 text-xs uppercase tracking-[0.18em] text-muted-foreground hover:text-foreground transition"
+            >
+              {showAllPassed ? "Show less" : `Show all ${passed.length} passed checks`}
+              <ChevronDown className={`h-3 w-3 transition ${showAllPassed ? "rotate-180" : ""}`} />
+            </button>
           )}
         </div>
       )}
