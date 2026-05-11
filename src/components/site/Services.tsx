@@ -117,6 +117,17 @@ export const Services = () => {
 
   return (
     <section id="services" className="py-32 relative overflow-hidden bg-background">
+      {/* Smooth transition from hero */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-32 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-background z-10"
+      />
+      {/* Accent divider line */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent z-10"
+      />
+
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-[0.04]"
