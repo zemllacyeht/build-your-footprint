@@ -1,0 +1,113 @@
+import { useState } from "react";
+import { Check, ChevronDown } from "lucide-react";
+
+interface Issue {
+  id: string;
+  name: string;
+  category: string;
+  priority: "critical" | "important" | "minor";
+  whyItMatters?: string;
+  found: string;
+  howToFix?: string;
+}
+
+const priorityClass: Record<string, string> = {
+  critical: "bg-destructive/15 text-destructive border-destructive/30",
+  important: "bg-accent/15 text-accent border-accent/30",
+  minor: "bg-muted text-muted-foreground border-border",
+};
+
+const categoryLabel: Record<string, string> = {
+  seo: "SEO",
+  performance: "Performance",
+  aiVisibility: "AI Visibility",
+  security: "Security",
+};
+
+const categoryClass: Record<string, string> = {
+  seo: "bg-primary/10 text-primary border-primary/30",
+  performance: "bg-orange-500/10 text-orange-400 border-orange-500/30",
+  aiVisibility: "bg-accent/10 text-accent border-accent/30",
+  security: "bg-blue-500/10 text-blue-400 border-blue-500/30",
+};
+
+export const IssuesList = ({ issues, passed }: { issues: any[]; passed: any[] }) => {
+  const [showPassed, setShowPassed] = useState(false);
+
+  const sorted = [...issues].sort((a, b) => {
+    const order = { critical: 0, important: 1, minor: 2 };
+    return order[a.priority as keyof typeof order] - order[b.priority as keyof typeof order];
+  });
+
+  return (
+    <div className="space-y-3">
+      {sorted.map((iss: Issue) => (
+        <div
+          key={iss.id}
+          className="rounded-xl border border-border bg-card/40 p-5 hover:border-border/80 transition"
+        >
+          <div className="flex items-start gap-4">
+            <span
+              className={`shrink-0 text-[10px] uppercase tracking-wider font-semibold px-2.5 py-1 rounded-full border ${priorityClass[iss.priority]}`}
+            >
+              {iss.priority}
+            </span>
+            <div className="flex-1 min-w-0">
+              <div className="flex flex-wrap items-center gap-2 mb-2">
+                <h4 className="font-display text-base font-medium">{iss.name}</h4>
+                <span
+                  className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border ${categoryClass[iss.category]}`}
+                >
+                  {categoryLabel[iss.category]}
+                </span>
+              </div>
+              {iss.whyItMatters && (
+                <p className="text-sm text-muted-foreground mb-2">
+                  <span className="text-foreground/80 font-medium">Why this matters: </span>
+                  {iss.whyItMatters}
+                </p>
+              )}
+              <p className="text-sm text-muted-foreground mb-2">
+                <span className="text-foreground/80 font-medium">What we found: </span>
+                {iss.found}
+              </p>
+              {iss.howToFix && (
+                <p className="text-sm text-muted-foreground">
+                  <span className="text-foreground/80 font-medium">How to fix it: </span>
+                  {iss.howToFix}
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      ))}
+
+      {passed.length > 0 && (
+        <div className="rounded-xl border border-border bg-card/30 overflow-hidden">
+          <button
+            onClick={() => setShowPassed(!showPassed)}
+            className="w-full flex items-center justify-between p-5 text-left hover:bg-card/60 transition"
+          >
+            <span className="inline-flex items-center gap-2 text-sm font-medium">
+              <Check className="h-4 w-4 text-primary" />
+              What's already working ({passed.length} checks passed)
+            </span>
+            <ChevronDown
+              className={`h-4 w-4 text-muted-foreground transition ${showPassed ? "rotate-180" : ""}`}
+            />
+          </button>
+          {showPassed && (
+            <ul className="px-5 pb-5 space-y-2 animate-fade-in">
+              {passed.map((p: any) => (
+                <li key={p.id} className="flex items-start gap-2 text-sm">
+                  <Check className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                  <span className="text-muted-foreground">{p.name}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
