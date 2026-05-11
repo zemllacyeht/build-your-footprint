@@ -1,15 +1,11 @@
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import heroJpg from "@/assets/hero-footprint.jpg";
 import heroWebp from "@/assets/hero-footprint.webp";
-import { motion, useMotionValue, useMotionTemplate, useAnimationFrame } from "framer-motion";
 import { useEffect, useRef } from "react";
-import { AnalyzerWidget } from "@/components/site/AnalyzerWidget";
 
 export const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Preload the above-the-fold hero image with high priority
   useEffect(() => {
     const link = document.createElement("link");
     link.rel = "preload";
@@ -23,35 +19,11 @@ export const Hero = () => {
     };
   }, []);
 
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const { left, top } = e.currentTarget.getBoundingClientRect();
-    mouseX.set(e.clientX - left);
-    mouseY.set(e.clientY - top);
-  };
-
-  const gridOffsetX = useMotionValue(0);
-  const gridOffsetY = useMotionValue(0);
-
-  const speedX = 0.5;
-  const speedY = 0.5;
-
-  useAnimationFrame(() => {
-    const currentX = gridOffsetX.get();
-    const currentY = gridOffsetY.get();
-    gridOffsetX.set((currentX + speedX) % 40);
-    gridOffsetY.set((currentY + speedY) % 40);
-  });
-
-  const maskImage = useMotionTemplate`radial-gradient(300px circle at ${mouseX}px ${mouseY}px, black, transparent)`;
-
   return (
     <section
       ref={containerRef}
-      onMouseMove={handleMouseMove}
-      className="relative min-h-screen flex items-center pt-32 pb-20 overflow-hidden grain"
+      className="relative min-h-screen flex items-center pt-32 pb-20 overflow-hidden"
+      style={{ background: "#0a0a0b", color: "#f0f0f2" }}
     >
       {/* Background image */}
       <div className="absolute inset-0 -z-10">
@@ -66,90 +38,129 @@ export const Hero = () => {
             decoding="async"
             // @ts-expect-error fetchpriority is a valid HTML attribute
             fetchpriority="high"
-            className="w-full h-full object-cover opacity-40"
+            className="w-full h-full object-cover opacity-20"
           />
         </picture>
-        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/80 to-background" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background/40" />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(10,10,11,0.6), #0a0a0b 80%)" }} />
       </div>
 
-      {/* Infinite Grid Overlay */}
-      <div className="absolute inset-0 -z-5 opacity-[0.03]">
-        <GridPattern offsetX={gridOffsetX} offsetY={gridOffsetY} />
-      </div>
-      <motion.div
-        className="absolute inset-0 -z-5 opacity-20"
-        style={{ maskImage, WebkitMaskImage: maskImage }}
-      >
-        <GridPattern offsetX={gridOffsetX} offsetY={gridOffsetY} />
-      </motion.div>
-
-      {/* Floating glow */}
-      <div className="absolute top-1/4 -left-40 h-[500px] w-[500px] rounded-full bg-primary/20 blur-[140px] animate-float" />
-      <div className="absolute bottom-1/4 -right-40 h-[500px] w-[500px] rounded-full bg-accent/15 blur-[140px] animate-float" style={{ animationDelay: "2s" }} />
+      {/* Warm radial glow at top */}
+      <div
+        className="pointer-events-none absolute inset-0 -z-0"
+        style={{
+          background:
+            "radial-gradient(60% 50% at 25% 10%, rgba(212,165,116,0.18), transparent 60%), radial-gradient(50% 40% at 80% 0%, rgba(168,133,86,0.10), transparent 60%)",
+        }}
+      />
 
       <div className="container relative z-10">
-        <div className="max-w-4xl">
-          <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 mb-8 animate-fade-in">
-            <Sparkles className="h-3.5 w-3.5 text-accent" />
-            <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-              Design · Hosting · Ongoing Partnership
-            </span>
+        <div className="w-full md:w-3/5 max-w-[760px] mx-auto md:mx-0 text-center md:text-left">
+          <div
+            className="text-[11px] uppercase mb-2"
+            style={{
+              fontFamily: "'JetBrains Mono', monospace",
+              letterSpacing: "0.18em",
+              color: "#d4a574",
+            }}
+          >
+            Design. Build. Ongoing care.
           </div>
 
-          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-light leading-[0.95] mb-8 animate-fade-up">
-            Your brand's<br />
-            <span className="italic font-normal text-gradient-hero">digital footprint</span><br />
-            in expert hands.
+          <h1
+            className="font-light"
+            style={{
+              fontFamily: "'Fraunces', Georgia, serif",
+              fontSize: "clamp(2.75rem, 7vw, 5.5rem)",
+              lineHeight: 1.05,
+              letterSpacing: "-0.02em",
+              fontWeight: 300,
+              color: "#f0f0f2",
+              fontVariationSettings: "'opsz' 144",
+            }}
+          >
+            Take control of your<br />
+            digital{" "}
+            <em
+              style={{
+                fontStyle: "italic",
+                color: "#d4a574",
+                fontWeight: 300,
+              }}
+            >
+              footprint
+            </em>
+            .
           </h1>
 
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-12 leading-relaxed animate-fade-up" style={{ animationDelay: "0.1s" }}>
-            More than a website. A long-term partnership. We shape your brand identity,
-            launch a site your customers love, and keep your marketing fresh with
-            managed hosting, a private client portal, and ongoing collateral design.
+          <p
+            className="mt-6 text-base md:text-[17px] leading-relaxed mx-auto md:mx-0"
+            style={{
+              fontFamily: "'Inter Tight', Inter, system-ui, sans-serif",
+              color: "#b8b8be",
+              maxWidth: "580px",
+            }}
+          >
+            A website should bring in customers, not just sit there. We build yours to convert, and we'll show you for free where your current one is falling short.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 animate-fade-up" style={{ animationDelay: "0.2s" }}>
-            <Button variant="hero" size="xl" asChild>
-              <a href="#contact">
-                Start your project <ArrowRight className="h-5 w-5" />
-              </a>
-            </Button>
-            <Button variant="glass" size="xl" asChild>
-              <a href="#work">See our work</a>
-            </Button>
+          <div className="mt-10 flex flex-col sm:flex-row items-center md:items-start gap-4 justify-center md:justify-start">
+            <a
+              href="/analyze"
+              className="inline-flex items-center justify-center px-6 h-12 text-sm font-medium transition-colors"
+              style={{
+                background: "#10b981",
+                color: "#0a0a0b",
+                fontFamily: "'Inter Tight', Inter, sans-serif",
+                borderRadius: "2px",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "#22c79b")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = "#10b981")}
+            >
+              Get a Free Site Audit
+            </a>
+            <a
+              href="/contact"
+              className="inline-flex items-center justify-center gap-2 px-6 h-12 text-sm font-medium transition-colors"
+              style={{
+                background: "transparent",
+                border: "1px solid rgba(212,165,116,0.6)",
+                color: "#d4a574",
+                fontFamily: "'Inter Tight', Inter, sans-serif",
+                borderRadius: "2px",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(212,165,116,0.10)")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+            >
+              Start a Project <ArrowRight className="h-4 w-4" />
+            </a>
           </div>
 
-          <AnalyzerWidget />
+          <div className="mt-4">
+            <a
+              href="/pricing"
+              className="text-sm group inline-block"
+              style={{
+                color: "#b8b8be",
+                fontFamily: "'Inter Tight', Inter, sans-serif",
+              }}
+            >
+              <span className="border-b border-transparent group-hover:border-[#d4a574] transition-colors">
+                See pricing
+              </span>
+            </a>
+          </div>
 
+          <p
+            className="mt-6 text-[12.5px]"
+            style={{
+              color: "#888890",
+              fontFamily: "'Inter Tight', Inter, sans-serif",
+            }}
+          >
+            Sites starting at $499. Care plans from $19/mo.
+          </p>
         </div>
       </div>
     </section>
-  );
-};
-
-const GridPattern = ({ offsetX, offsetY }: { offsetX: any, offsetY: any }) => {
-  return (
-    <svg className="w-full h-full">
-      <defs>
-        <motion.pattern
-          id="hero-grid-pattern"
-          width="40"
-          height="40"
-          patternUnits="userSpaceOnUse"
-          x={offsetX}
-          y={offsetY}
-        >
-          <path
-            d="M 40 0 L 0 0 0 40"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1"
-            className="text-muted-foreground"
-          />
-        </motion.pattern>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#hero-grid-pattern)" />
-    </svg>
   );
 };
