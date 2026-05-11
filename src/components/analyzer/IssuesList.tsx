@@ -127,7 +127,6 @@ export const IssuesList = ({ issues, passed }: { issues: any[]; passed: any[] })
                 <Check className="h-4 w-4 text-primary shrink-0 mt-0.5" />
                 <div className="flex-1">
                   <span className="text-foreground/90 font-medium">{p.name}</span>
-                  <span className="text-muted-foreground"> — {winFor(p)}</span>
                 </div>
               </li>
             ))}

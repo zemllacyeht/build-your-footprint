@@ -23,6 +23,44 @@ type Check = {
 
 const FETCH_TIMEOUT_MS = 14000;
 
+const CHECK_NAMES: Record<string, { passed: string; failed: string }> = {
+  "seo-title-exists": { passed: "Your page has a strong Google headline", failed: "Your page has no headline for Google" },
+  "seo-title-length": { passed: "Your Google headline is the perfect length", failed: "Your Google headline is getting cut off" },
+  "seo-meta-desc": { passed: "Your Google search description is set", failed: "Missing description in Google search" },
+  "seo-meta-desc-len": { passed: "Your Google description is the right length", failed: "Your Google description is the wrong length" },
+  "seo-h1": { passed: "Your page has one clear main heading", failed: "Your page is missing a clear main heading" },
+  "seo-img-alt": { passed: "Your photos are visible to Google", failed: "Your photos are invisible to Google" },
+  "seo-canonical": { passed: "Google sees one clean version of your site", failed: "Google may be seeing duplicate versions of your site" },
+  "seo-robots": { passed: "Search engines can find your pages easily", failed: "Search engines may have trouble finding your pages" },
+  "perf-score": { passed: "Your website loads at a good speed", failed: "Your website is too slow" },
+  "perf-psi": { passed: "Your website loads at a good speed", failed: "Your website is too slow" },
+  "perf-fcp": { passed: "Customers see your content quickly", failed: "Customers wait too long to see anything" },
+  "perf-lcp": { passed: "Your main content loads fast", failed: "Your main content loads too slowly" },
+  "perf-tbt": { passed: "Your website responds to clicks instantly", failed: "Something is freezing your website" },
+  "ai-og-title": { passed: "Your links look great when shared on social", failed: "Your links look broken when shared on social media" },
+  "ai-og-desc": { passed: "Your links show a description when shared", failed: "No description when your link is shared" },
+  "ai-og-image": { passed: "Your links show an image when shared", failed: "No image when your link is shared" },
+  "ai-schema": { passed: "AI tools can understand your business", failed: "AI tools can't understand your business" },
+  "ai-faq": { passed: "You have FAQ content for Google and AI", failed: "You're missing easy Google ranking opportunities" },
+  "ai-location": { passed: "Google knows where your business is located", failed: "Google doesn't know where you're located" },
+  "ai-bots-allowed": { passed: "AI assistants can find and recommend you", failed: "AI assistants may not be able to recommend your business" },
+  "sec-https": { passed: "Your website has a secure connection", failed: "Your website connection is not secure" },
+  "sec-hsts": { passed: "Your HTTPS connection is fully enforced", failed: "Your HTTPS can be bypassed" },
+  "sec-xframe": { passed: "Your website is protected from hijacking", failed: "Your website can be hijacked by other sites" },
+  "sec-xcto": { passed: "Your site is protected from file type attacks", failed: "Your site is vulnerable to file type attacks" },
+  "sec-referrer": { passed: "Your visitors' data stays private", failed: "Your visitors' data is being shared without their knowledge" },
+  "sec-csp": { passed: "Your site is defended against hacker injections", failed: "Your site has no defense against hacker injections" },
+  "sec-permissions": { passed: "Visitor device permissions are locked down", failed: "Your visitors' camera and location could be accessed without permission" },
+};
+
+function applyNames(checks: Check[]): Check[] {
+  return checks.map((c) => {
+    const n = CHECK_NAMES[c.id];
+    if (!n) return c;
+    return { ...c, name: c.passed ? n.passed : n.failed };
+  });
+}
+
 async function fetchWithTimeout(url: string, init: RequestInit = {}, timeout = FETCH_TIMEOUT_MS) {
   const ctrl = new AbortController();
   const t = setTimeout(() => ctrl.abort(), timeout);
@@ -559,18 +597,19 @@ Deno.serve(async (req) => {
     robotsCheck.earned = robots.ok ? 2 : 0;
     robotsCheck.found = robots.ok ? "Robots file found and accessible" : "No robots file found at your site root";
 
-    const aiChecks = buildAiChecks(seo, robots);
-    const securityChecks = buildSecurityChecks(htmlRes.finalUrl || url, htmlRes.headers);
+    const aiChecks = applyNames(buildAiChecks(seo, robots));
+    const securityChecks = applyNames(buildSecurityChecks(htmlRes.finalUrl || url, htmlRes.headers));
+    const seoChecksNamed = applyNames(seoChecks);
 
     const sumEarned = (cs: Check[]) => cs.reduce((s, c) => s + c.earned, 0);
-    const seoScore = sumEarned(seoChecks);
+    const seoScore = sumEarned(seoChecksNamed);
     const aiScore = sumEarned(aiChecks);
     const secScore = sumEarned(securityChecks);
 
     // Overall scaled to 100 from the 3 instant categories. Speed merges in client-side.
     const overall = Math.round(((seoScore + aiScore + secScore) / 75) * 100);
 
-    const allChecks = [...seoChecks, ...aiChecks, ...securityChecks];
+    const allChecks = [...seoChecksNamed, ...aiChecks, ...securityChecks];
     const issues = allChecks.filter((c) => !c.passed);
     const passed = allChecks.filter((c) => c.passed);
 
@@ -580,7 +619,7 @@ Deno.serve(async (req) => {
         domain: new URL(url).hostname,
         overallScore: overall,
         categories: {
-          seo: { score: seoScore, max: 25, checks: seoChecks },
+          seo: { score: seoScore, max: 25, checks: seoChecksNamed },
           aiVisibility: { score: aiScore, max: 25, checks: aiChecks },
           security: { score: secScore, max: 25, checks: securityChecks },
         },

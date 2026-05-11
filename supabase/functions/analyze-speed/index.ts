@@ -20,6 +20,22 @@ type Check = {
   howToFix: string;
 };
 
+const CHECK_NAMES: Record<string, { passed: string; failed: string }> = {
+  "perf-psi": { passed: "Your website loads at a good speed", failed: "Your website is too slow" },
+  "perf-score": { passed: "Your website loads at a good speed", failed: "Your website is too slow" },
+  "perf-fcp": { passed: "Customers see your content quickly", failed: "Customers wait too long to see anything" },
+  "perf-lcp": { passed: "Your main content loads fast", failed: "Your main content loads too slowly" },
+  "perf-tbt": { passed: "Your website responds to clicks instantly", failed: "Something is freezing your website" },
+};
+
+function applyNames(checks: Check[]): Check[] {
+  return checks.map((c) => {
+    const n = CHECK_NAMES[c.id];
+    if (!n) return c;
+    return { ...c, name: c.passed ? n.passed : n.failed };
+  });
+}
+
 function normalizeUrl(input: string): string {
   let u = (input || "").trim();
   if (!u) throw new Error("EMPTY_URL");
@@ -184,12 +200,13 @@ Deno.serve(async (req) => {
     }
 
     const perf = buildPerfChecks(psi);
+    const namedChecks = applyNames(perf.checks);
     return new Response(
       JSON.stringify({
         unavailable: false,
         score: perf.score,
         max: 25,
-        checks: perf.checks,
+        checks: namedChecks,
         vitals: perf.vitals,
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } },
