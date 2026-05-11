@@ -122,20 +122,6 @@ export const Hero = () => {
 
           <AnalyzerWidget />
 
-
-          <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl animate-fade-up" style={{ animationDelay: "0.3s" }}>
-            {[
-              { v: "100%", l: "Custom Design" },
-              { v: "24/7", l: "Hosting Support" },
-              { v: "5★", l: "Client Rating" },
-              { v: "∞", l: "Revisions" },
-            ].map((s) => (
-              <div key={s.l}>
-                <div className="font-display text-3xl md:text-4xl font-medium text-gradient-gold">{s.v}</div>
-                <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground mt-1">{s.l}</div>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </section>
