@@ -597,8 +597,9 @@ Deno.serve(async (req) => {
     robotsCheck.earned = robots.ok ? 2 : 0;
     robotsCheck.found = robots.ok ? "Robots file found and accessible" : "No robots file found at your site root";
 
-    const aiChecks = buildAiChecks(seo, robots);
-    const securityChecks = buildSecurityChecks(htmlRes.finalUrl || url, htmlRes.headers);
+    const aiChecks = applyNames(buildAiChecks(seo, robots));
+    const securityChecks = applyNames(buildSecurityChecks(htmlRes.finalUrl || url, htmlRes.headers));
+    const seoChecksNamed = applyNames(seoChecks);
 
     const sumEarned = (cs: Check[]) => cs.reduce((s, c) => s + c.earned, 0);
     const seoScore = sumEarned(seoChecks);
