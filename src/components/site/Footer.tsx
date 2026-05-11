@@ -42,6 +42,12 @@ export const Footer = () => {
               <li><a href="/services" className="text-muted-foreground hover:text-foreground transition-colors">Hosting & Care</a></li>
               <li><a href="/pricing" className="text-muted-foreground hover:text-foreground transition-colors">Pricing</a></li>
               <li><a href="/work" className="text-muted-foreground hover:text-foreground transition-colors">Our Work</a></li>
+              <li>
+                <a href="/analyze" className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors">
+                  Free Website Audit
+                  <span className="text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-primary/15 text-primary font-semibold">New</span>
+                </a>
+              </li>
             </ul>
           </div>
 

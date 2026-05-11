@@ -23,6 +23,7 @@ import Cookies from "./pages/Cookies.tsx";
 import ResetPassword from "./pages/ResetPassword.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import DemoOne from "./pages/DemoOne.tsx";
+import Analyze from "./pages/Analyze.tsx";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +48,7 @@ const App = () => (
               <Route path="/cookies" element={<Cookies />} />
               <Route path="/login" element={<Login />} />
               <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/analyze" element={<Analyze />} />
               <Route path="/demo" element={<DemoOne />} />
               <Route
                 path="/portal"
