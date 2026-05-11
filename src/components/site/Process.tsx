@@ -1,11 +1,11 @@
 import { Fragment } from "react";
-import { Lock, Eye, MessageSquare, CreditCard, CheckCircle2, Compass, PenTool, Code2, Rocket, ArrowRight } from "lucide-react";
+import { Eye, Compass, PenTool, Code2, Rocket, ArrowRight } from "lucide-react";
 
 const steps = [
   { n: "01", title: "Discover", icon: Compass, desc: "We learn your brand, customers, and the impression you want to leave." },
-  { n: "02", title: "Design", icon: PenTool, desc: "Custom mockups in your private portal. Review and approve in real time." },
-  { n: "03", title: "Build", icon: Code2, desc: "Engineered for speed, SEO, and conversions on modern infrastructure." },
-  { n: "04", title: "Preview Hub", icon: Lock, desc: "Password-protected portal to preview, comment, and pay invoices." },
+  { n: "02", title: "Design", icon: PenTool, desc: "Custom layouts designed around your business goals. You review and approve in your private portal." },
+  { n: "03", title: "Build", icon: Code2, desc: "Hand-coded for speed, SEO, and conversion. We use modern infrastructure that won't break six months in." },
+  { n: "04", title: "Review", icon: Eye, desc: "You see what we're building in real time. Leave feedback, request changes, approve when ready. No endless email threads." },
   { n: "05", title: "Launch & Grow", icon: Rocket, desc: "We handle hosting, domains, and ongoing care so you focus on customers." },
 ];
 
