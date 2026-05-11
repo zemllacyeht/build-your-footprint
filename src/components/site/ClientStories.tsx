@@ -391,6 +391,31 @@ export const ClientStories = () => {
                               [{s.id}]
                             </div>
 
+                            {/* CC toggle */}
+                            {isActive && s.captionsSrc && (
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setCaptionsOn((v) => !v);
+                                }}
+                                aria-pressed={captionsOn}
+                                aria-label={captionsOn ? "Hide captions" : "Show captions"}
+                                className="absolute top-3 right-3 px-2 py-1 text-[10px] uppercase"
+                                style={{
+                                  fontFamily: "'JetBrains Mono', monospace",
+                                  letterSpacing: "0.18em",
+                                  color: captionsOn ? "#0a0a0b" : "#e8c89a",
+                                  background: captionsOn ? "#d4a574" : "rgba(10,10,11,0.6)",
+                                  backdropFilter: "blur(6px)",
+                                  border: "1px solid rgba(212,165,116,0.4)",
+                                  cursor: "pointer",
+                                }}
+                              >
+                                CC
+                              </button>
+                            )}
+
                             {/* unmute hint */}
                             {isActive && showHint && (
                               <div
