@@ -53,7 +53,7 @@ const STORIES: Story[] = [
     poster: "/testimonial-03.jpg",
     client: "Aisha Okonkwo",
     business: "Founder, Aisha Okonkwo Studio",
-    quote: "Isaiah just gets it. The site finally feels like the work.",
+    quote: "I feel like the exact idea i had in my head was transferred to my site.",
     metrics: [
       { value: "3.8×", label: "inquiry value" },
       { value: "14", label: "international clients this yr" },
