@@ -44,19 +44,41 @@ export const Services = () => {
 
         <div className="grid md:grid-cols-3 gap-12 md:gap-10">
           {columns.map((col) => (
-            <div key={col.header} className="relative pl-6 md:pl-8 border-l border-border/80">
-              <div className="font-display text-3xl font-light italic text-gradient-gold mb-10 pb-5 border-b border-border">
+            <div
+              key={col.header}
+              className="group/col relative pl-6 md:pl-8 border-l border-border/80 transition-colors duration-500 hover:border-accent/60"
+            >
+              <span
+                aria-hidden
+                className="pointer-events-none absolute left-[-1px] top-0 h-0 w-px bg-gradient-to-b from-accent via-accent/60 to-transparent transition-all duration-700 ease-out group-hover/col:h-full"
+              />
+              <div className="font-display text-3xl font-light italic text-gradient-gold mb-10 pb-5 border-b border-border transition-all duration-500 group-hover/col:[text-shadow:0_0_28px_hsl(var(--accent)/0.55)] group-hover/col:border-accent/50">
                 {col.header}
               </div>
               <div className="flex flex-col">
                 {col.services.map((s, i) => (
                   <div
                     key={s.title}
-                    className={`py-8 ${i !== col.services.length - 1 ? "border-b border-border/70" : ""}`}
+                    className={`group/item relative py-8 px-3 -mx-3 rounded-md cursor-default transition-all duration-300 hover:bg-accent/[0.04] hover:translate-x-1 ${
+                      i !== col.services.length - 1 ? "border-b border-border/70" : ""
+                    }`}
                   >
-                    <s.icon className="h-5 w-5 text-primary mb-5" strokeWidth={1.25} />
-                    <h3 className="font-display text-2xl font-light mb-3 leading-snug">{s.title}</h3>
-                    <p className="text-muted-foreground leading-relaxed text-[15px]">{s.desc}</p>
+                    <div className="relative mb-5 inline-flex items-center justify-center">
+                      <span
+                        aria-hidden
+                        className="absolute inset-0 -m-2 rounded-full bg-accent/20 blur-md opacity-0 transition-opacity duration-300 group-hover/item:opacity-100"
+                      />
+                      <s.icon
+                        className="relative h-5 w-5 text-primary transition-all duration-300 group-hover/item:text-accent group-hover/item:scale-110 group-hover/item:rotate-[-4deg]"
+                        strokeWidth={1.25}
+                      />
+                    </div>
+                    <h3 className="font-display text-2xl font-light mb-3 leading-snug transition-colors duration-300 group-hover/item:text-accent">
+                      {s.title}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed text-[15px] transition-colors duration-300 group-hover/item:text-foreground/80">
+                      {s.desc}
+                    </p>
                   </div>
                 ))}
               </div>
