@@ -102,6 +102,14 @@ export const ClientStories = () => {
   const dragStart = useRef<number | null>(null);
   const userInteracted = useRef(false);
   const volumeFadeRef = useRef<number | null>(null);
+  const advanceTimerRef = useRef<number | null>(null);
+
+  const clearAdvanceTimer = useCallback(() => {
+    if (advanceTimerRef.current) {
+      window.clearTimeout(advanceTimerRef.current);
+      advanceTimerRef.current = null;
+    }
+  }, []);
 
   // reduced motion + reduced data
   useEffect(() => {
