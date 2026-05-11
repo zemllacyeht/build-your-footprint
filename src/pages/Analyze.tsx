@@ -226,7 +226,7 @@ const Analyze = () => {
               />
 
               {/* Conversion CTA */}
-              <section className="relative rounded-3xl p-[2px] bg-gradient-to-br from-accent via-primary to-accent bg-[length:200%_200%] animate-[gradient-shift_6s_ease_infinite]">
+              <section className="relative rounded-3xl p-[2px] bg-gradient-to-br from-accent via-primary to-accent bg-[length:200%_200%] animate-gradient-shift">
                 <div className="rounded-3xl bg-background py-20 px-6 sm:px-10 md:py-24 md:px-14 text-center">
                   <h2 className="font-display text-3xl md:text-5xl font-light mb-4">
                     Ready to <span className="italic text-gradient-gold">fix this</span>?
