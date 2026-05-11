@@ -116,7 +116,7 @@ export const Services = () => {
   const [openKey, setOpenKey] = useState<string | null>(null);
 
   return (
-    <section id="services" className="py-32 relative overflow-hidden">
+    <section id="services" className="py-32 relative overflow-hidden bg-background">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-[0.04]"
