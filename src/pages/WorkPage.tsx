@@ -15,7 +15,7 @@ const WorkPage = () => {
       <PageHeader
         eyebrow="Selected Work"
         breadcrumb="Work"
-        title={<>Footprints we've <span className="italic text-gradient-gold">left behind</span>.</>}
+        title={<>Footprints we've <span className="italic text-gradient-gold">made</span>.</>}
         description="Recent client launches across hospitality, healthcare, retail, and professional services. Every site is hand-crafted around the brand and its audience."
       />
 

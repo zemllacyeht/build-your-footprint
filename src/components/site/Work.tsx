@@ -31,7 +31,7 @@ export const Work = () => {
           <div className="max-w-2xl">
             <div className="text-xs uppercase tracking-[0.25em] text-accent mb-4">Selected Work</div>
             <h2 className="font-display text-4xl md:text-6xl font-light leading-tight">
-              Footprints we've <span className="italic text-gradient-gold">left behind</span>.
+              Footprints we've <span className="italic text-gradient-gold">made</span>.
             </h2>
           </div>
           <p className="text-muted-foreground max-w-sm">
