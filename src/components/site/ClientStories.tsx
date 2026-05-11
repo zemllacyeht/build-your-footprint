@@ -247,13 +247,28 @@ export const ClientStories = () => {
     if (i !== active) return;
     const v = videoRefs.current[i];
     if (v && v.duration) {
-      const p = (v.currentTime / v.duration) * 100;
-      setProgress(p);
-      if (p >= 99.5 && !reduced && !hovering && !userInteracted.current) {
-        next();
-      }
+      setProgress((v.currentTime / v.duration) * 100);
     }
   };
+
+  const onVideoEnded = (i: number) => {
+    if (i !== active) return;
+    setProgress(100);
+    if (reduced || cardHover) return;
+    clearAdvanceTimer();
+    advanceTimerRef.current = window.setTimeout(() => {
+      advanceTimerRef.current = null;
+      next();
+    }, 1500);
+  };
+
+  // pause auto-advance while hovering active card
+  useEffect(() => {
+    if (cardHover) clearAdvanceTimer();
+  }, [cardHover, clearAdvanceTimer]);
+
+  // cleanup on unmount
+  useEffect(() => clearAdvanceTimer, [clearAdvanceTimer]);
 
   // drag
   const onPointerDown = (e: React.PointerEvent) => { dragStart.current = e.clientX; };
