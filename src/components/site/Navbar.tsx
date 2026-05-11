@@ -9,7 +9,7 @@ const links = [
   { href: "/process", label: "Process" },
   { href: "/work", label: "Work" },
   { href: "/pricing", label: "Pricing" },
-  { href: "/analyze", label: "Free Audit", badge: true },
+  { href: "/analyze", label: "Free Audit" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -44,30 +44,9 @@ export const Navbar = () => {
         </a>
 
         <div className="hidden md:flex items-center gap-2">
-          <Button
-            variant="gold"
-            size="sm"
-            asChild
-            className="mr-2 shadow-glow ring-1 ring-primary/40 font-semibold tracking-wide"
-          >
-            <a href="/login">Client Login</a>
-          </Button>
           {links.map((l) => (
-            <Button
-              key={l.href}
-              variant="glass"
-              size="sm"
-              asChild
-              className={l.badge ? "ring-1 ring-primary/40 text-primary" : ""}
-            >
-              <a href={l.href} className="inline-flex items-center gap-1.5">
-                {l.label}
-                {l.badge && (
-                  <span className="text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-primary text-primary-foreground font-semibold">
-                    Free
-                  </span>
-                )}
-              </a>
+            <Button key={l.href} variant="glass" size="sm" asChild>
+              <a href={l.href}>{l.label}</a>
             </Button>
           ))}
         </div>
@@ -114,7 +93,6 @@ export const Navbar = () => {
             </a>
           ))}
           <div className="pt-4 border-t border-border flex flex-col gap-2">
-            <Button variant="gold" size="sm" asChild><a href="/login">Client Login</a></Button>
             <Button variant="hero" size="sm" asChild><a href="/contact">Start a Project</a></Button>
           </div>
         </div>

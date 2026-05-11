@@ -89,39 +89,52 @@ export const Hero = () => {
       <div className="absolute bottom-1/4 -right-40 h-[500px] w-[500px] rounded-full bg-accent/15 blur-[140px] animate-float" style={{ animationDelay: "2s" }} />
 
       <div className="container relative z-10">
-        <div className="max-w-4xl">
-          <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 mb-8 animate-fade-in">
-            <Sparkles className="h-3.5 w-3.5 text-accent" />
-            <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-              Design · Hosting · Ongoing Partnership
-            </span>
+        <div className="w-full md:w-[60%] text-center md:text-left mx-auto md:mx-0">
+          <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground animate-fade-in mb-2">
+            Design. Build. Ongoing Care.
           </div>
 
-          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-light leading-[0.95] mb-8 animate-fade-up">
-            Your brand's<br />
-            <span className="italic font-normal text-gradient-hero">digital footprint</span><br />
-            in expert hands.
+          <h1
+            className="font-display text-5xl md:text-7xl lg:text-8xl font-light leading-[0.95] animate-fade-up"
+            style={{ fontOpticalSizing: "auto" }}
+          >
+            Take control of your<br />
+            <span className="italic font-normal text-primary">digital footprint.</span>
           </h1>
 
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-12 leading-relaxed animate-fade-up" style={{ animationDelay: "0.1s" }}>
-            More than a website. A long-term partnership. We shape your brand identity,
-            launch a site your customers love, and keep your marketing fresh with
-            managed hosting, a private client portal, and ongoing collateral design.
+          <p
+            className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed animate-fade-up mt-6 mx-auto md:mx-0"
+            style={{ animationDelay: "0.1s" }}
+          >
+            A website should bring in customers, not just sit there. We build yours to convert, and we'll show you for free where your current one is falling short.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 animate-fade-up" style={{ animationDelay: "0.2s" }}>
+          <div
+            className="flex flex-col sm:flex-row gap-4 animate-fade-up mt-10 justify-center md:justify-start"
+            style={{ animationDelay: "0.2s" }}
+          >
             <Button variant="hero" size="xl" asChild>
-              <a href="#contact">
-                Start your project <ArrowRight className="h-5 w-5" />
-              </a>
+              <a href="/analyze">Get a Free Site Audit</a>
             </Button>
             <Button variant="glass" size="xl" asChild>
-              <a href="#work">See our work</a>
+              <a href="/contact">
+                Start a Project <ArrowRight className="h-5 w-5" />
+              </a>
             </Button>
           </div>
 
-          <AnalyzerWidget />
+          <div className="mt-4">
+            <a
+              href="/pricing"
+              className="text-sm text-muted-foreground no-underline hover:underline underline-offset-4"
+            >
+              See pricing
+            </a>
+          </div>
 
+          <p className="text-xs text-muted-foreground mt-6">
+            Sites starting at $499. Care plans from $19/mo.
+          </p>
         </div>
       </div>
     </section>
