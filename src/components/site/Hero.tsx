@@ -74,11 +74,11 @@ export const Hero = () => {
       </div>
 
       {/* Infinite Grid Overlay */}
-      <div className="absolute inset-0 -z-5 opacity-[0.03]">
+      <div className="absolute inset-0 -z-5 opacity-[0.12]">
         <GridPattern offsetX={gridOffsetX} offsetY={gridOffsetY} />
       </div>
       <motion.div
-        className="absolute inset-0 -z-5 opacity-20"
+        className="absolute inset-0 -z-5 opacity-60"
         style={{ maskImage, WebkitMaskImage: maskImage }}
       >
         <GridPattern offsetX={gridOffsetX} offsetY={gridOffsetY} />
@@ -158,7 +158,7 @@ const GridPattern = ({ offsetX, offsetY }: { offsetX: any, offsetY: any }) => {
             fill="none"
             stroke="currentColor"
             strokeWidth="1"
-            className="text-muted-foreground"
+            className="text-foreground"
           />
         </motion.pattern>
       </defs>
