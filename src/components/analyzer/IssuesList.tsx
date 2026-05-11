@@ -77,7 +77,7 @@ export const IssuesList = ({ issues, passed }: { issues: any[]; passed: any[] })
       {sorted.map((iss: Issue) => (
         <div
           key={iss.id}
-          className="rounded-xl border border-border bg-card/40 p-5 hover:border-border/80 transition"
+          className="rounded-xl border border-border bg-card/40 p-4 sm:p-5 hover:border-border/80 transition"
         >
           <div className="flex items-start gap-4">
             <span
