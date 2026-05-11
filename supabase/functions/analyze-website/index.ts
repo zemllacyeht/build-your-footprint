@@ -551,7 +551,7 @@ Deno.serve(async (req) => {
     console.log("PSI URL:", psiUrl ? psiUrl.replace(apiKey!, "***") : "(no key)");
 
     const psiPromise: Promise<any> = apiKey
-      ? fetchWithTimeout(psiUrl, {}, 28000)
+      ? fetchWithTimeout(psiUrl, {}, 60000)
           .then(async (r) => {
             console.log("PSI response status:", r.status);
             if (r.ok) {
