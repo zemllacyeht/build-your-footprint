@@ -619,7 +619,7 @@ Deno.serve(async (req) => {
         domain: new URL(url).hostname,
         overallScore: overall,
         categories: {
-          seo: { score: seoScore, max: 25, checks: seoChecks },
+          seo: { score: seoScore, max: 25, checks: seoChecksNamed },
           aiVisibility: { score: aiScore, max: 25, checks: aiChecks },
           security: { score: secScore, max: 25, checks: securityChecks },
         },
