@@ -44,15 +44,15 @@ export const Services = () => {
 
         <div className="grid md:grid-cols-3 gap-12 md:gap-10">
           {columns.map((col) => (
-            <div key={col.header}>
-              <div className="font-mono text-xs uppercase tracking-[0.3em] text-primary mb-8 pb-4 border-b border-border/60">
+            <div key={col.header} className="relative pl-6 md:pl-8 border-l border-border/80">
+              <div className="font-display text-3xl font-light italic text-gradient-gold mb-10 pb-5 border-b border-border">
                 {col.header}
               </div>
               <div className="flex flex-col">
                 {col.services.map((s, i) => (
                   <div
                     key={s.title}
-                    className={`py-8 ${i !== col.services.length - 1 ? "border-b border-border/40" : ""}`}
+                    className={`py-8 ${i !== col.services.length - 1 ? "border-b border-border/70" : ""}`}
                   >
                     <s.icon className="h-5 w-5 text-primary mb-5" strokeWidth={1.25} />
                     <h3 className="font-display text-2xl font-light mb-3 leading-snug">{s.title}</h3>
