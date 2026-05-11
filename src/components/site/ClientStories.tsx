@@ -17,6 +17,7 @@ type Story = {
 const STORIES: Story[] = [
   {
     id: "01",
+    videoSrc: "/videos/byf-01.mp4",
     client: "Maya Chen",
     business: "Founder, Cloth & Verse Studio",
     quote:
