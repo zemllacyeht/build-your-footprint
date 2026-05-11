@@ -19,6 +19,7 @@ const STORIES: Story[] = [
   {
     id: "01",
     videoSrc: "/videos/byf-01.mp4",
+    captionsSrc: "/captions/byf-01.vtt",
     client: "Maya Chen",
     business: "Founder, Cloth & Verse Studio",
     quote:
@@ -34,6 +35,7 @@ const STORIES: Story[] = [
   {
     id: "02",
     videoSrc: "/videos/byf-02.mp4",
+    captionsSrc: "/captions/byf-02.vtt",
     client: "Marcus Reid",
     business: "CEO, Reid & Sons Construction",
     quote:
@@ -48,6 +50,7 @@ const STORIES: Story[] = [
   {
     id: "03",
     videoSrc: "/videos/byf-03.mp4",
+    captionsSrc: "/captions/byf-03.vtt",
     client: "Aisha Okonkwo",
     business: "Founder, Lumen Wellness",
     quote:
