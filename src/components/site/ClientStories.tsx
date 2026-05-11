@@ -648,18 +648,20 @@ export const ClientStories = () => {
                           {s.description}
                         </p>
 
-                        <a
-                          href={s.href || "#"}
-                          className="byf-focus group/link mt-8 inline-flex items-center gap-2 text-sm"
-                          style={{
-                            color: "#d4a574",
-                            fontFamily: "'Inter Tight', Inter, sans-serif",
-                            letterSpacing: "0.02em",
-                          }}
-                        >
-                          View full case study
-                          <ArrowRight className="h-4 w-4" />
-                        </a>
+                        {s.href && (
+                          <a
+                            href={s.href}
+                            className="byf-focus group/link mt-8 inline-flex items-center gap-2 text-sm"
+                            style={{
+                              color: "#d4a574",
+                              fontFamily: "'Inter Tight', Inter, sans-serif",
+                              letterSpacing: "0.02em",
+                            }}
+                          >
+                            View full case study
+                            <ArrowRight className="h-4 w-4" />
+                          </a>
+                        )}
                       </div>
                     </div>
                   </article>
