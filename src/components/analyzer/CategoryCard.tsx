@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDown, Check, X } from "lucide-react";
+import { ChevronDown, Check, X, Loader2, ArrowRight } from "lucide-react";
 
 export interface CheckItem {
   id: string;
