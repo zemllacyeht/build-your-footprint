@@ -155,6 +155,7 @@ export const ClientStories = () => {
   }, []);
 
   const goTo = useCallback((i: number) => {
+    clearAdvanceTimer();
     setActive((prev) => {
       const next = (i + STORIES.length) % STORIES.length;
       if (next !== prev) {
@@ -166,7 +167,7 @@ export const ClientStories = () => {
       }
       return next;
     });
-  }, []);
+  }, [clearAdvanceTimer]);
 
   const next = useCallback(() => goTo(active + 1), [active, goTo]);
   const prev = useCallback(() => goTo(active - 1), [active, goTo]);
