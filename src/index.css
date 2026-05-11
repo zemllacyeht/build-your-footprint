@@ -152,6 +152,11 @@
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
 }
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
 .animate-fade-up { animation: fade-up 0.8s var(--transition-smooth) both; }
 .animate-fade-in { animation: fade-in 1s var(--transition-smooth) both; }
 .animate-float { animation: float 6s ease-in-out infinite; }
+.animate-gradient-shift { animation: gradient-shift 6s ease infinite; }
