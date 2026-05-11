@@ -4,6 +4,7 @@ import heroJpg from "@/assets/hero-footprint.jpg";
 import heroWebp from "@/assets/hero-footprint.webp";
 import { motion, useMotionValue, useMotionTemplate, useAnimationFrame } from "framer-motion";
 import { useEffect, useRef } from "react";
+import { AnalyzerWidget } from "@/components/site/AnalyzerWidget";
 
 export const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -118,6 +119,9 @@ export const Hero = () => {
               <a href="#work">See our work</a>
             </Button>
           </div>
+
+          <AnalyzerWidget />
+
 
           <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl animate-fade-up" style={{ animationDelay: "0.3s" }}>
             {[

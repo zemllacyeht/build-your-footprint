@@ -9,6 +9,7 @@ const links = [
   { href: "/process", label: "Process" },
   { href: "/work", label: "Work" },
   { href: "/pricing", label: "Pricing" },
+  { href: "/analyze", label: "Free Audit", badge: true },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -52,8 +53,21 @@ export const Navbar = () => {
             <a href="/login">Client Login</a>
           </Button>
           {links.map((l) => (
-            <Button key={l.href} variant="glass" size="sm" asChild>
-              <a href={l.href}>{l.label}</a>
+            <Button
+              key={l.href}
+              variant="glass"
+              size="sm"
+              asChild
+              className={l.badge ? "ring-1 ring-primary/40 text-primary" : ""}
+            >
+              <a href={l.href} className="inline-flex items-center gap-1.5">
+                {l.label}
+                {l.badge && (
+                  <span className="text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-primary text-primary-foreground font-semibold">
+                    Free
+                  </span>
+                )}
+              </a>
             </Button>
           ))}
         </div>
