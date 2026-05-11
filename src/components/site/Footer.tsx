@@ -11,8 +11,8 @@ export const Footer = () => {
           {/* Company */}
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <div className="h-9 w-9 rounded-lg grid place-items-center" style={{ background: "#d4a574" }}>
-                <span className="font-display font-bold text-white text-base">F</span>
+              <div className="h-9 w-9 rounded-lg bg-gradient-primary grid place-items-center shadow-glow">
+                <span className="font-display font-bold text-primary-foreground text-base">F</span>
               </div>
               <div className="leading-tight">
                 <div className="font-display text-sm font-semibold">
