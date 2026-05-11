@@ -165,7 +165,9 @@ const Analyze = () => {
               {/* Overall Score */}
               <section className="max-w-2xl mx-auto rounded-3xl border border-border bg-card/40 p-8 md:p-12 text-center">
                 <div className="flex justify-center mb-6">
-                  <ScoreGauge score={result.overallScore} />
+                  <div className="w-full max-w-[280px] md:max-w-none">
+                    <ScoreGauge score={result.overallScore} />
+                  </div>
                 </div>
                 <div className="font-display text-3xl md:text-4xl mb-2">{grade(result.overallScore)}</div>
                 <p className="text-muted-foreground max-w-md mx-auto">{summary(result.overallScore)}</p>
