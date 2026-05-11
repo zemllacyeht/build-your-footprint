@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDown, Check, X } from "lucide-react";
+import { ChevronDown, Check, X, Loader2, ArrowRight } from "lucide-react";
 
 export interface CheckItem {
   id: string;
@@ -19,8 +19,10 @@ interface Props {
   max: number;
   checks: CheckItem[];
   vitals?: Record<string, any>;
+  loading?: boolean;
   unavailable?: boolean;
   unavailableReason?: string | null;
+  unavailableCta?: { label: string; href: string };
 }
 
 const summary = (score: number | null, max: number, unavailable?: boolean, reason?: string | null) => {
@@ -42,11 +44,24 @@ const colorTokens = (score: number | null, max: number) => {
   return { bar: "bg-destructive", glow: "hsl(var(--destructive) / 0.55)", text: "hsl(var(--destructive))" };
 };
 
-export const CategoryCard = ({ icon, title, subtitle, score, max, checks, vitals, unavailable, unavailableReason }: Props) => {
+export const CategoryCard = ({
+  icon,
+  title,
+  subtitle,
+  score,
+  max,
+  checks,
+  vitals,
+  loading,
+  unavailable,
+  unavailableReason,
+  unavailableCta,
+}: Props) => {
   const [open, setOpen] = useState(false);
   const pct = score !== null ? (score / max) * 100 : 0;
   const tokens = colorTokens(score, max);
   const hasVitals = vitals && Object.values(vitals).some((v) => v != null);
+  const inactive = loading || unavailable;
 
   return (
     <div className="rounded-2xl border border-border bg-card/40 p-7 md:p-8 transition hover:border-primary/30">
@@ -56,41 +71,65 @@ export const CategoryCard = ({ icon, title, subtitle, score, max, checks, vitals
           <div className="min-w-0">
             <h3 className="font-display text-lg font-medium leading-tight">{title}</h3>
             <p className="text-xs text-muted-foreground mt-1 leading-snug">
-              {unavailable ? (unavailableReason || "Speed data temporarily unavailable") : (subtitle || summary(score, max, unavailable, unavailableReason))}
+              {loading
+                ? "Analyzing page speed..."
+                : unavailable
+                  ? (subtitle || "")
+                  : (subtitle || summary(score, max, unavailable, unavailableReason))}
             </p>
           </div>
         </div>
         <div className="text-right shrink-0">
-          <div
-            className="font-display font-medium tabular-nums leading-none"
-            style={{ fontSize: "2.25rem", color: tokens.text }}
-          >
-            {unavailable ? "—" : score}
-            <span className="text-base text-muted-foreground font-normal">/{max}</span>
-          </div>
+          {loading ? (
+            <Loader2 className="h-7 w-7 text-accent animate-spin" />
+          ) : (
+            <div
+              className="font-display font-medium tabular-nums leading-none"
+              style={{ fontSize: "2.25rem", color: tokens.text }}
+            >
+              {unavailable ? "—" : score}
+              <span className="text-base text-muted-foreground font-normal">/{max}</span>
+            </div>
+          )}
         </div>
       </div>
 
-      <div className="h-2 rounded-full bg-border/60 overflow-hidden mb-5">
-        <div
-          className={`h-full ${tokens.bar} transition-all duration-700 rounded-full`}
-          style={{
-            width: `${pct}%`,
-            boxShadow: !unavailable ? `0 0 12px ${tokens.glow}` : undefined,
-          }}
-        />
-      </div>
-
-      {unavailable && hasVitals && (
-        <div className="grid grid-cols-2 gap-2 mb-2">
-          {vitals!.fcp != null && <Vital label="FCP" value={`${vitals!.fcp}s`} />}
-          {vitals!.lcp != null && <Vital label="LCP" value={`${vitals!.lcp}s`} />}
-          {vitals!.tbt != null && <Vital label="TBT" value={`${vitals!.tbt}ms`} />}
-          {vitals!.speedIndex != null && <Vital label="Speed Index" value={`${vitals!.speedIndex}s`} />}
+      {!unavailable && (
+        <div className="h-2 rounded-full bg-border/60 overflow-hidden mb-5">
+          {loading ? (
+            <div className="h-full w-1/3 bg-accent/60 animate-pulse rounded-full" />
+          ) : (
+            <div
+              className={`h-full ${tokens.bar} transition-all duration-700 rounded-full`}
+              style={{
+                width: `${pct}%`,
+                boxShadow: `0 0 12px ${tokens.glow}`,
+              }}
+            />
+          )}
         </div>
       )}
 
-      {!unavailable && (
+      {unavailable && (
+        <div className="space-y-3">
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            {unavailableReason || "Speed data is temporarily unavailable for this site. This usually means the site is slow to respond, which is itself a signal."}
+          </p>
+          {unavailableCta && (
+            <a
+              href={unavailableCta.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent/80 transition group"
+            >
+              {unavailableCta.label}
+              <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
+            </a>
+          )}
+        </div>
+      )}
+
+      {!inactive && (
         <button
           onClick={() => setOpen(!open)}
           className="text-xs uppercase tracking-[0.18em] text-muted-foreground hover:text-foreground inline-flex items-center gap-1 transition"
@@ -100,7 +139,7 @@ export const CategoryCard = ({ icon, title, subtitle, score, max, checks, vitals
         </button>
       )}
 
-      {open && !unavailable && (
+      {open && !inactive && (
         <div className="mt-4 space-y-2 animate-fade-in">
           {hasVitals && (
             <div className="grid grid-cols-2 gap-2 mb-3 pb-3 border-b border-border">

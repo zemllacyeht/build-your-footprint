@@ -17,3 +17,5 @@ project_id = "ttoyhiyjlocjofpwzkoz"
     verify_jwt = true
   [functions.analyze-website]
     verify_jwt = false
+  [functions.analyze-speed]
+    verify_jwt = false

@@ -522,7 +522,6 @@ Deno.serve(async (req) => {
       );
     }
 
-    const apiKey = Deno.env.get("PAGESPEED_API_KEY");
     const origin = new URL(url).origin;
 
     const htmlPromise = fetchWithTimeout(url).then(async (r) => ({
@@ -538,41 +537,9 @@ Deno.serve(async (req) => {
       text: r.ok ? await r.text() : "",
     })).catch(() => ({ ok: false, text: "" }));
 
-    let perfUnavailableReason: string | null = null;
-    console.error("[psi-debug] API KEY present:", !!apiKey, "len:", apiKey?.length || 0);
-    if (!apiKey) {
-      perfUnavailableReason = "Performance API key not configured, contact site admin";
-    }
+    const [htmlRes, robots] = await Promise.all([htmlPromise, robotsPromise]);
 
-    const psiUrl = apiKey
-      ? `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&strategy=mobile&key=${apiKey}`
-      : "";
-    console.error("[psi-debug] URL:", psiUrl ? psiUrl.replace(apiKey!, "***") : "(no key)");
-
-    const psiPromise: Promise<any> = apiKey
-      ? fetchWithTimeout(psiUrl, {}, 60000)
-          .then(async (r) => {
-            console.error("[psi-debug] response status:", r.status);
-            if (r.ok) {
-              const data = await r.json();
-              console.error("[psi-debug] data keys:", Object.keys(data).join(","));
-              return data;
-            }
-            const body = await r.text().catch(() => "");
-            console.error("[analyze-website] PSI HTTP", r.status, body.slice(0, 500));
-            perfUnavailableReason = `Performance data unavailable, PageSpeed API returned ${r.status}`;
-            return null;
-          })
-          .catch((e) => {
-            console.error("[analyze-website] PSI fetch failed:", String(e), "name:", (e as any)?.name);
-            perfUnavailableReason = "Performance data unavailable, PageSpeed request timed out";
-            return null;
-          })
-      : Promise.resolve(null);
-
-    const [htmlRes, robots, psi] = await Promise.all([htmlPromise, robotsPromise, psiPromise]);
-
-    if (!htmlRes.ok && !psi) {
+    if (!htmlRes.ok) {
       return new Response(
         JSON.stringify({
           error: "UNREACHABLE",
@@ -587,7 +554,6 @@ Deno.serve(async (req) => {
     const seo = parseSeo(html, url);
     const seoChecks = buildSeoChecks(seo);
 
-    // robots.txt check fill in
     const robotsCheck = seoChecks.find((c) => c.id === "seo-robots")!;
     robotsCheck.passed = robots.ok;
     robotsCheck.earned = robots.ok ? 2 : 0;
@@ -595,20 +561,16 @@ Deno.serve(async (req) => {
 
     const aiChecks = buildAiChecks(seo, robots);
     const securityChecks = buildSecurityChecks(htmlRes.finalUrl || url, htmlRes.headers);
-    const perf = buildPerfChecks(psi);
 
     const sumEarned = (cs: Check[]) => cs.reduce((s, c) => s + c.earned, 0);
-
     const seoScore = sumEarned(seoChecks);
     const aiScore = sumEarned(aiChecks);
     const secScore = sumEarned(securityChecks);
-    const perfScore = perf.checks.length ? sumEarned(perf.checks) : null;
 
-    const overall = perfScore !== null
-      ? seoScore + aiScore + secScore + perfScore
-      : Math.round(((seoScore + aiScore + secScore) / 75) * 100);
+    // Overall scaled to 100 from the 3 instant categories. Speed merges in client-side.
+    const overall = Math.round(((seoScore + aiScore + secScore) / 75) * 100);
 
-    const allChecks = [...seoChecks, ...aiChecks, ...securityChecks, ...perf.checks];
+    const allChecks = [...seoChecks, ...aiChecks, ...securityChecks];
     const issues = allChecks.filter((c) => !c.passed);
     const passed = allChecks.filter((c) => c.passed);
 
@@ -619,14 +581,6 @@ Deno.serve(async (req) => {
         overallScore: overall,
         categories: {
           seo: { score: seoScore, max: 25, checks: seoChecks },
-          performance: {
-            score: perfScore,
-            max: 25,
-            checks: perf.checks,
-            vitals: perf.vitals,
-            unavailable: perfScore === null,
-            unavailableReason: perfScore === null ? (perfUnavailableReason || "Performance data unavailable") : null,
-          },
           aiVisibility: { score: aiScore, max: 25, checks: aiChecks },
           security: { score: secScore, max: 25, checks: securityChecks },
         },
