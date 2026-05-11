@@ -43,6 +43,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { ClientWorkspace } from "@/components/portal/ClientWorkspace";
+import { ClientInvoices } from "@/components/portal/ClientInvoices";
 import { z } from "zod";
 
 const STATUSES = [
@@ -512,7 +513,12 @@ const Admin = () => {
             </DialogDescription>
           </DialogHeader>
           {workspaceFor && (
-            <ClientWorkspace clientId={workspaceFor.id} isAdmin />
+            <div className="space-y-8">
+              <ClientWorkspace clientId={workspaceFor.id} isAdmin />
+              <div className="border-t border-border/50 pt-6">
+                <ClientInvoices clientId={workspaceFor.id} isAdmin />
+              </div>
+            </div>
           )}
         </DialogContent>
       </Dialog>

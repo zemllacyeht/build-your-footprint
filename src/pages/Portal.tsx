@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { LogOut, Globe, MessageSquare, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { ClientWorkspace } from "@/components/portal/ClientWorkspace";
+import { ClientInvoices } from "@/components/portal/ClientInvoices";
 
 interface Profile {
   id: string;
@@ -139,6 +140,13 @@ const Portal = () => {
         <Card className="glass border-border/50">
           <CardContent className="pt-6">
             {user && <ClientWorkspace clientId={user.id} isAdmin={false} />}
+          </CardContent>
+        </Card>
+
+        {/* Billing */}
+        <Card className="glass border-border/50">
+          <CardContent className="pt-6">
+            {user && <ClientInvoices clientId={user.id} isAdmin={false} />}
           </CardContent>
         </Card>
       </section>
