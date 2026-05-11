@@ -119,12 +119,15 @@ export const IssuesList = ({ issues, passed }: { issues: any[]; passed: any[] })
       ))}
 
       {passed.length > 0 && (
-        <div className="rounded-xl border border-primary/20 bg-primary/5 p-5 sm:p-6">
-          <div className="flex items-center gap-2 text-sm font-medium mb-4">
+        <div
+          className="rounded-xl border border-primary/20 bg-primary/5 p-5 sm:p-6 mx-auto"
+          style={{ maxWidth: "680px", width: "100%" }}
+        >
+          <div className="flex items-center justify-center gap-2 text-sm font-medium mb-4 text-center">
             <Check className="h-4 w-4 text-primary" />
             What's already working
           </div>
-          <ul className="space-y-3">
+          <ul className="space-y-3 text-left">
             {visiblePassed.map((p: any) => (
               <li key={p.id} className="flex items-start gap-3 text-sm">
                 <Check className="h-4 w-4 text-primary shrink-0 mt-0.5" />
@@ -135,13 +138,15 @@ export const IssuesList = ({ issues, passed }: { issues: any[]; passed: any[] })
             ))}
           </ul>
           {remaining > 0 && (
-            <button
-              onClick={() => setShowAllPassed(!showAllPassed)}
-              className="mt-4 inline-flex items-center gap-1 text-xs uppercase tracking-[0.18em] text-muted-foreground hover:text-foreground transition"
-            >
-              {showAllPassed ? "Show less" : `Show all ${passed.length} passed checks`}
-              <ChevronDown className={`h-3 w-3 transition ${showAllPassed ? "rotate-180" : ""}`} />
-            </button>
+            <div className="text-center">
+              <button
+                onClick={() => setShowAllPassed(!showAllPassed)}
+                className="mt-4 inline-flex items-center gap-1 text-xs uppercase tracking-[0.18em] text-muted-foreground hover:text-foreground transition"
+              >
+                {showAllPassed ? "Show less" : `Show all ${passed.length} passed checks`}
+                <ChevronDown className={`h-3 w-3 transition ${showAllPassed ? "rotate-180" : ""}`} />
+              </button>
+            </div>
           )}
         </div>
       )}
