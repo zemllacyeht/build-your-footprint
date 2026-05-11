@@ -88,6 +88,7 @@ export const ClientStories = () => {
   const [showHint, setShowHint] = useState(true);
   const [progress, setProgress] = useState(0);
   const [hovering, setHovering] = useState(false);
+  const [captionsOn, setCaptionsOn] = useState(true);
   const sectionRef = useRef<HTMLElement | null>(null);
   const videoRefs = useRef<Array<HTMLVideoElement | null>>([]);
   const dragStart = useRef<number | null>(null);
