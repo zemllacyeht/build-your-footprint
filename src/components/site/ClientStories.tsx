@@ -31,6 +31,7 @@ const STORIES: Story[] = [
   },
   {
     id: "02",
+    videoSrc: "/videos/byf-02.mp4",
     client: "Marcus Reid",
     business: "CEO, Reid & Sons Construction",
     quote:
