@@ -116,28 +116,30 @@ export const IssuesList = ({ issues, passed }: { issues: any[]; passed: any[] })
       ))}
 
       {passed.length > 0 && (
-        <div className="rounded-xl border border-border bg-card/30 overflow-hidden">
-          <button
-            onClick={() => setShowPassed(!showPassed)}
-            className="w-full flex items-center justify-between p-5 text-left hover:bg-card/60 transition"
-          >
-            <span className="inline-flex items-center gap-2 text-sm font-medium">
-              <Check className="h-4 w-4 text-primary" />
-              What's already working ({passed.length} checks passed)
-            </span>
-            <ChevronDown
-              className={`h-4 w-4 text-muted-foreground transition ${showPassed ? "rotate-180" : ""}`}
-            />
-          </button>
-          {showPassed && (
-            <ul className="px-5 pb-5 space-y-2 animate-fade-in">
-              {passed.map((p: any) => (
-                <li key={p.id} className="flex items-start gap-2 text-sm">
-                  <Check className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-                  <span className="text-muted-foreground">{p.name}</span>
-                </li>
-              ))}
-            </ul>
+        <div className="rounded-xl border border-primary/20 bg-primary/5 p-5 sm:p-6">
+          <div className="flex items-center gap-2 text-sm font-medium mb-4">
+            <Check className="h-4 w-4 text-primary" />
+            What's already working
+          </div>
+          <ul className="space-y-3">
+            {visiblePassed.map((p: any) => (
+              <li key={p.id} className="flex items-start gap-3 text-sm">
+                <Check className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  <span className="text-foreground/90 font-medium">{p.name}</span>
+                  <span className="text-muted-foreground"> — {winFor(p)}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+          {remaining > 0 && (
+            <button
+              onClick={() => setShowAllPassed(!showAllPassed)}
+              className="mt-4 inline-flex items-center gap-1 text-xs uppercase tracking-[0.18em] text-muted-foreground hover:text-foreground transition"
+            >
+              {showAllPassed ? "Show less" : `Show all ${passed.length} passed checks`}
+              <ChevronDown className={`h-3 w-3 transition ${showAllPassed ? "rotate-180" : ""}`} />
+            </button>
           )}
         </div>
       )}
