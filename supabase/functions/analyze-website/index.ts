@@ -518,14 +518,30 @@ Deno.serve(async (req) => {
       text: r.ok ? await r.text() : "",
     })).catch(() => ({ ok: false, text: "" }));
 
-    const psiPromise = apiKey
+    let perfUnavailableReason: string | null = null;
+    if (!apiKey) {
+      perfUnavailableReason = "Performance data unavailable, API key not configured";
+      console.error("[analyze-website] PAGESPEED_API_KEY missing");
+    }
+
+    const psiPromise: Promise<any> = apiKey
       ? fetchWithTimeout(
           `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(
             url,
           )}&strategy=mobile&category=performance&key=${apiKey}`,
         )
-          .then((r) => (r.ok ? r.json() : null))
-          .catch(() => null)
+          .then(async (r) => {
+            if (r.ok) return await r.json();
+            const body = await r.text().catch(() => "");
+            console.error("[analyze-website] PSI HTTP", r.status, body.slice(0, 500));
+            perfUnavailableReason = `Performance data unavailable, PageSpeed API returned ${r.status}`;
+            return null;
+          })
+          .catch((e) => {
+            console.error("[analyze-website] PSI fetch failed", String(e));
+            perfUnavailableReason = "Performance data unavailable, PageSpeed request failed";
+            return null;
+          })
       : Promise.resolve(null);
 
     const [htmlRes, robots, psi] = await Promise.all([htmlPromise, robotsPromise, psiPromise]);
