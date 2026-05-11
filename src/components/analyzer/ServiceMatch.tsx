@@ -10,8 +10,10 @@ interface Service {
   title: string;
   body: string;
   includes: string[];
-  tag: string;
+  learnMoreHref: string;
 }
+
+const PRIMARY_HREF = "https://byf-vercel-depo.vercel.app/";
 
 const services: Service[] = [
   {
@@ -24,7 +26,7 @@ const services: Service[] = [
       "Heading structure and content",
       "Schema markup and Google indexing",
     ],
-    tag: "Included in all packages",
+    learnMoreHref: "/services",
   },
   {
     key: "performance",
@@ -36,7 +38,7 @@ const services: Service[] = [
       "Code cleanup and minification",
       "Hosting performance review",
     ],
-    tag: "Included in all packages",
+    learnMoreHref: "/services",
   },
   {
     key: "aiVisibility",
@@ -48,7 +50,7 @@ const services: Service[] = [
       "Social media preview setup",
       "AI crawler access configuration",
     ],
-    tag: "Professional & Premium packages",
+    learnMoreHref: "/services",
   },
   {
     key: "security",
@@ -60,7 +62,7 @@ const services: Service[] = [
       "Security header setup",
       "Ongoing security monitoring",
     ],
-    tag: "Included in all packages",
+    learnMoreHref: "/services",
   },
 ];
 
@@ -88,7 +90,7 @@ export const ServiceMatch = ({ scores }: Props) => {
           <ServiceCard key={s.key} {...s} />
         ))}
 
-        <div className="md:col-span-2 rounded-2xl border border-primary/40 bg-gradient-to-br from-primary/10 via-card/40 to-accent/10 p-7">
+        <div className="md:col-span-2 rounded-2xl border border-primary/40 bg-gradient-to-br from-primary/10 via-card/40 to-accent/10 p-7 flex flex-col">
           <div className="flex items-start gap-4">
             <div className="text-3xl shrink-0">✦</div>
             <div className="flex-1">
@@ -96,17 +98,13 @@ export const ServiceMatch = ({ scores }: Props) => {
               <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
                 Get everything fixed at once: a brand new website that's fast, secure, and built to rank on Google and show up in AI searches. Everything your business needs to win customers online, done right.
               </p>
-              <div className="flex flex-wrap items-center gap-3">
-                <a
-                  href="/pricing"
-                  className="inline-flex items-center gap-2 h-10 px-5 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:shadow-glow transition"
-                >
-                  See Pricing <ArrowRight className="h-4 w-4" />
-                </a>
-                <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-accent/15 text-accent border border-accent/30 text-xs font-medium">
-                  Starting at $800
-                </span>
-              </div>
+              <p
+                className="text-xs mb-3"
+                style={{ color: "#c9a84c" }}
+              >
+                This issue was found on your site →
+              </p>
+              <CardActions learnMoreHref="/services" />
             </div>
           </div>
         </div>
@@ -115,7 +113,26 @@ export const ServiceMatch = ({ scores }: Props) => {
   );
 };
 
-const ServiceCard = ({ icon, title, body, includes, tag }: Service) => (
+const CardActions = ({ learnMoreHref }: { learnMoreHref: string }) => (
+  <div className="flex flex-wrap items-center gap-3">
+    <a
+      href={PRIMARY_HREF}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-2 h-10 px-5 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:shadow-glow transition"
+    >
+      Start Your Project <ArrowRight className="h-4 w-4" />
+    </a>
+    <a
+      href={learnMoreHref}
+      className="inline-flex items-center gap-2 h-10 px-5 rounded-full border border-border bg-transparent text-foreground text-sm font-medium hover:border-primary/40 transition"
+    >
+      Learn More <ArrowRight className="h-4 w-4" />
+    </a>
+  </div>
+);
+
+const ServiceCard = ({ icon, title, body, includes, learnMoreHref }: Service) => (
   <div className="rounded-2xl border border-border bg-card/40 p-6 hover:border-primary/30 transition flex flex-col">
     <div className="text-2xl mb-3">{icon}</div>
     <h3 className="font-display text-xl font-medium mb-2">{title}</h3>
@@ -132,9 +149,10 @@ const ServiceCard = ({ icon, title, body, includes, tag }: Service) => (
       ))}
     </ul>
     <div className="mt-auto">
-      <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-accent/15 text-accent border border-accent/30 text-xs font-medium">
-        {tag}
-      </span>
+      <p className="text-xs mb-3" style={{ color: "#c9a84c" }}>
+        This issue was found on your site →
+      </p>
+      <CardActions learnMoreHref={learnMoreHref} />
     </div>
   </div>
 );
