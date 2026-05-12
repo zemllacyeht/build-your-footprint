@@ -345,13 +345,14 @@ export const PlanFinderWizard = () => {
                   )}
 
                   <div className="flex flex-col sm:flex-row gap-3">
-                    <Button variant="hero" size="lg" onClick={addAllToCart} className="flex-1">
-                      Add plan to cart <ArrowRight className="h-4 w-4" />
-                    </Button>
-                    <Button variant="glass" size="lg" onClick={openCart}>
-                      View cart
+                    <Button variant="hero" size="lg" onClick={startWithPlan} className="flex-1">
+                      Start a project with this plan <ArrowRight className="h-4 w-4" />
                     </Button>
                     <Button variant="ghost" size="lg" onClick={reset}>
+                      <RotateCcw className="h-4 w-4" />
+                      Start over
+                    </Button>
+                  </div>
                       <RotateCcw className="h-4 w-4" />
                       Start over
                     </Button>
