@@ -490,23 +490,33 @@ export const ClientStories = () => {
                               outlineOffset: "-1px",
                             }}
                           >
-                            <video
-                              ref={(el) => (videoRefs.current[i] = el)}
-                              data-video-id={s.id}
-                              src={s.videoSrc}
-                              poster={s.poster}
-                              muted
-                              playsInline
-                              preload={preload}
-                              onTimeUpdate={() => onTimeUpdate(i)}
-                              onEnded={() => onVideoEnded(i)}
-                              aria-label={`${s.client}, ${s.business}: ${s.quote}`}
-                              className="absolute inset-0 w-full h-full object-cover"
-                              style={{
-                                background:
-                                  "radial-gradient(60% 50% at 50% 40%, hsl(var(--accent) / 0.18), hsl(var(--background)) 70%)",
-                              }}
-                            />
+                            {isAdj ? (
+                              <video
+                                ref={(el) => (videoRefs.current[i] = el)}
+                                data-video-id={s.id}
+                                src={s.videoSrc}
+                                poster={s.poster}
+                                muted
+                                playsInline
+                                preload={preload}
+                                onTimeUpdate={() => onTimeUpdate(i)}
+                                onEnded={() => onVideoEnded(i)}
+                                aria-label={`${s.client}, ${s.business}: ${s.quote}`}
+                                className="absolute inset-0 w-full h-full object-cover"
+                                style={{
+                                  background:
+                                    "radial-gradient(60% 50% at 50% 40%, hsl(var(--accent) / 0.18), hsl(var(--background)) 70%)",
+                                }}
+                              />
+                            ) : (
+                              <img
+                                src={s.poster}
+                                alt={`${s.client}, ${s.business}`}
+                                loading="lazy"
+                                decoding="async"
+                                className="absolute inset-0 w-full h-full object-cover"
+                              />
+                            )}
 
                             {/* number chip */}
                             <div
