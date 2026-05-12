@@ -26,7 +26,7 @@ const STORIES: Story[] = [
     metrics: [
       { value: "+213%", label: "online orders" },
       { value: "2.4×", label: "avg cart size" },
-      { value: "4", label: "wholesale accounts added" },
+      { value: "1", label: "wholesale accounts added" },
     ],
     description:
       "A husband-and-wife coffee roastery serving four cafés around the city. We rebuilt their site around the rituals of their craft, and turned casual browsers into committed accounts.",
