@@ -552,6 +552,9 @@ const Admin = () => {
                 <TabsTrigger value="timeline">Timeline</TabsTrigger>
                 <TabsTrigger value="approvals">Approvals</TabsTrigger>
                 <TabsTrigger value="workspace">Files & Messages</TabsTrigger>
+                <TabsTrigger value="assets">
+                  <FolderUp className="h-4 w-4" /> Build Assets
+                </TabsTrigger>
                 <TabsTrigger value="billing">Billing</TabsTrigger>
               </TabsList>
               <TabsContent value="timeline">
@@ -562,6 +565,9 @@ const Admin = () => {
               </TabsContent>
               <TabsContent value="workspace">
                 <ClientWorkspace clientId={workspaceFor.id} isAdmin />
+              </TabsContent>
+              <TabsContent value="assets">
+                <BuildAssetsPanel clientId={workspaceFor.id} isAdmin />
               </TabsContent>
               <TabsContent value="billing">
                 <ClientInvoices clientId={workspaceFor.id} isAdmin />
