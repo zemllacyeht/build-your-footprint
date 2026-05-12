@@ -5,8 +5,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { useCart } from "@/hooks/useCart";
 
 const schema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
@@ -22,6 +23,13 @@ const schema = z.object({
 export const Contact = () => {
   const [loading, setLoading] = useState(false);
   const [messageChars, setMessageChars] = useState(0);
+  const { items, removeItem, clear } = useCart();
+  const selections = items.filter(
+    (i) =>
+      i.category === "Build package" ||
+      i.category === "Care plan" ||
+      i.category === "Add-on",
+  );
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -41,6 +49,18 @@ export const Contact = () => {
     setLoading(true);
     try {
       const id = crypto.randomUUID();
+      const selectionsList = selections.map((s) => ({
+        name: s.name,
+        category: s.category,
+        price: s.price,
+      }));
+      const selectionsSummary = selections.length
+        ? selections.map((s) => `${s.name} (${s.category})`).join(", ")
+        : "";
+      const messageWithSelections = selectionsSummary
+        ? `${parsed.data.message}\n\n— Selections: ${selectionsSummary}`
+        : parsed.data.message;
+
       const { error } = await supabase.functions.invoke("send-transactional-email", {
         body: {
           templateName: "contact-message-customer",
@@ -49,7 +69,8 @@ export const Contact = () => {
           templateData: {
             customerName: parsed.data.name,
             business: parsed.data.business,
-            message: parsed.data.message,
+            message: messageWithSelections,
+            selections: selectionsList,
           },
         },
       });
@@ -57,6 +78,7 @@ export const Contact = () => {
       toast.success("Message received. We'll be in touch within 24 hours.");
       form.reset();
       setMessageChars(0);
+      clear();
     } catch (err) {
       console.error(err);
       toast.error("Could not send message. Please try again.");
@@ -66,7 +88,7 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-32 relative">
+    <section id="contact" className="py-32 relative scroll-mt-24">
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-primary/5 to-transparent" />
       <div className="container">
         <div className="grid lg:grid-cols-2 gap-16 max-w-6xl mx-auto">
@@ -111,6 +133,32 @@ export const Contact = () => {
           </div>
 
           <form onSubmit={onSubmit} className="glass rounded-2xl p-8 space-y-5">
+            {selections.length > 0 && (
+              <div className="rounded-xl border border-accent/30 bg-accent/5 p-4 space-y-3">
+                <div className="text-xs uppercase tracking-[0.22em] text-accent font-mono">
+                  Your selections
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {selections.map((s) => (
+                    <span
+                      key={s.id}
+                      className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-background/40 px-3 py-1 text-xs"
+                    >
+                      <span className="text-foreground/90">{s.name}</span>
+                      <button
+                        type="button"
+                        aria-label={`Remove ${s.name}`}
+                        onClick={() => removeItem(s.id)}
+                        className="text-muted-foreground hover:text-destructive transition"
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div className="grid sm:grid-cols-2 gap-5">
               <div className="space-y-2">
                 <Label htmlFor="name">Your name</Label>
@@ -142,6 +190,11 @@ export const Contact = () => {
                 rows={5}
                 maxLength={2000}
                 required
+                defaultValue={
+                  selections.length
+                    ? `Interested in ${selections.map((s) => s.name).join(" + ")}. `
+                    : ""
+                }
                 onChange={(e) => setMessageChars(e.target.value.trim().length)}
                 className="bg-background/50 resize-none"
               />
