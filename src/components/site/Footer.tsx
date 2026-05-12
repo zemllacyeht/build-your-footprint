@@ -1,4 +1,5 @@
 import { Mail, Linkedin, Twitter, Instagram, LogIn } from "lucide-react";
+import logoMark from "@/assets/logo-mark.svg";
 
 export const Footer = () => {
   const year = new Date().getFullYear();
@@ -11,9 +12,7 @@ export const Footer = () => {
           {/* Company */}
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <div className="h-9 w-9 rounded-lg bg-gradient-primary grid place-items-center shadow-glow">
-                <span className="font-display font-bold text-primary-foreground text-base">F</span>
-              </div>
+              <img src={logoMark} alt="Build Your Footprint" className="h-9 w-9" />
               <div className="leading-tight">
                 <div className="font-display text-sm font-semibold">
                   Build Your <span className="text-gradient-gold">Footprint</span>
