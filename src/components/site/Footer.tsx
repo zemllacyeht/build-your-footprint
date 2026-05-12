@@ -49,9 +49,9 @@ export const Footer = () => {
             </ul>
           </div>
 
-          {/* Client Area */}
+          {/* Client */}
           <div>
-            <h4 className="text-xs uppercase tracking-[0.2em] text-accent mb-4">Client Area</h4>
+            <h4 className="text-xs uppercase tracking-[0.2em] text-accent mb-4">Client</h4>
             <ul className="space-y-2.5 text-sm">
               <li>
                 <a
