@@ -51,7 +51,7 @@ export const Hero = () => {
     <section
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className="relative min-h-screen flex items-center pt-32 pb-20 overflow-hidden grain"
+      className="relative min-h-screen flex items-center pt-24 md:pt-24 pb-16 md:pb-24 overflow-hidden grain"
     >
       {/* Background image */}
       <div className="absolute inset-0 -z-10">

@@ -256,9 +256,9 @@ export const Pricing = () => {
   };
 
   return (
-    <section id="pricing" className="py-32 relative">
+    <section id="pricing" className="pt-16 md:pt-24 pb-12 md:pb-16 relative">
       <div className="container">
-        <div className="max-w-2xl mx-auto text-center mb-20">
+        <div className="max-w-2xl mx-auto text-center mb-12">
           <div className="text-xs uppercase tracking-[0.25em] text-accent mb-4">Investment</div>
           <h2 className="font-display text-4xl md:text-6xl font-light leading-tight">
             Two parts, <span className="italic text-gradient-gold">clearly separated</span>.
@@ -331,7 +331,7 @@ export const Pricing = () => {
         )}
 
         {/* PART 1: ONE-TIME BUILD */}
-        <div className="max-w-7xl mx-auto mb-24">
+        <div className="max-w-7xl mx-auto mb-12">
           <div className="flex items-center gap-4 mb-10">
             <div className="h-10 w-10 rounded-lg bg-gradient-primary grid place-items-center shadow-glow shrink-0">
               <Hammer className="h-4 w-4 text-primary-foreground" />
@@ -591,7 +591,7 @@ export const Pricing = () => {
         </div>
 
         {/* OPTIONAL ADD-ONS */}
-        <div className="max-w-7xl mx-auto mt-20 scroll-mt-28" ref={addonRef}>
+        <div className="max-w-7xl mx-auto mt-12 scroll-mt-28" ref={addonRef}>
           <div className="flex items-center gap-4 mb-10">
             <div className="h-10 w-10 rounded-lg bg-gradient-gold grid place-items-center shadow-gold shrink-0">
               <Sparkles className="h-4 w-4 text-accent-foreground" />

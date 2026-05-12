@@ -116,7 +116,7 @@ export const Services = () => {
   const [openKey, setOpenKey] = useState<string | null>(null);
 
   return (
-    <section id="services" className="py-32 relative overflow-hidden bg-background">
+    <section id="services" className="py-12 md:py-16 relative overflow-hidden bg-background">
       {/* Smooth transition from hero */}
       <div
         aria-hidden
