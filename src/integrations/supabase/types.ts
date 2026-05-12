@@ -143,6 +143,7 @@ export type Database = {
           issued_at: string
           paid_at: string | null
           status: string
+          stripe_invoice_id: string | null
           updated_at: string
         }
         Insert: {
@@ -158,6 +159,7 @@ export type Database = {
           issued_at?: string
           paid_at?: string | null
           status?: string
+          stripe_invoice_id?: string | null
           updated_at?: string
         }
         Update: {
@@ -173,6 +175,7 @@ export type Database = {
           issued_at?: string
           paid_at?: string | null
           status?: string
+          stripe_invoice_id?: string | null
           updated_at?: string
         }
         Relationships: []
