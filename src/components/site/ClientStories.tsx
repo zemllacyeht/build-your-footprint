@@ -56,7 +56,7 @@ const STORIES: Story[] = [
     quote: "I feel like the exact idea i had in my head was transferred to my site.",
     metrics: [
       { value: "3.8×", label: "inquiry value" },
-      { value: "14", label: "international clients this yr" },
+      { value: "7", label: "international clients this yr" },
       { value: "$6k", label: "avg commission" },
     ],
     description:
