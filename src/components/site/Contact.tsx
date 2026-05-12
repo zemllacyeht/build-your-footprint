@@ -88,7 +88,7 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-32 relative scroll-mt-24">
+    <section id="contact" className="py-16 md:py-24 relative scroll-mt-24">
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-primary/5 to-transparent" />
       <div className="container">
         <div className="grid lg:grid-cols-2 gap-16 max-w-6xl mx-auto">

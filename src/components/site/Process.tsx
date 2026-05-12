@@ -11,7 +11,7 @@ const steps = [
 
 export const Process = () => {
   return (
-    <section id="process" className="py-32 relative overflow-hidden bg-gradient-to-b from-background via-card/20 to-background">
+    <section id="process" className="py-12 md:py-[72px] relative overflow-hidden bg-gradient-to-b from-background via-card/20 to-background">
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[400px] w-[800px] bg-primary/5 blur-[120px] rounded-full" />
       </div>

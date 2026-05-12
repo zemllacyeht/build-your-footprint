@@ -314,7 +314,7 @@ export const ClientStories = () => {
       id="client-stories"
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={onSectionLeave}
-      className="relative overflow-hidden py-32"
+      className="relative overflow-hidden py-12 md:py-[72px]"
       style={{
         background: "#0a0a0b",
         color: "#f0f0f2",
