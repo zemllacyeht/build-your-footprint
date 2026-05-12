@@ -19,6 +19,7 @@ import {
   XCircle,
 } from "lucide-react";
 import { toast } from "sonner";
+import { sendNotification, getClientContact, getAdminEmail } from "@/lib/notifications";
 
 interface Approval {
   id: string;
@@ -125,15 +126,35 @@ export const ProjectApprovals = ({ clientId, isAdmin = false }: Props) => {
       return toast.error("Preview URL must start with http(s)://");
     }
     setSaving(true);
-    const { error } = await supabase.from("project_approvals").insert({
-      client_id: clientId,
-      title: draft.title.trim(),
-      description: draft.description.trim() || null,
-      preview_url: draft.preview_url.trim() || null,
-    });
+    const { data: inserted, error } = await supabase
+      .from("project_approvals")
+      .insert({
+        client_id: clientId,
+        title: draft.title.trim(),
+        description: draft.description.trim() || null,
+        preview_url: draft.preview_url.trim() || null,
+      })
+      .select()
+      .single();
     setSaving(false);
     if (error) return toast.error(error.message);
-    toast.success("Approval requested");
+    toast.success("Approval requested, client notified");
+    if (inserted) {
+      const c = await getClientContact(clientId);
+      if (c.email) {
+        void sendNotification({
+          templateName: "approval-requested",
+          recipientEmail: c.email,
+          idempotencyKey: `approval-req-${inserted.id}`,
+          templateData: {
+            clientName: c.name || c.company || undefined,
+            approvalTitle: inserted.title,
+            approvalDescription: inserted.description,
+            previewUrl: inserted.preview_url,
+          },
+        });
+      }
+    }
     setShowForm(false);
     setDraft({ title: "", description: "", preview_url: "" });
   };
@@ -150,6 +171,20 @@ export const ProjectApprovals = ({ clientId, isAdmin = false }: Props) => {
       .eq("id", a.id);
     if (error) return toast.error(error.message);
     toast.success(status === "approved" ? "Approved, the team has been notified" : "Feedback sent to the team");
+    const [adminEmail, client] = await Promise.all([getAdminEmail(), getClientContact(a.client_id)]);
+    if (adminEmail) {
+      void sendNotification({
+        templateName: "approval-decided",
+        recipientEmail: adminEmail,
+        idempotencyKey: `approval-decide-${a.id}-${status}`,
+        templateData: {
+          clientName: client.name || undefined,
+          clientCompany: client.company || undefined,
+          approvalTitle: a.title,
+          decision: status,
+        },
+      });
+    }
   };
 
   const remove = async (a: Approval) => {
@@ -161,13 +196,38 @@ export const ProjectApprovals = ({ clientId, isAdmin = false }: Props) => {
   const postComment = async (approvalId: string) => {
     const text = (commentDraft[approvalId] || "").trim();
     if (!text || !user) return;
-    const { error } = await supabase.from("approval_comments").insert({
-      approval_id: approvalId,
-      author_id: user.id,
-      content: text,
-    });
+    const { data: inserted, error } = await supabase
+      .from("approval_comments")
+      .insert({
+        approval_id: approvalId,
+        author_id: user.id,
+        content: text,
+      })
+      .select()
+      .single();
     if (error) return toast.error(error.message);
     setCommentDraft((d) => ({ ...d, [approvalId]: "" }));
+    const approval = items.find((a) => a.id === approvalId);
+    if (approval && inserted) {
+      const audience: "admin" | "client" = isAdmin ? "client" : "admin";
+      const recipient = isAdmin
+        ? (await getClientContact(approval.client_id)).email
+        : await getAdminEmail();
+      if (recipient) {
+        const authorName = isAdmin ? "Your team" : "Client";
+        void sendNotification({
+          templateName: "approval-comment",
+          recipientEmail: recipient,
+          idempotencyKey: `approval-comment-${inserted.id}`,
+          templateData: {
+            authorName,
+            approvalTitle: approval.title,
+            comment: text,
+            audience,
+          },
+        });
+      }
+    }
   };
 
   const pendingCount = items.filter((a) => a.status === "pending").length;
