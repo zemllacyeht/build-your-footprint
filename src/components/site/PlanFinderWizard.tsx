@@ -81,7 +81,7 @@ const STEPS: { id: StepId; title: string; eyebrow: string }[] = [
 const initialAnswers: WizardAnswers = { marketing: [], budget: 1 };
 
 export const PlanFinderWizard = () => {
-  const { addItem, openCart, items } = useCart();
+  const { addItem, items } = useCart();
   const { toast } = useToast();
   const [stepIndex, setStepIndex] = useState(0);
   const [answers, setAnswers] = useState<WizardAnswers>(initialAnswers);
