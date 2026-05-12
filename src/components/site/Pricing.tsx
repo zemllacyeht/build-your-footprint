@@ -358,7 +358,7 @@ export const Pricing = () => {
                   key={t.name}
                   className={`relative rounded-2xl p-8 ${
                     t.featured
-                      ? "bg-gradient-to-b from-accent/10 to-card border-2 border-teal-400/70 shadow-elegant lg:scale-105"
+                      ? "bg-gradient-to-b from-accent/10 to-card border-2 border-primary/70 shadow-elegant lg:scale-105"
                       : "glass"
                   }`}
                 >
@@ -400,7 +400,7 @@ export const Pricing = () => {
                     <Button
                       variant="glass"
                       size="lg"
-                      className={`w-full mb-8 ${t.featured ? "bg-teal-500 text-white hover:bg-teal-600 border-transparent shadow-teal-500/30" : ""}`}
+                      className={`w-full mb-8 ${t.featured ? "bg-primary text-primary-foreground hover:bg-primary/90 border-transparent shadow-elegant" : ""}`}
                       onClick={() => startProject(tierId, t.name, `${t.price} one-time`, "Build package")}
                     >
                       <Plus className="h-4 w-4" />

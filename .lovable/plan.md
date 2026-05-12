@@ -1,102 +1,44 @@
-## Goal
+# Homepage color audit
 
-Replace the cloned `<Pricing />` block on the dedicated `/pricing` page with a polished, senior-level **Plan Finder Wizard**. The wizard asks the visitor a short series of questions, recommends a Build package + Care plan + relevant Add-ons, and routes the user directly into the existing cart flow. The pricing-card grid stays available below as the "Browse all plans" reference, but the wizard becomes the page's hero experience.
+The design system (`src/index.css`) defines a clear palette: dark green-black background, warm cream foreground, **emerald** primary (`158 64% 42%`), and **gold** accent (`42 78% 60%`). Most sections (Hero, Services, Process, Work, ClientPortal, Contact, Footer) follow it correctly via tokens like `bg-background`, `text-foreground`, `text-primary`, `text-accent`, `text-gradient-gold`.
 
-## What the user sees
+Two sections break the system.
 
-```text
-[Page header: Investment / Pricing]
-        |
-        v
-[ Plan Finder Wizard ]                  <- new, fills the fold
-  Step indicator (1 of 5)
-  Animated step card with question + options
-  Back / Next buttons, progress bar
-        |
-        v
-[ Recommendation panel ]                <- final step
-  Suggested Build + Care + Add-ons
-  Price summary, "why this plan" rationale
-  [Add to cart]   [View cart]   [Tweak answers]
-        |
-        v
-[ Browse all plans (collapsed accordion) ]
-  Existing <Pricing /> grid, opt-in
-[ FAQs ]                                <- existing
-```
+## Issues found
 
-## Wizard questions (5 short steps)
+### 1. ClientStories.tsx uses a parallel hardcoded palette
+Throughout the section (~20 occurrences) it hardcodes:
+- `#0a0a0b` background (neutral black, not our green-tinted `--background`)
+- `#f0f0f2` text (cool white, not our warm cream `--foreground`)
+- `#d4a574` / `#e8c89a` gold (warmer/duller than the site's `--accent` gold)
+- `#b8b8be`, `#888890` muted greys (cool, not our green-tinted muted)
 
-1. **What kind of site do you need?**  
-   Single landing page · Small business (3 to 5 pages) · Content-rich (6 to 12 pages) · E-commerce or booking
-2. **What is your goal?**  
-   Get found locally · Generate leads · Sell online · Build credibility
-3. **Brand assets ready?**  
-   Logo and colors set · Logo only · Need a refresh · Starting from scratch
-4. **Need ongoing marketing help?** (multi-select)  
-   SEO · Social and ads · Content and photography · Just keep the site running
-5. **Timeline and budget comfort?**  
-   ASAP (under 2 weeks) · 2 to 4 weeks · 1 to 2 months · Flexible  
-   plus a slider for monthly comfort: 19 / 59 / custom
+Result: the entire stories section reads as a slightly different brand, cooler and more neutral than the rest of the page.
 
-## Recommendation logic (deterministic, transparent)
+### 2. Pricing.tsx featured tier uses Tailwind teal
+Lines 361 and 403 use `border-teal-400/70`, `bg-teal-500`, `text-white`, `shadow-teal-500/30` for the featured plan. Teal is close to but not the same as our emerald primary, and `text-white` bypasses `primary-foreground`.
 
-- **Build tier** scored from Q1 + Q2 + Q5
-  - Single page or "ASAP" + "Get found locally" -> Core
-  - Small business + Generate leads -> Launch
-  - Content-rich + Build credibility, or Brand starting from scratch -> Signature
-  - E-commerce / booking, or "Need a refresh" + "Sell online" -> Enterprise
-- **Care plan**
-  - Core or Launch -> Essential Care
-  - Signature -> Growth Care
-  - Enterprise -> White-Glove Care
-- **Add-ons** mapped from Q3 + Q4
-  - Q3 = "refresh" or "scratch" -> Brand Identity Kit
-  - Q4 includes SEO -> SEO Boost
-  - Q4 includes Social/ads -> Marketing Collateral
-  - Q4 includes Content/photography -> Content & Photography
-- Show 1 to 2 sentences explaining *why* each item was picked, tied to the user's answers.
+## Fix plan
 
-## Cart integration
+**ClientStories.tsx**
+- Replace inline `style={{ background: "#0a0a0b" }}` on the section with `bg-background` (or remove and let parent show through).
+- Swap hardcoded text colors for tokens:
+  - `#f0f0f2` → `text-foreground` (or `hsl(var(--foreground))` where inline is required)
+  - `#b8b8be`, `#888890` → `text-muted-foreground`
+  - `#d4a574`, `#e8c89a` → `text-accent` / `hsl(var(--accent))`
+- Update the radial gradient and accent dot/button backgrounds to use `hsl(var(--accent) / 0.18)` and `hsl(var(--accent))`.
+- Prefer Tailwind classes; keep inline styles only where dynamic (animation delays, computed transforms).
 
-- Reuse `useCart().addItem` with the existing `id`, `name`, `price`, `category` shape used in `Pricing.tsx` (`build-core`, `care-essential`, `addon-seo-boost`, etc.) so the cart drawer, summary chips, and request flow keep working with no other changes.
-- Recommendation panel buttons:
-  - **Add recommended plan to cart** (adds Build + Care + selected add-ons)
-  - **Open cart** (`openCart()` from `useCart`)
-  - **Adjust answers** (jumps back to step 1 with current answers preserved)
-- Show a small inline confirmation toast via existing `useToast`.
+**Pricing.tsx**
+- Featured card border: `border-teal-400/70` → `border-primary/70`.
+- Featured CTA: `bg-teal-500 text-white hover:bg-teal-600 border-transparent shadow-teal-500/30` → `bg-primary text-primary-foreground hover:bg-primary/90 border-transparent shadow-elegant` (or a new `premium` button variant if we want this reusable).
 
-## Page restructure (`src/pages/PricingPage.tsx`)
+## Verification
 
-- Keep `PageLayout` and `PageHeader`.
-- Insert new `<PlanFinderWizard />` immediately under the header (this is what now occupies the fold).
-- Replace the bare `<Pricing />` with a collapsed "Browse all packages" disclosure (using the existing shadcn `Accordion`) so power users can still scan every tier.
-- Keep the existing FAQ section and "Get a custom quote" CTA at the bottom.
-
-## New files
-
-- `src/components/site/PlanFinderWizard.tsx`  
-  Self-contained wizard. Uses local state for answers and current step, framer-motion for step transitions (already a dep), shadcn `Button`, `Progress`, `RadioGroup`/`Checkbox`, and lucide icons consistent with the site (Compass, Sparkles, Check, ArrowRight, ArrowLeft, RotateCcw).
-- `src/components/site/PlanFinderWizard.recommend.ts`  
-  Pure function `recommend(answers): { build, care, addons[], rationale[] }`. Easy to unit test and keeps the component lean.
-
-## Touched files
-
-- `src/pages/PricingPage.tsx` (mount wizard, wrap `<Pricing />` in accordion)
-- `src/components/site/PlanFinderWizard.tsx` (new)
-- `src/components/site/PlanFinderWizard.recommend.ts` (new)
-
-## Design notes (matches existing site language)
-
-- Glassmorphism card with gold gradient border for the active step, primary emerald accents for recommendations.
-- `font-display` (Fraunces) for step headlines, Inter for body.
-- Animated progress bar tinted with `--accent` to `--primary` gradient, mirroring the Process page rail.
-- Mobile: stacked single column, large tap targets, sticky Next button at the bottom of the wizard card.
-- Respects existing tokens only, no ad hoc hex values.
-- No em dashes in copy.
+- Visual check of the homepage at desktop and mobile widths after changes.
+- Grep `rg "#[0-9a-fA-F]{3,6}|teal-|text-white|bg-white"` across `src/components/site/` to confirm no hardcoded colors remain on homepage components.
 
 ## Out of scope
 
-- No new database or auth work.
-- No changes to `Pricing.tsx` internals or to the cart hook.
-- No payment integration changes.
+- No changes to spacing, copy, layout, or non-homepage routes.
+- No changes to the token values themselves in `index.css`.

@@ -316,8 +316,8 @@ export const ClientStories = () => {
       onMouseLeave={onSectionLeave}
       className="relative overflow-hidden py-12 md:py-[72px]"
       style={{
-        background: "#0a0a0b",
-        color: "#f0f0f2",
+        background: "hsl(var(--background))",
+        color: "hsl(var(--foreground))",
         fontFamily: "'Inter Tight', Inter, system-ui, sans-serif",
       }}
     >
@@ -346,7 +346,7 @@ export const ClientStories = () => {
         .byf-video-reveal { opacity: 0; }
         .byf-video-reveal.show { animation: byf-video-in 800ms ${EASE} both; }
         .byf-focus:focus-visible {
-          outline: 2px solid #d4a574;
+          outline: 2px solid hsl(var(--accent));
           outline-offset: 4px;
         }
         @media (prefers-reduced-motion: reduce) {
@@ -361,7 +361,7 @@ export const ClientStories = () => {
         className="pointer-events-none absolute inset-0 -z-0"
         style={{
           background:
-            "radial-gradient(60% 50% at 20% 30%, rgba(212,165,116,0.08), transparent 60%), radial-gradient(50% 40% at 85% 70%, rgba(168,133,86,0.06), transparent 60%)",
+            "radial-gradient(60% 50% at 20% 30%, hsl(var(--accent) / 0.08), transparent 60%), radial-gradient(50% 40% at 85% 70%, hsl(var(--accent) / 0.06), transparent 60%)",
         }}
       />
       <div className="byf-grain absolute inset-0 -z-0" />
@@ -375,7 +375,7 @@ export const ClientStories = () => {
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
                 letterSpacing: "0.18em",
-                color: "#d4a574",
+                color: "hsl(var(--accent))",
                 animationDelay: "0ms",
               }}
             >
@@ -386,15 +386,15 @@ export const ClientStories = () => {
               style={{
                 fontFamily: "'Fraunces', Georgia, serif",
                 fontSize: "clamp(2.25rem, 4.2vw, 3rem)",
-                color: "#f0f0f2",
+                color: "hsl(var(--foreground))",
                 animationDelay: "200ms",
               }}
             >
-              Three businesses, three <em style={{ color: "#d4a574", fontStyle: "italic" }}>transformations</em>.
+              Three businesses, three <em style={{ color: "hsl(var(--accent))", fontStyle: "italic" }}>transformations</em>.
             </h2>
             <p
               className={`byf-reveal ${revealed ? "show" : ""} mt-5 text-[16px] leading-relaxed`}
-              style={{ color: "#b8b8be", animationDelay: "200ms", maxWidth: "62ch" }}
+              style={{ color: "hsl(var(--muted-foreground))", animationDelay: "200ms", maxWidth: "62ch" }}
             >
               Each one began with a conversation. Each one ended somewhere the founders couldn't have predicted alone.
             </p>
@@ -406,7 +406,7 @@ export const ClientStories = () => {
             className="hidden md:flex items-center gap-1 text-sm tabular-nums"
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              color: "#888890",
+              color: "hsl(var(--muted-foreground))",
               letterSpacing: "0.1em",
             }}
           >
@@ -418,7 +418,7 @@ export const ClientStories = () => {
         {/* Brass hairline */}
         <div
           className={`byf-reveal ${revealed ? "show" : ""} h-px w-full mb-16 md:mb-20`}
-          style={{ background: "rgba(212,165,116,0.25)", animationDelay: "100ms" }}
+          style={{ background: "hsl(var(--accent) / 0.25)", animationDelay: "100ms" }}
         />
 
         {/* Carousel */}
@@ -485,8 +485,8 @@ export const ClientStories = () => {
                             className="relative w-full h-full rounded-[2px] overflow-hidden"
                             style={{
                               boxShadow:
-                                "0 30px 80px -20px rgba(212,165,116,0.18), 0 10px 30px -10px rgba(0,0,0,0.6)",
-                              outline: "1px solid rgba(212,165,116,0.15)",
+                                "0 30px 80px -20px hsl(var(--accent) / 0.18), 0 10px 30px -10px rgba(0,0,0,0.6)",
+                              outline: "1px solid hsl(var(--accent) / 0.15)",
                               outlineOffset: "-1px",
                             }}
                           >
@@ -504,7 +504,7 @@ export const ClientStories = () => {
                               className="absolute inset-0 w-full h-full object-cover"
                               style={{
                                 background:
-                                  "radial-gradient(60% 50% at 50% 40%, rgba(212,165,116,0.18), #0a0a0b 70%)",
+                                  "radial-gradient(60% 50% at 50% 40%, hsl(var(--accent) / 0.18), hsl(var(--background)) 70%)",
                               }}
                             />
 
@@ -513,10 +513,10 @@ export const ClientStories = () => {
                               className="absolute top-3 left-3 px-2 py-1 text-[10px]"
                               style={{
                                 fontFamily: "'JetBrains Mono', monospace",
-                                color: "#e8c89a",
-                                background: "rgba(10,10,11,0.6)",
+                                color: "hsl(var(--accent))",
+                                background: "hsl(var(--background) / 0.6)",
                                 backdropFilter: "blur(6px)",
-                                border: "1px solid rgba(212,165,116,0.2)",
+                                border: "1px solid hsl(var(--accent) / 0.2)",
                               }}
                             >
                               [{s.id}]
@@ -527,7 +527,7 @@ export const ClientStories = () => {
                               <button
                                 onClick={() => setOptedIn((o) => ({ ...o, [i]: true }))}
                                 className="byf-focus absolute inset-0 grid place-items-center"
-                                style={{ background: "rgba(10,10,11,0.35)", color: "#f0f0f2" }}
+                                style={{ background: "hsl(var(--background) / 0.35)", color: "hsl(var(--foreground))" }}
                                 aria-label={`Play video for ${s.client}`}
                               >
                                 <span
@@ -535,9 +535,9 @@ export const ClientStories = () => {
                                   style={{
                                     fontFamily: "'JetBrains Mono', monospace",
                                     letterSpacing: "0.18em",
-                                    background: "rgba(10,10,11,0.7)",
-                                    border: "1px solid rgba(212,165,116,0.4)",
-                                    color: "#d4a574",
+                                    background: "hsl(var(--background) / 0.7)",
+                                    border: "1px solid hsl(var(--accent) / 0.4)",
+                                    color: "hsl(var(--accent))",
                                   }}
                                 >
                                   ▶ tap to play
@@ -552,10 +552,10 @@ export const ClientStories = () => {
                                 style={{
                                   fontFamily: "'JetBrains Mono', monospace",
                                   letterSpacing: "0.18em",
-                                  color: "#f0f0f2",
-                                  background: "rgba(10,10,11,0.6)",
+                                  color: "hsl(var(--foreground))",
+                                  background: "hsl(var(--background) / 0.6)",
                                   backdropFilter: "blur(6px)",
-                                  border: "1px solid rgba(212,165,116,0.2)",
+                                  border: "1px solid hsl(var(--accent) / 0.2)",
                                   transition: "opacity 400ms",
                                 }}
                               >
@@ -570,7 +570,7 @@ export const ClientStories = () => {
                                 style={{
                                   height: "1.5px",
                                   width: `${progress}%`,
-                                  background: "#d4a574",
+                                  background: "hsl(var(--accent))",
                                   opacity: hovering ? 1 : 0.6,
                                   transition: "width 120ms linear, opacity 300ms",
                                 }}
@@ -591,13 +591,13 @@ export const ClientStories = () => {
                               fontFamily: "'Fraunces', Georgia, serif",
                               fontSize: "clamp(1.75rem, 2.6vw, 2.4rem)",
                               fontWeight: 300,
-                              color: "#f0f0f2",
+                              color: "hsl(var(--foreground))",
                               lineHeight: 1.1,
                             }}
                           >
                             {s.client}
                           </div>
-                          <div className="mt-2 text-sm" style={{ color: "#888890" }}>
+                          <div className="mt-2 text-sm" style={{ color: "hsl(var(--muted-foreground))" }}>
                             {s.business}
                           </div>
                         </div>
@@ -609,7 +609,7 @@ export const ClientStories = () => {
                             fontSize: "clamp(1.5rem, 2.4vw, 2rem)",
                             fontWeight: 300,
                             lineHeight: 1.25,
-                            color: "#f0f0f2",
+                            color: "hsl(var(--foreground))",
                             fontStyle: "italic",
                             animationDelay: "280ms",
                           }}
@@ -619,7 +619,7 @@ export const ClientStories = () => {
 
                         <div
                           className="my-10 h-px w-full"
-                          style={{ background: "rgba(212,165,116,0.15)" }}
+                          style={{ background: "hsl(var(--accent) / 0.15)" }}
                         />
 
                         <div
@@ -640,7 +640,7 @@ export const ClientStories = () => {
                                   fontFamily: "'Fraunces', Georgia, serif",
                                   fontSize: "clamp(1.5rem, 2.2vw, 1.85rem)",
                                   fontWeight: 300,
-                                  color: "#e8c89a",
+                                  color: "hsl(var(--accent))",
                                   lineHeight: 1,
                                 }}
                               >
@@ -651,7 +651,7 @@ export const ClientStories = () => {
                                 style={{
                                   fontFamily: "'JetBrains Mono', monospace",
                                   letterSpacing: "0.18em",
-                                  color: "#888890",
+                                  color: "hsl(var(--muted-foreground))",
                                 }}
                               >
                                 {m.label}
@@ -662,7 +662,7 @@ export const ClientStories = () => {
 
                         <p
                           className={`byf-reveal ${revealed && isActive ? "show" : ""} mt-10 max-w-[60ch] text-[15px] leading-relaxed`}
-                          style={{ color: "#b8b8be", animationDelay: "360ms" }}
+                          style={{ color: "hsl(var(--muted-foreground))", animationDelay: "360ms" }}
                         >
                           {s.description}
                         </p>
@@ -672,7 +672,7 @@ export const ClientStories = () => {
                             href={s.href}
                             className="byf-focus group/link mt-8 inline-flex items-center gap-2 text-sm"
                             style={{
-                              color: "#d4a574",
+                              color: "hsl(var(--accent))",
                               fontFamily: "'Inter Tight', Inter, sans-serif",
                               letterSpacing: "0.02em",
                             }}
@@ -696,10 +696,10 @@ export const ClientStories = () => {
             aria-label="Previous story"
             className="byf-focus absolute top-1/2 -translate-y-1/2 left-4 md:left-2 h-11 w-11 rounded-full grid place-items-center opacity-0 group-hover:opacity-100"
             style={{
-              border: "1px solid rgba(212,165,116,0.4)",
-              background: "rgba(10,10,11,0.5)",
+              border: "1px solid hsl(var(--accent) / 0.4)",
+              background: "hsl(var(--background) / 0.5)",
               backdropFilter: "blur(10px)",
-              color: "#d4a574",
+              color: "hsl(var(--accent))",
               transform: `translate(${magnet.prev.x}px, calc(-50% + ${magnet.prev.y}px))`,
               transition: reduced
                 ? "opacity 400ms"
@@ -714,10 +714,10 @@ export const ClientStories = () => {
             aria-label="Next story"
             className="byf-focus absolute top-1/2 -translate-y-1/2 right-[10%] md:right-[9%] h-11 w-11 rounded-full grid place-items-center opacity-0 group-hover:opacity-100"
             style={{
-              border: "1px solid rgba(212,165,116,0.4)",
-              background: "rgba(10,10,11,0.5)",
+              border: "1px solid hsl(var(--accent) / 0.4)",
+              background: "hsl(var(--background) / 0.5)",
               backdropFilter: "blur(10px)",
-              color: "#d4a574",
+              color: "hsl(var(--accent))",
               transform: `translate(${magnet.next.x}px, calc(-50% + ${magnet.next.y}px))`,
               transition: reduced
                 ? "opacity 400ms"
@@ -741,7 +741,7 @@ export const ClientStories = () => {
                 style={{
                   height: "1px",
                   width: isActive ? 48 : 24,
-                  background: "rgba(184,184,190,0.3)",
+                  background: "hsl(var(--muted-foreground) / 0.3)",
                   transition: `width 600ms ${EASE}`,
                 }}
               >
@@ -750,7 +750,7 @@ export const ClientStories = () => {
                     className="absolute inset-y-0 left-0"
                     style={{
                       width: `${progress}%`,
-                      background: "#d4a574",
+                      background: "hsl(var(--accent))",
                       transition: "width 120ms linear",
                     }}
                   />
