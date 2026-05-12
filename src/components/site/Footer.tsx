@@ -71,6 +71,9 @@ export const Footer = () => {
           {/* Social / Legal */}
           <div>
             <h4 className="text-xs uppercase tracking-[0.2em] text-accent mb-4">Connect</h4>
+            <ul className="space-y-2.5 text-sm mb-5">
+              <li><a href="/#contact" className="text-muted-foreground hover:text-foreground transition-colors">Contact</a></li>
+            </ul>
             <div className="flex items-center gap-2 mb-5">
               <span
                 aria-label="LinkedIn (coming soon)"
