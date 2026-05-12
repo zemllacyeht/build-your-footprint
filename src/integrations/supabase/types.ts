@@ -14,6 +14,38 @@ export type Database = {
   }
   public: {
     Tables: {
+      approval_comments: {
+        Row: {
+          approval_id: string
+          author_id: string
+          content: string
+          created_at: string
+          id: string
+        }
+        Insert: {
+          approval_id: string
+          author_id: string
+          content: string
+          created_at?: string
+          id?: string
+        }
+        Update: {
+          approval_id?: string
+          author_id?: string
+          content?: string
+          created_at?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "approval_comments_approval_id_fkey"
+            columns: ["approval_id"]
+            isOneToOne: false
+            referencedRelation: "project_approvals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       client_deliverables: {
         Row: {
           client_id: string
@@ -264,6 +296,84 @@ export type Database = {
           phone?: string | null
           project_status?: string
           project_url?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      project_approvals: {
+        Row: {
+          client_id: string
+          created_at: string
+          decided_at: string | null
+          decided_by: string | null
+          description: string | null
+          id: string
+          preview_url: string | null
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          decided_at?: string | null
+          decided_by?: string | null
+          description?: string | null
+          id?: string
+          preview_url?: string | null
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          decided_at?: string | null
+          decided_by?: string | null
+          description?: string | null
+          id?: string
+          preview_url?: string | null
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      project_milestones: {
+        Row: {
+          client_id: string
+          completed_at: string | null
+          created_at: string
+          description: string | null
+          due_at: string | null
+          id: string
+          position: number
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          client_id: string
+          completed_at?: string | null
+          created_at?: string
+          description?: string | null
+          due_at?: string | null
+          id?: string
+          position?: number
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          client_id?: string
+          completed_at?: string | null
+          created_at?: string
+          description?: string | null
+          due_at?: string | null
+          id?: string
+          position?: number
+          status?: string
+          title?: string
           updated_at?: string
         }
         Relationships: []
