@@ -42,10 +42,10 @@ const CARES: Record<string, Omit<CartLine, "rationale">> = {
 };
 
 const ADDONS: Record<string, Omit<CartLine, "rationale">> = {
-  brand: { id: "addon-brand-identity", name: "Brand Identity Kit", price: "From $799", category: "Add-on" },
-  seo: { id: "addon-seo-boost", name: "SEO Boost", price: "From $349/mo", category: "Add-on" },
-  marketing: { id: "addon-marketing-collateral", name: "Marketing Collateral", price: "From $249/mo", category: "Add-on" },
-  content: { id: "addon-content-photography", name: "Content & Photography", price: "From $499", category: "Add-on" },
+  local: { id: "addon-local-service-boost", name: "Local Service Boost", price: "From $549/mo", category: "Add-on" },
+  social: { id: "addon-social-presence", name: "Social Presence", price: "From $699/mo", category: "Add-on" },
+  conversion: { id: "addon-conversion-focus", name: "Conversion Focus", price: "From $749 one-time", category: "Add-on" },
+  workspace: { id: "addon-business-workspace", name: "Business Workspace", price: "By application", category: "Add-on" },
 };
 
 export function recommend(a: WizardAnswers): Recommendation {
@@ -64,10 +64,10 @@ export function recommend(a: WizardAnswers): Recommendation {
     buildKey === "enterprise" ? "white" : buildKey === "signature" ? "growth" : "essential";
 
   const addonKeys: (keyof typeof ADDONS)[] = [];
-  if (a.brand === "refresh" || a.brand === "scratch") addonKeys.push("brand");
-  if (a.marketing.includes("seo") || a.goal === "local") addonKeys.push("seo");
-  if (a.marketing.includes("social")) addonKeys.push("marketing");
-  if (a.marketing.includes("content")) addonKeys.push("content");
+  if (a.marketing.includes("seo") || a.goal === "local") addonKeys.push("local");
+  if (a.marketing.includes("social") || a.marketing.includes("content")) addonKeys.push("social");
+  if (a.site === "landing" || (a.goal === "leads" && a.timeline === "asap")) addonKeys.push("conversion");
+  if (a.site === "ecom" || buildKey === "enterprise") addonKeys.push("workspace");
 
   const buildRationale = (() => {
     switch (buildKey) {
@@ -94,10 +94,10 @@ export function recommend(a: WizardAnswers): Recommendation {
   })();
 
   const addonRationale: Record<keyof typeof ADDONS, string> = {
-    brand: "Your brand needs work, so a logo, color, and type system gives the new site a strong base.",
-    seo: "You want to be found, so monthly SEO accelerates rankings instead of hoping for them.",
-    marketing: "Ongoing social and ad creative keeps your launch momentum visible every month.",
-    content: "Real photography and copy ready to drop in means launch day is not held up by missing assets.",
+    local: "You want to be found locally, so ongoing SEO and Google Business optimization gets you in front of nearby customers.",
+    social: "Staying visible takes consistent content, so monthly posts and emails keep your brand showing up where customers spend time.",
+    conversion: "A focused landing page built to convert turns ad spend or a campaign into actual leads and sales.",
+    workspace: "Bookings, customers, and payments add up fast, so a custom back-end keeps operations in one place instead of seven tools.",
   };
 
   const summary =
