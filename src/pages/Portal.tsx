@@ -17,6 +17,9 @@ import {
   Briefcase,
   Receipt,
   Settings,
+  Gift,
+  LifeBuoy,
+  FolderUp,
 } from "lucide-react";
 import { toast } from "sonner";
 import { ClientWorkspace } from "@/components/portal/ClientWorkspace";
@@ -25,6 +28,9 @@ import { ProjectTimeline } from "@/components/portal/ProjectTimeline";
 import { ProjectApprovals } from "@/components/portal/ProjectApprovals";
 import { PortalOverview } from "@/components/portal/PortalOverview";
 import { AccountSettings } from "@/components/portal/AccountSettings";
+import { ReferralPanel } from "@/components/portal/ReferralPanel";
+import { BuildAssetsPanel } from "@/components/portal/BuildAssetsPanel";
+import { Link } from "react-router-dom";
 
 interface Profile {
   id: string;
@@ -84,6 +90,9 @@ const Portal = () => {
             </div>
           </div>
           <div className="flex items-center gap-2">
+            <Button variant="ghost" size="sm" asChild>
+              <Link to="/support"><LifeBuoy className="h-4 w-4" /> Support</Link>
+            </Button>
             {role === "admin" && (
               <Button variant="glass" size="sm" onClick={() => navigate("/admin")}>
                 Admin Console
@@ -127,8 +136,14 @@ const Portal = () => {
               <TabsTrigger value="workspace" className="gap-1.5">
                 <Briefcase className="h-4 w-4" /> Files & Messages
               </TabsTrigger>
+              <TabsTrigger value="assets" className="gap-1.5">
+                <FolderUp className="h-4 w-4" /> Build Assets
+              </TabsTrigger>
               <TabsTrigger value="billing" className="gap-1.5">
                 <Receipt className="h-4 w-4" /> Billing
+              </TabsTrigger>
+              <TabsTrigger value="referrals" className="gap-1.5">
+                <Gift className="h-4 w-4" /> Referrals
               </TabsTrigger>
               <TabsTrigger value="settings" className="gap-1.5">
                 <Settings className="h-4 w-4" /> Settings
@@ -204,10 +219,26 @@ const Portal = () => {
               </Card>
             </TabsContent>
 
+            <TabsContent value="assets">
+              <Card className="glass border-border/50">
+                <CardContent className="pt-6">
+                  <BuildAssetsPanel clientId={user.id} isAdmin={false} />
+                </CardContent>
+              </Card>
+            </TabsContent>
+
             <TabsContent value="billing">
               <Card className="glass border-border/50">
                 <CardContent className="pt-6">
                   <ClientInvoices clientId={user.id} isAdmin={false} />
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="referrals">
+              <Card className="glass border-border/50">
+                <CardContent className="pt-6">
+                  <ReferralPanel />
                 </CardContent>
               </Card>
             </TabsContent>

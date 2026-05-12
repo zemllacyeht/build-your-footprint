@@ -40,12 +40,19 @@ import {
   RefreshCw,
   UserPlus,
   Briefcase,
+  Gift,
+  LifeBuoy,
+  Users,
+  FolderUp,
 } from "lucide-react";
 import { toast } from "sonner";
 import { ClientWorkspace } from "@/components/portal/ClientWorkspace";
 import { ClientInvoices } from "@/components/portal/ClientInvoices";
 import { ProjectTimeline } from "@/components/portal/ProjectTimeline";
 import { ProjectApprovals } from "@/components/portal/ProjectApprovals";
+import { BuildAssetsPanel } from "@/components/portal/BuildAssetsPanel";
+import { AdminReferrals } from "@/components/admin/AdminReferrals";
+import { AdminSupport } from "@/components/admin/AdminSupport";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { z } from "zod";
 
@@ -282,82 +289,106 @@ const Admin = () => {
       </header>
 
       <section className="container py-10">
-        <div className="flex items-end justify-between mb-8">
-          <div>
-            <p className="text-sm text-muted-foreground">Clients</p>
-            <h1 className="font-display text-4xl font-semibold tracking-tight mt-1">
-              {rows.length} {rows.length === 1 ? "account" : "accounts"}
-            </h1>
-          </div>
-        </div>
+        <Tabs defaultValue="clients" className="space-y-6">
+          <TabsList className="bg-muted/40 p-1">
+            <TabsTrigger value="clients" className="gap-1.5">
+              <Users className="h-4 w-4" /> Clients
+            </TabsTrigger>
+            <TabsTrigger value="referrals" className="gap-1.5">
+              <Gift className="h-4 w-4" /> Referrals
+            </TabsTrigger>
+            <TabsTrigger value="support" className="gap-1.5">
+              <LifeBuoy className="h-4 w-4" /> Support
+            </TabsTrigger>
+          </TabsList>
 
-        <div className="glass rounded-2xl border border-border/50 overflow-hidden">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Company</TableHead>
-                <TableHead>Contact</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Role</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {rows.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={6} className="text-center text-muted-foreground py-12">
-                    No clients yet. Use "Invite client" to add your first.
-                  </TableCell>
-                </TableRow>
-              ) : (
-                rows.map((row) => (
-                  <TableRow key={row.id}>
-                    <TableCell className="font-medium">{row.company_name ?? "Not set"}</TableCell>
-                    <TableCell>{row.contact_name ?? "Not set"}</TableCell>
-                    <TableCell className="text-muted-foreground">{row.email ?? "Not set"}</TableCell>
-                    <TableCell>
-                      <Badge variant="secondary" className="capitalize">
-                        {row.project_status}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      {row.is_admin ? (
-                        <Badge className="bg-gradient-gold text-accent-foreground">Admin</Badge>
-                      ) : (
-                        <Badge variant="outline">Client</Badge>
-                      )}
-                    </TableCell>
-                    <TableCell className="text-right space-x-1">
-                      <Button variant="ghost" size="sm" onClick={() => setWorkspaceFor(row)}>
-                        <Briefcase className="h-4 w-4" /> Workspace
-                      </Button>
-                      <Button variant="ghost" size="sm" onClick={() => openEditor(row)}>
-                        <Pencil className="h-4 w-4" /> Edit
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => toggleAdmin(row)}
-                        disabled={row.id === user?.id && row.is_admin}
-                      >
-                        {row.is_admin ? (
-                          <>
-                            <ShieldOff className="h-4 w-4" /> Demote
-                          </>
-                        ) : (
-                          <>
-                            <Shield className="h-4 w-4" /> Make admin
-                          </>
-                        )}
-                      </Button>
-                    </TableCell>
+          <TabsContent value="clients" className="space-y-6">
+            <div className="flex items-end justify-between">
+              <div>
+                <p className="text-sm text-muted-foreground">Clients</p>
+                <h1 className="font-display text-4xl font-semibold tracking-tight mt-1">
+                  {rows.length} {rows.length === 1 ? "account" : "accounts"}
+                </h1>
+              </div>
+            </div>
+
+            <div className="glass rounded-2xl border border-border/50 overflow-hidden">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Company</TableHead>
+                    <TableHead>Contact</TableHead>
+                    <TableHead>Email</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Role</TableHead>
+                    <TableHead className="text-right">Actions</TableHead>
                   </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
-        </div>
+                </TableHeader>
+                <TableBody>
+                  {rows.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={6} className="text-center text-muted-foreground py-12">
+                        No clients yet. Use "Invite client" to add your first.
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    rows.map((row) => (
+                      <TableRow key={row.id}>
+                        <TableCell className="font-medium">{row.company_name ?? "Not set"}</TableCell>
+                        <TableCell>{row.contact_name ?? "Not set"}</TableCell>
+                        <TableCell className="text-muted-foreground">{row.email ?? "Not set"}</TableCell>
+                        <TableCell>
+                          <Badge variant="secondary" className="capitalize">
+                            {row.project_status}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          {row.is_admin ? (
+                            <Badge className="bg-gradient-gold text-accent-foreground">Admin</Badge>
+                          ) : (
+                            <Badge variant="outline">Client</Badge>
+                          )}
+                        </TableCell>
+                        <TableCell className="text-right space-x-1">
+                          <Button variant="ghost" size="sm" onClick={() => setWorkspaceFor(row)}>
+                            <Briefcase className="h-4 w-4" /> Workspace
+                          </Button>
+                          <Button variant="ghost" size="sm" onClick={() => openEditor(row)}>
+                            <Pencil className="h-4 w-4" /> Edit
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => toggleAdmin(row)}
+                            disabled={row.id === user?.id && row.is_admin}
+                          >
+                            {row.is_admin ? (
+                              <>
+                                <ShieldOff className="h-4 w-4" /> Demote
+                              </>
+                            ) : (
+                              <>
+                                <Shield className="h-4 w-4" /> Make admin
+                              </>
+                            )}
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="referrals">
+            <AdminReferrals />
+          </TabsContent>
+
+          <TabsContent value="support">
+            <AdminSupport />
+          </TabsContent>
+        </Tabs>
       </section>
 
       {/* Edit dialog */}
@@ -521,6 +552,9 @@ const Admin = () => {
                 <TabsTrigger value="timeline">Timeline</TabsTrigger>
                 <TabsTrigger value="approvals">Approvals</TabsTrigger>
                 <TabsTrigger value="workspace">Files & Messages</TabsTrigger>
+                <TabsTrigger value="assets">
+                  <FolderUp className="h-4 w-4" /> Build Assets
+                </TabsTrigger>
                 <TabsTrigger value="billing">Billing</TabsTrigger>
               </TabsList>
               <TabsContent value="timeline">
@@ -531,6 +565,9 @@ const Admin = () => {
               </TabsContent>
               <TabsContent value="workspace">
                 <ClientWorkspace clientId={workspaceFor.id} isAdmin />
+              </TabsContent>
+              <TabsContent value="assets">
+                <BuildAssetsPanel clientId={workspaceFor.id} isAdmin />
               </TabsContent>
               <TabsContent value="billing">
                 <ClientInvoices clientId={workspaceFor.id} isAdmin />
