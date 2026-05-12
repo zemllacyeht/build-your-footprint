@@ -46,6 +46,48 @@ export type Database = {
           },
         ]
       }
+      client_build_assets: {
+        Row: {
+          category: string
+          client_id: string
+          created_at: string
+          description: string | null
+          file_path: string
+          id: string
+          label: string | null
+          mime_type: string | null
+          original_filename: string
+          size_bytes: number | null
+          uploader_id: string
+        }
+        Insert: {
+          category?: string
+          client_id: string
+          created_at?: string
+          description?: string | null
+          file_path: string
+          id?: string
+          label?: string | null
+          mime_type?: string | null
+          original_filename: string
+          size_bytes?: number | null
+          uploader_id: string
+        }
+        Update: {
+          category?: string
+          client_id?: string
+          created_at?: string
+          description?: string | null
+          file_path?: string
+          id?: string
+          label?: string | null
+          mime_type?: string | null
+          original_filename?: string
+          size_bytes?: number | null
+          uploader_id?: string
+        }
+        Relationships: []
+      }
       client_deliverables: {
         Row: {
           client_id: string
@@ -170,6 +212,89 @@ export type Database = {
             columns: ["sender_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      client_referrals: {
+        Row: {
+          created_at: string
+          id: string
+          message: string | null
+          referred_email: string
+          referred_name: string | null
+          referrer_id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message?: string | null
+          referred_email: string
+          referred_name?: string | null
+          referrer_id: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message?: string | null
+          referred_email?: string
+          referred_name?: string | null
+          referrer_id?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      client_subscriptions: {
+        Row: {
+          cancel_at: string | null
+          canceled_at: string | null
+          client_id: string
+          created_at: string
+          current_period_end: string | null
+          id: string
+          plan_id: string | null
+          status: string
+          stripe_customer_id: string | null
+          stripe_subscription_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          cancel_at?: string | null
+          canceled_at?: string | null
+          client_id: string
+          created_at?: string
+          current_period_end?: string | null
+          id?: string
+          plan_id?: string | null
+          status?: string
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          cancel_at?: string | null
+          canceled_at?: string | null
+          client_id?: string
+          created_at?: string
+          current_period_end?: string | null
+          id?: string
+          plan_id?: string | null
+          status?: string
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_subscriptions_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "subscription_plans"
             referencedColumns: ["id"]
           },
         ]
@@ -375,6 +500,143 @@ export type Database = {
           status?: string
           title?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      stripe_events: {
+        Row: {
+          event_id: string
+          event_type: string
+          processed_at: string
+        }
+        Insert: {
+          event_id: string
+          event_type: string
+          processed_at?: string
+        }
+        Update: {
+          event_id?: string
+          event_type?: string
+          processed_at?: string
+        }
+        Relationships: []
+      }
+      subscription_plans: {
+        Row: {
+          active: boolean
+          amount_cents: number
+          created_at: string
+          currency: string
+          description: string | null
+          id: string
+          interval: string
+          name: string
+          plan_type: string
+          position: number
+          stripe_price_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          amount_cents: number
+          created_at?: string
+          currency?: string
+          description?: string | null
+          id?: string
+          interval?: string
+          name: string
+          plan_type?: string
+          position?: number
+          stripe_price_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          amount_cents?: number
+          created_at?: string
+          currency?: string
+          description?: string | null
+          id?: string
+          interval?: string
+          name?: string
+          plan_type?: string
+          position?: number
+          stripe_price_id?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      support_ticket_attachments: {
+        Row: {
+          created_at: string
+          file_path: string
+          id: string
+          mime_type: string | null
+          size_bytes: number | null
+          ticket_id: string
+        }
+        Insert: {
+          created_at?: string
+          file_path: string
+          id?: string
+          mime_type?: string | null
+          size_bytes?: number | null
+          ticket_id: string
+        }
+        Update: {
+          created_at?: string
+          file_path?: string
+          id?: string
+          mime_type?: string | null
+          size_bytes?: number | null
+          ticket_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "support_ticket_attachments_ticket_id_fkey"
+            columns: ["ticket_id"]
+            isOneToOne: false
+            referencedRelation: "support_tickets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      support_tickets: {
+        Row: {
+          admin_notes: string | null
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          status: string
+          subject: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          admin_notes?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          status?: string
+          subject: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          admin_notes?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          status?: string
+          subject?: string
+          updated_at?: string
+          user_id?: string | null
         }
         Relationships: []
       }

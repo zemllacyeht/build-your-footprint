@@ -14,6 +14,30 @@ import {
 } from "@/components/ui/select";
 import { Check, CircleDashed, CircleDot, Loader2, Pencil, Plus, Trash2, Octagon, Milestone } from "lucide-react";
 import { toast } from "sonner";
+import { sendNotification, getClientContact } from "@/lib/notifications";
+
+async function notifyMilestone(
+  clientId: string,
+  milestoneId: string,
+  event: "created" | "updated" | "completed",
+  data: { title: string; description?: string | null; status: string; due_at?: string | null },
+) {
+  const c = await getClientContact(clientId);
+  if (!c.email) return;
+  await sendNotification({
+    templateName: "milestone-update",
+    recipientEmail: c.email,
+    idempotencyKey: `milestone-${milestoneId}-${event}-${data.status}`,
+    templateData: {
+      clientName: c.name || c.company || undefined,
+      milestoneTitle: data.title,
+      milestoneDescription: data.description || undefined,
+      status: data.status,
+      dueDate: data.due_at || undefined,
+      event,
+    },
+  });
+}
 
 export interface Milestone {
   id: string;
@@ -94,17 +118,29 @@ export const ProjectTimeline = ({ clientId, isAdmin = false }: Props) => {
     if (!draft.title.trim()) return toast.error("Title required");
     setSaving(true);
     const position = items.length ? Math.max(...items.map((m) => m.position)) + 1 : 0;
-    const { error } = await supabase.from("project_milestones").insert({
-      client_id: clientId,
-      title: draft.title.trim(),
-      description: draft.description.trim() || null,
-      status: draft.status,
-      due_at: draft.due_at || null,
-      position,
-    });
+    const { data: inserted, error } = await supabase
+      .from("project_milestones")
+      .insert({
+        client_id: clientId,
+        title: draft.title.trim(),
+        description: draft.description.trim() || null,
+        status: draft.status,
+        due_at: draft.due_at || null,
+        position,
+      })
+      .select()
+      .single();
     setSaving(false);
     if (error) return toast.error(error.message);
-    toast.success("Milestone added");
+    toast.success("Milestone added, client notified");
+    if (inserted) {
+      void notifyMilestone(clientId, inserted.id, "created", {
+        title: inserted.title,
+        description: inserted.description,
+        status: inserted.status,
+        due_at: inserted.due_at,
+      });
+    }
     setShowForm(false);
     setDraft({ title: "", description: "", status: "pending", due_at: "" });
   };
@@ -138,6 +174,12 @@ export const ProjectTimeline = ({ clientId, isAdmin = false }: Props) => {
       })
       .eq("id", m.id);
     if (error) return toast.error(error.message);
+    void notifyMilestone(m.client_id, m.id, status === "complete" ? "completed" : "updated", {
+      title: m.title,
+      description: m.description,
+      status,
+      due_at: m.due_at,
+    });
   };
 
   const remove = async (m: Milestone) => {
