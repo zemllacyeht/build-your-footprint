@@ -12,3 +12,11 @@ Allow: /
 
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /portal
+Disallow: /login
+Disallow: /reset-password
+Disallow: /unsubscribe
+
+Sitemap: https://footprint-forge-portal.lovable.app/sitemap.xml
+
