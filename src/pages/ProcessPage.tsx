@@ -34,9 +34,6 @@ const ProcessPage = () => {
               <Button variant="hero" size="lg" asChild>
                 <Link to="/contact">Start a project <ArrowRight className="h-4 w-4" /></Link>
               </Button>
-              <Button variant="glass" size="lg" asChild>
-                <Link to="/work">See past launches</Link>
-              </Button>
             </div>
           </div>
         </div>

@@ -44,7 +44,7 @@ export const Footer = () => {
                   Free Audit
                 </a>
               </li>
-              <li><a href="/work" className="text-muted-foreground hover:text-foreground transition-colors">Our Work</a></li>
+              
             </ul>
           </div>
 
