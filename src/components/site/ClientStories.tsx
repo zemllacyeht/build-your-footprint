@@ -42,7 +42,7 @@ const STORIES: Story[] = [
     metrics: [
       { value: "312%", label: "lead volume" },
       { value: "2×", label: "avg project size" },
-      { value: "~$84k", label: "mo. recurring" },
+      { value: "~$24k", label: "mo. recurring" },
     ],
     description:
       "Two generations of builders, finally with a site that looks like the work. We rebranded the family business for the way clients actually find contractors in 2026.",
