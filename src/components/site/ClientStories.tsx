@@ -18,7 +18,7 @@ const STORIES: Story[] = [
   {
     id: "01",
     videoSrc: "/videos/byf-01.mp4",
-    poster: "/testimonial-01.jpg",
+    poster: "/posters/byf-01.jpg",
     client: "David & Linh Park",
     business: "Co-founders, Marrow Coffee Roasters",
     quote:
@@ -34,7 +34,7 @@ const STORIES: Story[] = [
   {
     id: "02",
     videoSrc: "/videos/byf-02.mp4",
-    poster: "/testimonial-02.jpg",
+    poster: "/posters/byf-02.jpg",
     client: "Marcus Reid",
     business: "CEO, Reid & Sons Construction",
     quote:
@@ -50,7 +50,7 @@ const STORIES: Story[] = [
   {
     id: "03",
     videoSrc: "/videos/byf-03.mp4",
-    poster: "/testimonial-03.jpg",
+    poster: "/posters/byf-03.jpg",
     client: "Aisha Okonkwo",
     business: "Founder, Aisha Okonkwo Studio",
     quote: "I feel like the exact idea i had in my head was transferred to my site.",
@@ -490,23 +490,33 @@ export const ClientStories = () => {
                               outlineOffset: "-1px",
                             }}
                           >
-                            <video
-                              ref={(el) => (videoRefs.current[i] = el)}
-                              data-video-id={s.id}
-                              src={s.videoSrc}
-                              poster={s.poster}
-                              muted
-                              playsInline
-                              preload={preload}
-                              onTimeUpdate={() => onTimeUpdate(i)}
-                              onEnded={() => onVideoEnded(i)}
-                              aria-label={`${s.client}, ${s.business}: ${s.quote}`}
-                              className="absolute inset-0 w-full h-full object-cover"
-                              style={{
-                                background:
-                                  "radial-gradient(60% 50% at 50% 40%, hsl(var(--accent) / 0.18), hsl(var(--background)) 70%)",
-                              }}
-                            />
+                            {isAdj ? (
+                              <video
+                                ref={(el) => (videoRefs.current[i] = el)}
+                                data-video-id={s.id}
+                                src={s.videoSrc}
+                                poster={s.poster}
+                                muted
+                                playsInline
+                                preload={preload}
+                                onTimeUpdate={() => onTimeUpdate(i)}
+                                onEnded={() => onVideoEnded(i)}
+                                aria-label={`${s.client}, ${s.business}: ${s.quote}`}
+                                className="absolute inset-0 w-full h-full object-cover"
+                                style={{
+                                  background:
+                                    "radial-gradient(60% 50% at 50% 40%, hsl(var(--accent) / 0.18), hsl(var(--background)) 70%)",
+                                }}
+                              />
+                            ) : (
+                              <img
+                                src={s.poster}
+                                alt={`${s.client}, ${s.business}`}
+                                loading="lazy"
+                                decoding="async"
+                                className="absolute inset-0 w-full h-full object-cover"
+                              />
+                            )}
 
                             {/* number chip */}
                             <div
