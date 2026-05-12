@@ -242,7 +242,17 @@ export const Pricing = () => {
 
   const startProject = (id: string, name: string, price: string, category: "Build package" | "Care plan" | "Add-on") => {
     addItem({ id, name, price, category });
-    setTimeout(scrollToContact, 120);
+    // Build packages: nudge to care section first if no care chosen yet.
+    // Care plans: nudge to add-ons. Add-ons (and any second build): go to contact.
+    setTimeout(() => {
+      if (category === "Build package" && !hasCare) {
+        careRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else if (category === "Care plan") {
+        addonRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        scrollToContact();
+      }
+    }, 120);
   };
 
   return (
