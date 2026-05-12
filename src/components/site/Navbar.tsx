@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, ShoppingCart } from "lucide-react";
-import { useCart } from "@/hooks/useCart";
+import { Menu, X } from "lucide-react";
 
 const links = [
   { href: "/", label: "Home" },
