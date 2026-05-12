@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import logoMark from "@/assets/logo-mark.svg";
 
 const links: { href: string; label: string; tabletHidden?: boolean }[] = [
   { href: "/", label: "Home", tabletHidden: true },
@@ -30,9 +31,7 @@ export const Navbar = () => {
     >
       <nav className="container flex items-center justify-between">
         <a href="/" className="flex items-center gap-2 group">
-          <div className="h-9 w-9 rounded-lg bg-gradient-primary grid place-items-center shadow-glow">
-            <span className="font-display font-bold text-primary-foreground text-lg">F</span>
-          </div>
+          <img src={logoMark} alt="Build Your Footprint" className="h-9 w-9" />
           <div className="leading-tight">
             <div className="font-display text-base font-semibold tracking-tight">
               Build Your <span className="text-gradient-gold">Footprint</span>
