@@ -44,6 +44,9 @@ import {
 import { toast } from "sonner";
 import { ClientWorkspace } from "@/components/portal/ClientWorkspace";
 import { ClientInvoices } from "@/components/portal/ClientInvoices";
+import { ProjectTimeline } from "@/components/portal/ProjectTimeline";
+import { ProjectApprovals } from "@/components/portal/ProjectApprovals";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { z } from "zod";
 
 const STATUSES = [
@@ -501,24 +504,38 @@ const Admin = () => {
         </DialogContent>
       </Dialog>
 
-      {/* Workspace dialog (deliverables + messages) */}
+      {/* Per-client management */}
       <Dialog open={!!workspaceFor} onOpenChange={(o) => !o && setWorkspaceFor(null)}>
-        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>
               {workspaceFor?.company_name || workspaceFor?.email} workspace
             </DialogTitle>
             <DialogDescription>
-              Upload deliverables and message your client directly.
+              Manage timeline, approvals, files, messages, and billing for this client.
             </DialogDescription>
           </DialogHeader>
           {workspaceFor && (
-            <div className="space-y-8">
-              <ClientWorkspace clientId={workspaceFor.id} isAdmin />
-              <div className="border-t border-border/50 pt-6">
+            <Tabs defaultValue="timeline" className="space-y-4">
+              <TabsList className="flex flex-wrap h-auto gap-1">
+                <TabsTrigger value="timeline">Timeline</TabsTrigger>
+                <TabsTrigger value="approvals">Approvals</TabsTrigger>
+                <TabsTrigger value="workspace">Files & Messages</TabsTrigger>
+                <TabsTrigger value="billing">Billing</TabsTrigger>
+              </TabsList>
+              <TabsContent value="timeline">
+                <ProjectTimeline clientId={workspaceFor.id} isAdmin />
+              </TabsContent>
+              <TabsContent value="approvals">
+                <ProjectApprovals clientId={workspaceFor.id} isAdmin />
+              </TabsContent>
+              <TabsContent value="workspace">
+                <ClientWorkspace clientId={workspaceFor.id} isAdmin />
+              </TabsContent>
+              <TabsContent value="billing">
                 <ClientInvoices clientId={workspaceFor.id} isAdmin />
-              </div>
-            </div>
+              </TabsContent>
+            </Tabs>
           )}
         </DialogContent>
       </Dialog>
