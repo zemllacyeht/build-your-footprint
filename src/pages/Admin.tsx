@@ -40,12 +40,19 @@ import {
   RefreshCw,
   UserPlus,
   Briefcase,
+  Gift,
+  LifeBuoy,
+  Users,
+  FolderUp,
 } from "lucide-react";
 import { toast } from "sonner";
 import { ClientWorkspace } from "@/components/portal/ClientWorkspace";
 import { ClientInvoices } from "@/components/portal/ClientInvoices";
 import { ProjectTimeline } from "@/components/portal/ProjectTimeline";
 import { ProjectApprovals } from "@/components/portal/ProjectApprovals";
+import { BuildAssetsPanel } from "@/components/portal/BuildAssetsPanel";
+import { AdminReferrals } from "@/components/admin/AdminReferrals";
+import { AdminSupport } from "@/components/admin/AdminSupport";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { z } from "zod";
 
