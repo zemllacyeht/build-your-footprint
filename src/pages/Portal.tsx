@@ -17,6 +17,9 @@ import {
   Briefcase,
   Receipt,
   Settings,
+  Gift,
+  LifeBuoy,
+  FolderUp,
 } from "lucide-react";
 import { toast } from "sonner";
 import { ClientWorkspace } from "@/components/portal/ClientWorkspace";
@@ -25,6 +28,9 @@ import { ProjectTimeline } from "@/components/portal/ProjectTimeline";
 import { ProjectApprovals } from "@/components/portal/ProjectApprovals";
 import { PortalOverview } from "@/components/portal/PortalOverview";
 import { AccountSettings } from "@/components/portal/AccountSettings";
+import { ReferralPanel } from "@/components/portal/ReferralPanel";
+import { BuildAssetsPanel } from "@/components/portal/BuildAssetsPanel";
+import { Link } from "react-router-dom";
 
 interface Profile {
   id: string;
