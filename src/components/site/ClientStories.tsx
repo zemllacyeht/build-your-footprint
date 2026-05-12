@@ -60,7 +60,7 @@ const STORIES: Story[] = [
       { value: "$12k", label: "avg commission" },
     ],
     description:
-      "A lash artist whose website had been quietly contradicting her work for years. We rebuilt around her actual artistry and the right customers started finding her.",
+      "A painter whose website had been quietly contradicting her work for years. We rebuilt around her actual artistry and the right customers started finding her.",
   },
 ];
 
