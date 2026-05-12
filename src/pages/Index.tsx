@@ -25,6 +25,7 @@ const Index = () => {
         <Contact />
       </main>
       <Footer />
+      <MobileSelectionsBar />
     </div>
   );
 };
