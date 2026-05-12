@@ -13,22 +13,21 @@ export const ClientPortal = () => {
             <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 mb-6">
               <Lock className="h-3.5 w-3.5 text-accent" />
               <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                Client Portal
+                Your Private Portal
               </span>
             </div>
             <h3 className="font-display text-3xl md:text-5xl font-light leading-tight mb-6">
-              A private hub built for <span className="italic text-gradient-gold">your project</span>.
+              Every client gets a <span className="italic text-gradient-gold">personalized portal</span>.
             </h3>
             <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-              Every client gets a password-protected dashboard. Preview your live site,
-              comment on revisions, view invoices, and manage your monthly hosting all in one secure place.
+              Your project lives here. Your invoices live here. Your monthly hosting lives here. Yours for as long as we work together.
             </p>
 
             <ul className="space-y-4">
               {[
                 { icon: Eye, t: "Live website previews", d: "See your in-progress site exactly as your customers will." },
-                { icon: MessageSquare, t: "Review and approve in real time", d: "Leave feedback inline. We iterate without endless email threads." },
-                { icon: CreditCard, t: "One-click invoices and hosting", d: "Pay project invoices and manage monthly recurring billing securely." },
+                { icon: MessageSquare, t: "Real-time feedback", d: "Comment inline. We iterate without endless email threads." },
+                { icon: CreditCard, t: "Invoices & hosting in one place", d: "Pay project invoices and manage monthly billing securely." },
                 { icon: Lock, t: "Account-only access", d: "We provision your login. No public sign-ups, no leaks." },
               ].map((f) => (
                 <li key={f.t} className="flex gap-4">
@@ -67,7 +66,7 @@ export const ClientPortal = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Welcome back</div>
-                    <div className="font-display text-xl font-medium mt-0.5">Acme Coffee Co.</div>
+                    <div className="font-display text-xl font-medium mt-0.5">Marrow Coffee Roasters</div>
                   </div>
                   <div className="px-3 py-1 rounded-full bg-accent/10 border border-accent/30">
                     <span className="text-[10px] font-medium text-accent uppercase tracking-wider">In Review</span>
