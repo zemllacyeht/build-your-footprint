@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, ShoppingCart } from "lucide-react";
-import { useCart } from "@/hooks/useCart";
+import { Menu, X } from "lucide-react";
 
 const links = [
   { href: "/", label: "Home" },
@@ -16,7 +15,6 @@ const links = [
 export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const { count, openCart } = useCart();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -52,35 +50,12 @@ export const Navbar = () => {
         </div>
 
         <div className="hidden md:flex items-center gap-3">
-          <button
-            onClick={openCart}
-            aria-label="Open cart"
-            className="relative h-9 w-9 grid place-items-center rounded-md glass hover:border-primary/40 transition"
-          >
-            <ShoppingCart className="h-4 w-4" />
-            {count > 0 && (
-              <span className="absolute -top-1.5 -right-1.5 h-4 min-w-4 px-1 rounded-full bg-gradient-gold text-accent-foreground text-[10px] font-semibold grid place-items-center">
-                {count}
-              </span>
-            )}
-          </button>
           <Button variant="hero" size="sm" asChild>
             <a href="/contact">Start a Project</a>
           </Button>
         </div>
 
-        <button className="md:hidden text-foreground flex items-center gap-3" onClick={() => setOpen(!open)} aria-label="Menu">
-          <span
-            onClick={(e) => { e.stopPropagation(); openCart(); }}
-            className="relative h-8 w-8 grid place-items-center rounded-md glass"
-          >
-            <ShoppingCart className="h-4 w-4" />
-            {count > 0 && (
-              <span className="absolute -top-1.5 -right-1.5 h-4 min-w-4 px-1 rounded-full bg-gradient-gold text-accent-foreground text-[10px] font-semibold grid place-items-center">
-                {count}
-              </span>
-            )}
-          </span>
+        <button className="md:hidden text-foreground" onClick={() => setOpen(!open)} aria-label="Menu">
           {open ? <X /> : <Menu />}
         </button>
       </nav>

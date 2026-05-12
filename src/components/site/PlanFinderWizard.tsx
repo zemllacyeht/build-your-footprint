@@ -81,7 +81,7 @@ const STEPS: { id: StepId; title: string; eyebrow: string }[] = [
 const initialAnswers: WizardAnswers = { marketing: [], budget: 1 };
 
 export const PlanFinderWizard = () => {
-  const { addItem, openCart, items } = useCart();
+  const { addItem, items } = useCart();
   const { toast } = useToast();
   const [stepIndex, setStepIndex] = useState(0);
   const [answers, setAnswers] = useState<WizardAnswers>(initialAnswers);
@@ -144,24 +144,19 @@ export const PlanFinderWizard = () => {
     });
   };
 
-  const addAllToCart = () => {
+  const startWithPlan = () => {
     const lines = [recommendation.build, recommendation.care, ...recommendation.addons];
     const existingIds = new Set(items.map((i) => i.id));
-    let added = 0;
     lines.forEach((l) => {
       if (!existingIds.has(l.id)) {
         addItem({ id: l.id, name: l.name, price: l.price, category: l.category });
-        added++;
       }
     });
     toast({
-      title: added > 0 ? "Plan added to your cart" : "Already in your cart",
-      description:
-        added > 0
-          ? `${recommendation.build.name} build, ${recommendation.care.name}, and ${recommendation.addons.length} add-on${recommendation.addons.length === 1 ? "" : "s"}.`
-          : "Open the cart to review or send the request.",
+      title: "Plan added to your request",
+      description: `${recommendation.build.name} build, ${recommendation.care.name}, and ${recommendation.addons.length} add-on${recommendation.addons.length === 1 ? "" : "s"}.`,
     });
-    openCart();
+    window.location.href = "/contact";
   };
 
   return (
@@ -350,11 +345,8 @@ export const PlanFinderWizard = () => {
                   )}
 
                   <div className="flex flex-col sm:flex-row gap-3">
-                    <Button variant="hero" size="lg" onClick={addAllToCart} className="flex-1">
-                      Add plan to cart <ArrowRight className="h-4 w-4" />
-                    </Button>
-                    <Button variant="glass" size="lg" onClick={openCart}>
-                      View cart
+                    <Button variant="hero" size="lg" onClick={startWithPlan} className="flex-1">
+                      Start a project with this plan <ArrowRight className="h-4 w-4" />
                     </Button>
                     <Button variant="ghost" size="lg" onClick={reset}>
                       <RotateCcw className="h-4 w-4" />

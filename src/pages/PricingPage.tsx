@@ -35,7 +35,7 @@ const PricingPage = () => {
   return (
     <PageLayout
       title="Pricing · Build Your Footprint"
-      description="Answer a few questions to get a tailored plan, then send it straight to your cart. Transparent two part pricing with a one time build fee plus a simple monthly retainer."
+      description="Answer a few questions to get a tailored plan, then send it straight to your project request. Transparent two part pricing with a one time build fee plus a simple monthly retainer."
     >
       <section className="relative pt-28 md:pt-32 pb-2 overflow-hidden grain">
         <div className="absolute inset-0 -z-10">

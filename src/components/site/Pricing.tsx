@@ -1,72 +1,108 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Check, Megaphone, Mail, Image as ImageIcon, FileText, ShieldCheck, CreditCard, Server, LifeBuoy, RefreshCw, Hammer, Repeat, Lock, Plus, ArrowDown, Sparkles, X, Trash2, Search, Camera, PenTool, ChevronDown, ChevronUp } from "lucide-react";
+import {
+  Check,
+  Mail,
+  ShieldCheck,
+  CreditCard,
+  Server,
+  LifeBuoy,
+  RefreshCw,
+  Hammer,
+  Repeat,
+  Lock,
+  Plus,
+  ArrowDown,
+  Sparkles,
+  X,
+  Trash2,
+  Search,
+  Megaphone,
+  Target,
+  LayoutDashboard,
+  TrendingUp,
+  PenTool,
+  FileText,
+  Calendar,
+  Database,
+  Link as LinkIcon,
+  MapPin,
+  BarChart3,
+  Send,
+  FlaskConical,
+  Zap,
+} from "lucide-react";
 import { useCart } from "@/hooks/useCart";
 
 const addons = [
   {
-    id: "addon-marketing-collateral",
-    name: "Marketing Collateral",
-    price: "From $249/mo",
-    priceLabel: "$249",
+    id: "addon-local-service-boost",
+    name: "Local Service Boost",
+    price: "From $549/mo",
+    priceLabel: "$549",
+    priceUnit: "/mo",
+    icon: TrendingUp,
+    tagline: "Get found by local customers searching for what you do.",
+    desc: "Ongoing SEO so local customers searching for what you do can actually find you.",
+    features: [
+      { icon: Search, t: "Keyword strategy", d: "Targeted to your niche" },
+      { icon: PenTool, t: "On-page SEO", d: "Monthly updates" },
+      { icon: MapPin, t: "Local search", d: "Google Business optimization" },
+      { icon: BarChart3, t: "Monthly reporting", d: "Clear, jargon-free" },
+    ],
+    apply: false,
+  },
+  {
+    id: "addon-social-presence",
+    name: "Social Presence",
+    price: "From $699/mo",
+    priceLabel: "$699",
     priceUnit: "/mo",
     icon: Megaphone,
-    tagline: "Keep your brand visible everywhere, every month.",
-    desc: "Ongoing social posts, email banners, digital ads, one-pagers, and print pieces, designed on-brand and delivered through your client portal.",
+    tagline: "Stay visible where your customers spend their time.",
+    desc: "Monthly content and email campaigns that keep your brand visible where your customers spend their time.",
     features: [
-      { icon: ImageIcon, t: "Social Graphics", d: "Instagram, Facebook & LinkedIn" },
-      { icon: Mail, t: "Email Campaigns", d: "Branded headers & templates" },
-      { icon: Megaphone, t: "Digital Ads", d: "Meta, Google & retargeting" },
-      { icon: FileText, t: "Print & One-Pagers", d: "Flyers, menus, signage" },
+      { icon: FileText, t: "2 content pieces", d: "Blog or social, your choice" },
+      { icon: Mail, t: "Email campaign", d: "One per month" },
+      { icon: PenTool, t: "Brand-voice writing", d: "Sounds like you" },
+      { icon: Calendar, t: "Published & scheduled", d: "Hands-off for you" },
     ],
+    apply: false,
   },
   {
-    id: "addon-seo-boost",
-    name: "SEO Boost",
-    price: "From $349/mo",
-    priceLabel: "$349",
-    priceUnit: "/mo",
-    icon: Search,
-    tagline: "Climb search rankings without lifting a finger.",
-    desc: "Monthly keyword strategy, on-page optimization, technical fixes, and a clear performance report so you always know what's moving.",
-    features: [
-      { icon: Search, t: "Keyword Strategy", d: "Targeted to your niche" },
-      { icon: Check, t: "On-page SEO", d: "Titles, meta, structure" },
-      { icon: RefreshCw, t: "Technical Audits", d: "Speed, indexing, schema" },
-      { icon: FileText, t: "Monthly Reporting", d: "Clear, jargon-free" },
-    ],
-  },
-  {
-    id: "addon-content-photography",
-    name: "Content & Photography",
-    price: "From $499",
-    priceLabel: "$499",
+    id: "addon-conversion-focus",
+    name: "Conversion Focus",
+    price: "From $749 one-time",
+    priceLabel: "$749",
     priceUnit: "one-time",
-    icon: Camera,
-    tagline: "Real photos and real words, built for your launch.",
-    desc: "A professional photo shoot or full copywriting pass tailored to your business, ready to drop straight into your new site.",
+    icon: Target,
+    tagline: "A landing page built to convert.",
+    desc: "A high-converting landing page built for a specific campaign, product launch, or ad spend.",
     features: [
-      { icon: Camera, t: "Photo Shoot", d: "On-location or product" },
-      { icon: PenTool, t: "Copywriting", d: "Voice, tone, and CTAs" },
-      { icon: FileText, t: "Page Copy", d: "Home, About, Services" },
-      { icon: Check, t: "Launch-Ready", d: "Delivered drop-in" },
+      { icon: Zap, t: "Conversion-focused design", d: "Built to drive action" },
+      { icon: PenTool, t: "Campaign copy", d: "Written for your offer" },
+      { icon: FlaskConical, t: "A/B testing setup", d: "Track what works" },
+      { icon: Send, t: "3-5 day delivery", d: "Ready when you are" },
     ],
+    apply: false,
   },
   {
-    id: "addon-brand-identity",
-    name: "Brand Identity Kit",
-    price: "From $799",
-    priceLabel: "$799",
-    priceUnit: "one-time",
-    icon: PenTool,
-    tagline: "A polished brand system you can use anywhere.",
-    desc: "Logo refresh, color and type system, and a tidy brand guidelines doc so every touchpoint feels intentional and consistent.",
+    id: "addon-business-workspace",
+    name: "Business Workspace",
+    price: "By application",
+    priceLabel: "By application",
+    priceUnit: "",
+    icon: LayoutDashboard,
+    tagline: "Run your operations from one custom back-end.",
+    desc: "A custom back-end system so you can manage bookings, customers, and operations without juggling seven different tools.",
     features: [
-      { icon: PenTool, t: "Logo Refresh", d: "Primary + variations" },
-      { icon: ImageIcon, t: "Color System", d: "Palette + usage" },
-      { icon: FileText, t: "Type System", d: "Headings & body" },
-      { icon: Check, t: "Brand Guidelines", d: "PDF + assets" },
+      { icon: LayoutDashboard, t: "Custom dashboard", d: "Built around your workflow" },
+      { icon: Database, t: "Customer or booking database", d: "Everything in one place" },
+      { icon: CreditCard, t: "Invoice & payment tracking", d: "Connected to Stripe" },
+      { icon: LinkIcon, t: "Integrates with your site", d: "No data silos" },
     ],
+    subLabel: "Limited spots each quarter",
+    apply: true,
   },
 ];
 
@@ -75,7 +111,7 @@ const tiers = [
     name: "Core",
     price: "$499",
     desc: "Perfect for getting online fast with a clean, professional presence",
-    turnaround: "3-5 days",
+    turnaround: "1 week",
     pairsWith: "Essential Care",
     features: [
       "1-3 page custom website",
@@ -91,7 +127,7 @@ const tiers = [
     name: "Launch",
     price: "$999",
     desc: "For businesses ready to grow with a polished, optimized website",
-    turnaround: "1-2 weeks",
+    turnaround: "2 weeks",
     pairsWith: "Essential Care",
     features: [
       "Up to 5 custom pages",
@@ -109,7 +145,7 @@ const tiers = [
     name: "Signature",
     price: "$1,499",
     desc: "Full brand identity and a website built to convert visitors into customers",
-    turnaround: "2-4 weeks",
+    turnaround: "4 weeks",
     pairsWith: "Growth Care",
     features: [
       "Up to 12 custom pages",
@@ -127,7 +163,7 @@ const tiers = [
     name: "Enterprise",
     price: "Custom",
     desc: "Custom solutions for growing businesses that need power and flexibility",
-    turnaround: "Custom timeline",
+    turnaround: "6-8 weeks",
     pairsWith: "White-Glove Care",
     features: [
       "Unlimited pages",
@@ -185,6 +221,15 @@ const carePlans = [
   },
 ];
 
+const scrollToContact = () => {
+  const el = document.getElementById("contact");
+  if (el) {
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  } else {
+    window.location.href = "/contact#contact";
+  }
+};
+
 export const Pricing = () => {
   const { addItem, items, removeItem, clear } = useCart();
   const buildIds = new Set(items.filter((i) => i.category === "Build package").map((i) => i.id));
@@ -194,28 +239,12 @@ export const Pricing = () => {
   const hasCare = careIds.size > 0;
   const careRef = useRef<HTMLDivElement>(null);
   const addonRef = useRef<HTMLDivElement>(null);
-  const [showAllAddons, setShowAllAddons] = useState(false);
 
-  const handleAddBuild = (id: string, name: string, price: string) => {
-    const wasEmpty = !buildIds.has(id);
-    addItem({ id, name, price, category: "Build package" });
-    if (wasEmpty && !hasCare) {
-      // Wait a tick so the prompt banner mounts before scrolling
-      setTimeout(() => {
-        careRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 100);
-    }
+  const startProject = (id: string, name: string, price: string, category: "Build package" | "Care plan" | "Add-on") => {
+    addItem({ id, name, price, category });
+    setTimeout(scrollToContact, 120);
   };
 
-  const handleAddCare = (id: string, name: string, price: string) => {
-    const wasEmpty = !careIds.has(id);
-    addItem({ id, name, price, category: "Care plan" });
-    if (wasEmpty) {
-      setTimeout(() => {
-        addonRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 150);
-    }
-  };
   return (
     <section id="pricing" className="py-32 relative">
       <div className="container">
@@ -243,7 +272,7 @@ export const Pricing = () => {
           </div>
         </div>
 
-        {/* SELECTION SUMMARY — appears when anything is selected */}
+        {/* SELECTION SUMMARY */}
         {(hasBuild || hasCare || addonIds.size > 0) && (
           <div className="max-w-7xl mx-auto mb-12 animate-fade-up">
             <div className="glass rounded-2xl p-4 md:p-5 flex flex-col sm:flex-row sm:items-center gap-4">
@@ -256,7 +285,7 @@ export const Pricing = () => {
                   .map((i) => (
                     <span
                       key={i.id}
-                      className="inline-flex items-center gap-2 rounded-full bg-secondary/60 border border-border px-3 py-1 text-xs"
+                      className="inline-flex items-center gap-2 rounded-full bg-secondary/60 border border-accent/40 px-3 py-1 text-xs"
                     >
                       <span className="text-foreground/90">{i.name}</span>
                       <button
@@ -273,11 +302,19 @@ export const Pricing = () => {
               <Button
                 variant="ghost"
                 size="sm"
+                onClick={scrollToContact}
+                className="shrink-0"
+              >
+                Review in contact form
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={clear}
                 className="text-muted-foreground hover:text-destructive shrink-0"
               >
                 <Trash2 className="h-4 w-4" />
-                Clear selection
+                Clear
               </Button>
             </div>
           </div>
@@ -303,82 +340,77 @@ export const Pricing = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {tiers.map((t) => (
-              <div
-                key={t.name}
-                className={`relative rounded-2xl p-8 ${
-                  t.featured
-                    ? "bg-gradient-to-b from-accent/10 to-card border-2 border-teal-400/70 shadow-elegant lg:scale-105"
-                    : "glass"
-                }`}
-              >
-                {t.featured && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-gradient-gold text-accent-foreground text-[10px] uppercase tracking-[0.2em] font-semibold shadow-gold">
-                    Most Popular
-                  </div>
-                )}
-                <h3 className="font-display text-3xl font-medium mb-2">{t.name}</h3>
-                <p className="text-sm text-muted-foreground min-h-[3rem]">{t.desc}</p>
+            {tiers.map((t) => {
+              const tierId = `build-${t.name.toLowerCase()}`;
+              const selected = buildIds.has(tierId);
+              return (
+                <div
+                  key={t.name}
+                  className={`relative rounded-2xl p-8 ${
+                    t.featured
+                      ? "bg-gradient-to-b from-accent/10 to-card border-2 border-teal-400/70 shadow-elegant lg:scale-105"
+                      : "glass"
+                  }`}
+                >
+                  {t.featured && (
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-gradient-gold text-accent-foreground text-[10px] uppercase tracking-[0.2em] font-semibold shadow-gold">
+                      Most Popular
+                    </div>
+                  )}
+                  <h3 className="font-display text-3xl font-medium mb-2">{t.name}</h3>
+                  <p className="text-sm text-muted-foreground min-h-[3rem]">{t.desc}</p>
 
-                <div className="my-8">
-                  <div className="flex items-baseline gap-2">
-                    <span className="font-display text-5xl font-light">{t.price}</span>
+                  <div className="my-8">
+                    <div className="flex items-baseline gap-2">
+                      <span className="font-display text-5xl font-light">{t.price}</span>
+                    </div>
+                    <div className="text-sm text-muted-foreground mt-2">Estimated delivery: {t.turnaround}</div>
+                    <div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-accent/10 border border-accent/20 px-2.5 py-1">
+                      <Repeat className="h-3 w-3 text-accent" />
+                      <span className="text-[11px] text-accent uppercase tracking-wider">Pairs with {t.pairsWith}</span>
+                    </div>
                   </div>
-                  <div className="text-sm text-muted-foreground mt-2">Estimated delivery: {t.turnaround}</div>
-                  <div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-accent/10 border border-accent/20 px-2.5 py-1">
-                    <Repeat className="h-3 w-3 text-accent" />
-                    <span className="text-[11px] text-accent uppercase tracking-wider">Pairs with {t.pairsWith}</span>
-                  </div>
-                </div>
 
-                {(() => {
-                  const tierId = `build-${t.name.toLowerCase()}`;
-                  const selected = buildIds.has(tierId);
-                  if (selected) {
-                    return (
-                      <div className="w-full mb-8 flex items-stretch gap-2">
-                        <div className="flex-1 inline-flex items-center justify-center gap-2 rounded-md bg-gradient-gold text-accent-foreground shadow-gold h-12 px-4 text-sm font-medium">
-                          <Check className="h-4 w-4" />
-                          Selected
-                        </div>
-                        <button
-                          type="button"
-                          aria-label={`Remove ${t.name} from request`}
-                          onClick={() => removeItem(tierId)}
-                          className="h-12 w-12 grid place-items-center rounded-md glass hover:border-destructive/50 hover:text-destructive transition"
-                        >
-                          <X className="h-4 w-4" />
-                        </button>
+                  {selected ? (
+                    <div className="w-full mb-8 flex items-stretch gap-2">
+                      <div className="flex-1 inline-flex items-center justify-center gap-2 rounded-md bg-gradient-gold text-accent-foreground shadow-gold h-12 px-4 text-sm font-medium">
+                        <Check className="h-4 w-4" />
+                        Selected
                       </div>
-                    );
-                  }
-                  return (
+                      <button
+                        type="button"
+                        aria-label={`Remove ${t.name} from request`}
+                        onClick={() => removeItem(tierId)}
+                        className="h-12 w-12 grid place-items-center rounded-md glass hover:border-destructive/50 hover:text-destructive transition"
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
+                    </div>
+                  ) : (
                     <Button
                       variant="glass"
                       size="lg"
                       className={`w-full mb-8 ${t.featured ? "bg-teal-500 text-white hover:bg-teal-600 border-transparent shadow-teal-500/30" : ""}`}
-                      onClick={() =>
-                        handleAddBuild(tierId, t.name, `${t.price} one-time`)
-                      }
+                      onClick={() => startProject(tierId, t.name, `${t.price} one-time`, "Build package")}
                     >
                       <Plus className="h-4 w-4" />
-                      Add to request
+                      Start a project
                     </Button>
-                  );
-                })()}
+                  )}
 
-                <ul className="space-y-3">
-                  {t.features.map((f) => (
-                    <li key={f} className="flex items-start gap-3 text-sm">
-                      <div className="mt-0.5 h-5 w-5 rounded-full bg-primary/15 grid place-items-center shrink-0">
-                        <Check className="h-3 w-3 text-primary" />
-                      </div>
-                      <span className="text-foreground/90">{f}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+                  <ul className="space-y-3">
+                    {t.features.map((f) => (
+                      <li key={f} className="flex items-start gap-3 text-sm">
+                        <div className="mt-0.5 h-5 w-5 rounded-full bg-primary/15 grid place-items-center shrink-0">
+                          <Check className="h-3 w-3 text-primary" />
+                        </div>
+                        <span className="text-foreground/90">{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
           </div>
         </div>
 
@@ -392,7 +424,7 @@ export const Pricing = () => {
           <div className="flex-1 h-px bg-gradient-to-l from-transparent via-border to-border" />
         </div>
 
-        {/* CARE PLAN PROMPT — appears after a build package is selected */}
+        {/* CARE PLAN PROMPT */}
         {hasBuild && !hasCare && (
           <div className="max-w-7xl mx-auto mb-10 animate-fade-up">
             <div className="rounded-2xl border-2 border-accent/40 bg-gradient-to-r from-accent/10 via-accent/5 to-transparent p-5 md:p-6 flex items-center gap-4">
@@ -432,137 +464,117 @@ export const Pricing = () => {
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 mb-10">
-            {carePlans.map((p) => (
-              <div
-                key={p.name}
-                className={`relative rounded-2xl p-8 flex flex-col ${
-                  p.featured
-                    ? "bg-gradient-to-b from-accent/10 to-card border-2 border-accent/40 shadow-gold"
-                    : "glass"
-                }`}
-              >
-                {p.featured && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-gradient-gold text-accent-foreground text-[10px] uppercase tracking-[0.2em] font-semibold shadow-gold">
-                    Most Popular
+            {carePlans.map((p) => {
+              const careId = `care-${p.name.toLowerCase().replace(/\s+/g, "-")}`;
+              const selected = careIds.has(careId);
+              return (
+                <div
+                  key={p.name}
+                  className={`relative rounded-2xl p-8 flex flex-col ${
+                    p.featured
+                      ? "bg-gradient-to-b from-accent/10 to-card border-2 border-accent/40 shadow-gold"
+                      : "glass"
+                  }`}
+                >
+                  {p.featured && (
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-gradient-gold text-accent-foreground text-[10px] uppercase tracking-[0.2em] font-semibold shadow-gold">
+                      Most Popular
+                    </div>
+                  )}
+                  <h4 className="font-display text-2xl font-medium mb-2">{p.name}</h4>
+                  <p className="text-sm text-muted-foreground min-h-[3rem]">{p.desc}</p>
+
+                  <div className="my-6">
+                    <div className="flex items-baseline gap-1.5">
+                      <span className="font-display text-4xl font-light">{p.price}</span>
+                      {p.price !== "Custom" && (
+                        <span className="text-base text-muted-foreground">/mo</span>
+                      )}
+                    </div>
+                    <div className="text-xs text-muted-foreground mt-1">{p.sub}</div>
                   </div>
-                )}
-                <h4 className="font-display text-2xl font-medium mb-2">{p.name}</h4>
-                <p className="text-sm text-muted-foreground min-h-[3rem]">{p.desc}</p>
 
-                <div className="my-6">
-                  <div className="flex items-baseline gap-1.5">
-                    <span className="font-display text-4xl font-light">{p.price}</span>
-                    {p.price !== "Custom" && (
-                      <span className="text-base text-muted-foreground">/mo</span>
-                    )}
-                  </div>
-                  <div className="text-xs text-muted-foreground mt-1">{p.sub}</div>
-                </div>
-
-                <ul className="space-y-3 mb-6 flex-1">
-                  {p.features.map((f) => (
-                    <li key={f} className="flex items-start gap-3 text-sm">
-                      <div className="mt-0.5 h-5 w-5 rounded-full bg-accent/15 grid place-items-center shrink-0">
-                        <Check className="h-3 w-3 text-accent" />
-                      </div>
-                      <span className="text-foreground/90">{f}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                {(() => {
-                  const careId = `care-${p.name.toLowerCase().replace(/\s+/g, "-")}`;
-                  const selected = careIds.has(careId);
-                  if (selected) {
-                    return (
-                      <div className="w-full flex items-stretch gap-2">
-                        <div className="flex-1 inline-flex items-center justify-center gap-2 rounded-md bg-gradient-gold text-accent-foreground shadow-gold h-9 px-3 text-sm font-medium">
-                          <Check className="h-4 w-4" />
-                          Selected
+                  <ul className="space-y-3 mb-6 flex-1">
+                    {p.features.map((f) => (
+                      <li key={f} className="flex items-start gap-3 text-sm">
+                        <div className="mt-0.5 h-5 w-5 rounded-full bg-accent/15 grid place-items-center shrink-0">
+                          <Check className="h-3 w-3 text-accent" />
                         </div>
-                        <button
-                          type="button"
-                          aria-label={`Remove ${p.name} from request`}
-                          onClick={() => removeItem(careId)}
-                          className="h-9 w-9 grid place-items-center rounded-md glass hover:border-destructive/50 hover:text-destructive transition"
-                        >
-                          <X className="h-4 w-4" />
-                        </button>
+                        <span className="text-foreground/90">{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {selected ? (
+                    <div className="w-full flex items-stretch gap-2">
+                      <div className="flex-1 inline-flex items-center justify-center gap-2 rounded-md bg-gradient-gold text-accent-foreground shadow-gold h-9 px-3 text-sm font-medium">
+                        <Check className="h-4 w-4" />
+                        Selected
                       </div>
-                    );
-                  }
-                  return (
+                      <button
+                        type="button"
+                        aria-label={`Remove ${p.name} from request`}
+                        onClick={() => removeItem(careId)}
+                        className="h-9 w-9 grid place-items-center rounded-md glass hover:border-destructive/50 hover:text-destructive transition"
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
+                    </div>
+                  ) : (
                     <Button
                       variant={p.featured ? "gold" : "glass"}
                       size="sm"
                       className="w-full"
                       onClick={() =>
-                        handleAddCare(
+                        startProject(
                           careId,
                           p.name,
                           p.price === "Custom" ? "Custom" : `${p.price}/mo`,
+                          "Care plan",
                         )
                       }
                     >
                       <Plus className="h-4 w-4" />
-                      {hasCare ? `Switch to ${p.name.split(" ")[0]}` : `Add ${p.name.split(" ")[0]}`}
+                      Start a project
                     </Button>
-                  );
-                })()}
-              </div>
-            ))}
+                  )}
+                </div>
+              );
+            })}
           </div>
 
-          {/* Stripe billing trust note */}
+          {/* Trust strip — folded in from the old Stripe section */}
           <div className="glass rounded-2xl p-8 md:p-10">
-            <div className="grid lg:grid-cols-[1.1fr_1.4fr] gap-10 items-center">
-              <div>
-                <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 mb-5">
-                  <ShieldCheck className="h-3.5 w-3.5 text-accent" />
-                  <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                    Billing you can trust
-                  </span>
-                </div>
-                <h3 className="font-display text-2xl md:text-3xl font-light leading-tight mb-4">
-                  Monthly billing is fully automated with <span className="italic text-gradient-gold">Stripe</span>.
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-5">
-                  One predictable charge each month. No invoices to chase, no surprise fees,
-                  cancel or change plans anytime from your secure client portal.
-                </p>
-                <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
-                  <div className="inline-flex items-center gap-1.5 glass rounded-full px-3 py-1.5">
-                    <CreditCard className="h-3 w-3 text-accent" />
-                    <span>PCI-compliant via Stripe</span>
-                  </div>
-                  <div className="inline-flex items-center gap-1.5 glass rounded-full px-3 py-1.5">
-                    <RefreshCw className="h-3 w-3 text-accent" />
-                    <span>Cancel anytime</span>
-                  </div>
-                </div>
+            <div className="text-center mb-6">
+              <div className="text-xs uppercase tracking-[0.28em] text-accent font-mono">
+                Included every month
               </div>
-
-              <div>
-                <div className="text-xs uppercase tracking-[0.22em] text-accent mb-4">
-                  Included every month
-                </div>
-                <ul className="grid sm:grid-cols-2 gap-3">
-                  {[
-                    { icon: Server, t: "Premium hosting & uptime monitoring" },
-                    { icon: ShieldCheck, t: "SSL, security patches & daily backups" },
-                    { icon: RefreshCw, t: "Software, plugin & CMS updates" },
-                    { icon: LifeBuoy, t: "Priority support & small content edits" },
-                    { icon: CreditCard, t: "Automated Stripe billing & receipts" },
-                    { icon: Check, t: "Access to your secure client portal" },
-                  ].map((item) => (
-                    <li key={item.t} className="flex items-start gap-3 text-sm">
-                      <div className="mt-0.5 h-7 w-7 rounded-lg bg-primary/15 grid place-items-center shrink-0">
-                        <item.icon className="h-3.5 w-3.5 text-primary" />
-                      </div>
-                      <span className="text-foreground/90 leading-snug">{item.t}</span>
-                    </li>
-                  ))}
-                </ul>
+            </div>
+            <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-3 max-w-3xl mx-auto mb-8">
+              {[
+                { icon: Server, t: "Premium hosting & uptime monitoring" },
+                { icon: ShieldCheck, t: "SSL, security patches & daily backups" },
+                { icon: RefreshCw, t: "Software, plugin & CMS updates" },
+                { icon: LifeBuoy, t: "Priority support & small content edits" },
+                { icon: CreditCard, t: "Automated Stripe billing & receipts" },
+                { icon: Check, t: "Access to your secure client portal" },
+              ].map((item) => (
+                <li key={item.t} className="flex items-start gap-3 text-sm">
+                  <div className="mt-0.5 h-7 w-7 rounded-lg bg-accent/15 grid place-items-center shrink-0">
+                    <item.icon className="h-3.5 w-3.5 text-accent" />
+                  </div>
+                  <span className="text-foreground/90 leading-snug">{item.t}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="flex flex-wrap items-center justify-center gap-3 text-xs text-muted-foreground">
+              <div className="inline-flex items-center gap-1.5 glass rounded-full px-3 py-1.5">
+                <CreditCard className="h-3 w-3 text-accent" />
+                <span>PCI-compliant via Stripe</span>
+              </div>
+              <div className="inline-flex items-center gap-1.5 glass rounded-full px-3 py-1.5">
+                <RefreshCw className="h-3 w-3 text-accent" />
+                <span>Cancel anytime</span>
               </div>
             </div>
           </div>
@@ -588,7 +600,7 @@ export const Pricing = () => {
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
-            {(showAllAddons ? addons : addons.slice(0, 2)).map((a) => {
+            {addons.map((a) => {
               const selected = addonIds.has(a.id);
               const Icon = a.icon;
               return (
@@ -627,9 +639,20 @@ export const Pricing = () => {
                   <div className="mt-auto flex items-end justify-between gap-4">
                     <div>
                       <div className="font-display text-2xl font-medium">
-                        From <span className="text-gradient-gold">{a.priceLabel}</span>
-                        <span className="text-sm text-muted-foreground font-normal ml-1">{a.priceUnit}</span>
+                        {a.priceUnit ? (
+                          <>
+                            From <span className="text-gradient-gold">{a.priceLabel}</span>
+                            <span className="text-sm text-muted-foreground font-normal ml-1">{a.priceUnit}</span>
+                          </>
+                        ) : (
+                          <span className="text-gradient-gold">{a.priceLabel}</span>
+                        )}
                       </div>
+                      {a.subLabel && (
+                        <div className="text-[11px] uppercase tracking-wider text-muted-foreground mt-1">
+                          {a.subLabel}
+                        </div>
+                      )}
                     </div>
                     {selected ? (
                       <div className="flex items-stretch gap-2">
@@ -650,17 +673,10 @@ export const Pricing = () => {
                       <Button
                         variant="glass"
                         size="default"
-                        onClick={() =>
-                          addItem({
-                            id: a.id,
-                            name: a.name,
-                            price: a.price,
-                            category: "Add-on",
-                          })
-                        }
+                        onClick={() => startProject(a.id, a.name, a.price, "Add-on")}
                       >
                         <Plus className="h-4 w-4" />
-                        Add to request
+                        {a.apply ? "Apply to request" : "Start a project"}
                       </Button>
                     )}
                   </div>
@@ -668,28 +684,6 @@ export const Pricing = () => {
               );
             })}
           </div>
-
-          {addons.length > 2 && (
-            <div className="mt-8 flex justify-center">
-              <Button
-                variant="glass"
-                size="lg"
-                onClick={() => setShowAllAddons((v) => !v)}
-              >
-                {showAllAddons ? (
-                  <>
-                    <ChevronUp className="h-4 w-4" />
-                    Show fewer add-ons
-                  </>
-                ) : (
-                  <>
-                    <ChevronDown className="h-4 w-4" />
-                    See more add-ons ({addons.length - 2})
-                  </>
-                )}
-              </Button>
-            </div>
-          )}
         </div>
       </div>
     </section>
