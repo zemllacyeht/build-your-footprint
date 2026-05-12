@@ -8,6 +8,7 @@ import { ClientStories } from "@/components/site/ClientStories";
 import { ClientPortal } from "@/components/site/ClientPortal";
 import { Contact } from "@/components/site/Contact";
 import { Footer } from "@/components/site/Footer";
+import { MobileSelectionsBar } from "@/components/site/MobileSelectionsBar";
 
 const Index = () => {
   return (
@@ -24,6 +25,7 @@ const Index = () => {
         <Contact />
       </main>
       <Footer />
+      <MobileSelectionsBar />
     </div>
   );
 };
