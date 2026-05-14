@@ -1,5 +1,10 @@
 import { createClient } from 'npm:@supabase/supabase-js@2'
-import { corsHeaders } from 'npm:@supabase/supabase-js@2/cors'
+// Inline CORS headers — the @supabase/supabase-js@2/cors subpath does not exist.
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+}
 
 function jsonResponse(data: Record<string, unknown>, status = 200): Response {
   return new Response(JSON.stringify(data), {
@@ -30,28 +35,26 @@ Deno.serve(async (req) => {
   let token: string | null = url.searchParams.get('token')
 
   if (req.method === 'POST') {
-    // Detect RFC 8058 one-click unsubscribe: POST with form-encoded body
-    // containing "List-Unsubscribe=One-Click". Email clients (Gmail, Apple Mail,
-    // etc.) send this when the user clicks "Unsubscribe" in the mail UI.
     const contentType = req.headers.get('content-type') ?? ''
     if (contentType.includes('application/x-www-form-urlencoded')) {
+      // Two distinct form-encoded scenarios:
+      // 1. RFC 8058 one-click unsubscribe (Gmail/Apple Mail inbox button):
+      //    body = "List-Unsubscribe=One-Click", token is in the URL query string
+      //    (already captured above from url.searchParams).
+      // 2. Manual form POST from a custom unsubscribe page:
+      //    body = "token=xxx", no List-Unsubscribe key.
+      // If we don't see List-Unsubscribe in the body, try the body for a token.
       const formText = await req.text()
       const params = new URLSearchParams(formText)
-      // For one-click, token comes from query param (already set above).
-      // Otherwise, token may be in the form body.
       if (!params.get('List-Unsubscribe')) {
         const formToken = params.get('token')
-        if (formToken) {
-          token = formToken
-        }
+        if (formToken) token = formToken
       }
     } else {
       // JSON body (from the app's unsubscribe page)
       try {
         const body = await req.json()
-        if (body.token) {
-          token = body.token
-        }
+        if (body.token) token = body.token
       } catch {
         // Fall through — token stays from query param
       }
