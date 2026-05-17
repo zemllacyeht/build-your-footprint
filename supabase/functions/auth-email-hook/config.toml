@@ -1,0 +1,2 @@
+[functions.auth-email-hook]
+verify_jwt = false

@@ -1,0 +1,2 @@
+[functions.handle-email-unsubscribe]
+verify_jwt = false
