@@ -36,8 +36,8 @@ const EMAIL_TEMPLATES: Record<string, React.ComponentType<any>> = {
 // Email sender configuration. Mirrors the values in send-transactional-email
 // so auth and transactional emails share the same verified Resend domain.
 const SITE_NAME = 'Build Your Footprint'
-const SENDER_DOMAIN = 'send.buildyourfootprint.com'
-const FROM_DOMAIN = 'send.buildyourfootprint.com'
+const SENDER_DOMAIN = 'buildyourfootprint.com'
+const FROM_DOMAIN = 'buildyourfootprint.com'
 
 // Maximum age (in seconds) for the webhook timestamp before we reject the
 // request as stale. 5 minutes matches the Standard Webhooks default tolerance.

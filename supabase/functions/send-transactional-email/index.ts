@@ -16,12 +16,12 @@ const SITE_NAME = "Build Your Footprint"
 // SENDER_DOMAIN is the verified Resend sender subdomain — DKIM, SPF, and MX
 // records for this subdomain are configured in Cloudflare. The dispatcher
 // (process-email-queue) uses this value to route the send through Resend.
-const SENDER_DOMAIN = "send.buildyourfootprint.com"
+const SENDER_DOMAIN = "buildyourfootprint.com"
 // FROM_DOMAIN is the domain shown in the From: header (used as `noreply@<FROM_DOMAIN>`).
 // Currently identical to SENDER_DOMAIN. To migrate the From: header to the apex
 // domain in a future phase, add `include:amazonses.com` to the apex SPF record
 // (merged with the existing Google Workspace include) and update this constant.
-const FROM_DOMAIN = "send.buildyourfootprint.com"
+const FROM_DOMAIN = "buildyourfootprint.com"
 // Generate a cryptographically random 32-byte hex token
 function generateToken(): string {
   const bytes = new Uint8Array(32)
