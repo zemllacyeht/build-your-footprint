@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
@@ -21,7 +21,21 @@ const schema = z.object({
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { user, role, loading } = useAuth();
+
+  const authError = (() => {
+    switch (searchParams.get('error')) {
+      case 'verification_failed':
+        return 'That link has expired or already been used. Please request a new one.'
+      case 'missing_params':
+        return 'Invalid verification link. Please use the link from your email.'
+      case null:
+        return null
+      default:
+        return 'Something went wrong. Please try again or contact support.'
+    }
+  })()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -83,6 +97,12 @@ export default function LoginPage() {
               Sign in to view your previews and manage your account.
             </p>
           </div>
+
+          {authError && (
+            <div className="mb-6 rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+              {authError}
+            </div>
+          )}
 
           <Button type="button" variant="glass" size="lg" className="w-full mb-4" onClick={handleGoogleSignIn}>
             <svg className="h-4 w-4" viewBox="0 0 24 24" aria-hidden="true">

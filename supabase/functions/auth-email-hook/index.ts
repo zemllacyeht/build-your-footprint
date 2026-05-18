@@ -214,21 +214,22 @@ Deno.serve(async (req) => {
     )
   }
 
-  // Construct the confirmation URL. Supabase expects the verify endpoint at
-  // <site_url>/auth/v1/verify with token_hash + type + redirect_to params.
-  const siteUrl: string = emailData.site_url || `https://buildyourfootprint.com`
+  // Construct the confirmation URL pointing at our Next.js /auth/callback route.
+  // emailData.site_url is the GoTrue API base (supabase.co/auth/v1) — wrong here.
+  // SITE_URL env var holds the marketing domain (https://buildyourfootprint.com).
+  const siteHost: string = Deno.env.get('SITE_URL') || 'https://buildyourfootprint.com'
   const tokenHash: string = emailData.token_hash || ''
-  const redirectTo: string = emailData.redirect_to || siteUrl
+  const redirectTo: string = emailData.redirect_to || siteHost
   const confirmationUrl =
-    `${siteUrl.replace(/\/$/, '')}/auth/v1/verify` +
-    `?token=${encodeURIComponent(tokenHash)}` +
+    `${siteHost.replace(/\/$/, '')}/auth/callback` +
+    `?token_hash=${encodeURIComponent(tokenHash)}` +
     `&type=${encodeURIComponent(emailType)}` +
     `&redirect_to=${encodeURIComponent(redirectTo)}`
 
   // Build template props matching the existing templates' expected shape.
   const templateProps = {
     siteName: SITE_NAME,
-    siteUrl,
+    siteUrl: siteHost,
     recipient,
     confirmationUrl,
     token: emailData.token,
